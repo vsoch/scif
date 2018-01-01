@@ -1,0 +1,8 @@
+include README.md LICENSE
+recursive-include scif *
+recursive-include scif *.png
+global-exclude *.py[co]
+global-exclude *.img
+global-exclude OLD-scif/*
+global-exclude *.simg
+global-exclude __pycache__

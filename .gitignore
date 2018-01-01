@@ -1,0 +1,9 @@
+scif.egg-info/
+build/
+_site
+dist/
+pypi.sh
+OLD
+__pycache__
+*.simg
+*.img
