@@ -95,11 +95,8 @@ def read_section(config, spec, section, name):
     '''
     members = []
 
+    # If we need to add other sections, for now all are "apps"
     global_section = 'apps'
-
-    if section in ['install']:
-        global_section = section
-        section = None
 
     while True:
 
@@ -142,12 +139,6 @@ def add_section(config, section, name=None):
         sys.exit(1)
 
     global_section = 'apps'
-
-    # Global sections don't have names (are indexed by section)
-    if section in ['install']:
-        global_section = section
-        section = None
-        name = None
 
     # Add the global section, if doesn't exist
     if global_section not in config:
