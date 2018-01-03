@@ -50,6 +50,14 @@ def get_parser():
     # else?
 
     # Preview changes to the filesystem
+    shell = subparsers.add_parser("shell",
+                                  help="shell to interact with scientific filesystem")
+
+    shell.add_argument("recipe", nargs=1, 
+                       help="recipe file or scientific filesystem base", 
+                       type=str)
+
+    # Preview changes to the filesystem
     preview = subparsers.add_parser("preview",
                                      help="preview changes to a filesytem")
 
@@ -142,6 +150,7 @@ def main():
 
     # Does the user want a shell?
     if args.command == "preview": from .preview import main
+    if args.command == "shell": from .shell import main
     if args.command == "inspect": from .inspect import main
 
     # Pass on to the correct parser

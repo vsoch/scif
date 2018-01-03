@@ -35,12 +35,43 @@ class ScifRecipe:
 
     '''
     
-    def __init__(self, path, base='/'):
+    def __init__(self, path=None):
         '''initialize the scientific filesystem by creating a scif folder
            at the base, and loading the recipe to fill it.
+
+           Parameters
+           ==========
+           path: is the first paramter, not required to initialize an empty 
+                 client session. The logic proceeds as follows:
+                 1. If path is not defined, we want (empty) interactive session
+                 2. We derive the base from the environment SCIF_BASE
         '''
-        self._set_base(base) # /scif
-        self.load(path)      # recipe, environment
+        # 0. base determined from environment
+        from scif.defaults import SCIF_BASE as base
+
+        # 1. Determine if path is a recipe or base
+        if path is not None:
+
+            # 1. path is a recipe
+            if os.path.isfile(path):
+                self.load(path)      # recipe, environment
+                self.set_base(base) # /scif
+
+            # 1. path is a base
+            elif os.path.isdir(path):   
+                #TODO: write functoin to try loading base from here...
+                self.set_base(path) # /scif
+
+            else:
+                bot.warning('%s is not detected as a recipe or base.')
+                self.set_base(base) # /scif
+
+        # 2. Neither, development client
+        else:
+            bot.info('[skeleton] session!'
+            bot.info('           load a recipe: client.load("recipe.scif")')
+            bot.info('           change default base:  client.set_base("/")')
+
 
     def __str__(self):
         return '[scif]'

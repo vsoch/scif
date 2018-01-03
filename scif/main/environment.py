@@ -169,7 +169,7 @@ def add_env(self, key, value):
         action = 'update'
 
     self.environment[key] = value
-    bot.info('[environment:%s][%s:%s]' %(action.ljust(5), key, value))
+    bot.info('[environment:%s][%s=%s]' %(action, key, value))
 
 
 def get_env(self, key=None):

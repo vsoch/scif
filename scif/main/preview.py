@@ -21,39 +21,39 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 from scif.logger import bot
+from datetime import datetime
 from scif.utils import ( mkdir_p, run_command, write_file, write_json )
 from scif.main.helpers import get_parts
 import sys
 import os
 
 
-def install(self, app=None):
-    '''install recipes to a base. We assume this is the root of a system
-       or container, and will write the /scif directory on top of it.
-       If an app name is provided, install that app if it is found 
-       in the config. This function goes through all step to:
 
-       1. Install base folders to base, creating a folder for each app
-       2. Install one or more apps to it, the config is already loaded
+def preview(self, app=None):
+    '''preview the complete setup for a scientific filesytem. This is useful 
+       to print out actions for install (without doing them).
     '''
+    self._preview_base()             # preview the folder structure
+    self._preview_apps(app)          # App install
 
-    self._install_base()             # Generate the folder structure
-    self._install_apps(app)          # App install
 
+def preview_base(self):
+    ''' preview basic scif structure at the base for apps and metadata
 
-def init_app(self, app):
-    '''initialize an app, meaning adding the metadata folder, bin, and 
-       lib to it. The app is created at the base
+        Parameters
+        ==========
+        base: the full path to the root folder to create /scif
     '''
-    settings = get_appenv(app, self._base)[app]
+    if not hasattr(self,'_base'):
+        bot.error('Please set the base before preview.')
+        sys.exit(1)
+    
+    bot.info('[base] %s' %self._base)  
+    bot.info('[apps] %s' %self.path_apps)  
+    bot.info('[data] %s' %self.path_data)  
 
-    # Create base directories for metadata
-    for folder in ['appmeta', 'appbin', 'applib', 'appdata']:
-        mkdir_p(settings[folder])
-    return settings
 
-
-def install_apps(self, apps=None):
+def preview_apps(self, apps=None):
     '''install one or more apps to the base. If app is defined, only
        install app specified. Otherwise, install all found in config.
     '''
@@ -71,22 +71,38 @@ def install_apps(self, apps=None):
             sys.exit(1)
 
         # Make directories
-        settings = self._init_app(app)
+        settings = self._init_app_preview(app)
 
         # Get the app configuration
         config = self.app(app)
 
         # Handle environment, runscript, labels
-        self._install_runscript(app, settings, config)
-        self._install_environment(app, settings, config)
-        self._install_labels(app, settings, config)
-        self._install_commands(app, settings, config)
-        self._install_files(app, settings, config)
-        self._install_recipe(app, settings, settings, config)
+        self._preview_runscript(app, settings, config)
+        self._preview_environment(app, settings, config)
+        self._preview_labels(app, settings, config)
+        self._preview_commands(app, settings, config)
+        self._preview_files(app, settings, config)
+        self._preview_recipe(app, settings, settings, config)
 
 
-def install_runscript(self, app, settings, config):
-    '''install runscript will prepare the runscript for an app.
+
+def init_app_preview(self, app):
+    '''initialize an app, meaning adding the metadata folder, bin, and 
+       lib to it. The app is created at the base
+    '''
+    from scif.main.environment import get_appenv
+    settings = get_appenv(app, self._base)[app]
+
+    # Create base directories for metadata
+    for folder, path in settings.items():
+        if path.startswith(self._base):
+            section_name = folder.replace('app','')
+            bot.info(('[%s]' %section_name).ljust(10) + path)
+    return settings
+
+
+def preview_runscript(self, app, settings, config):
+    '''preview the runscript for an app
        
        Parameters
        ==========
@@ -98,11 +114,11 @@ def install_runscript(self, app, settings, config):
     if "apprun" in config:
         content = '\n'.join(config['apprun'])
         bot.info('+ ' + 'apprun '.ljust(5) + app)
-        write_file(settings['apprun'], content)
+        print(content)
 
 
-def install_labels(self, app, settings, config):
-    '''install labels will add labels to the app labelfile
+def preview_labels(self, app, settings, config):
+    '''preview labels for an app
 
        Parameters
        ==========
@@ -111,19 +127,18 @@ def install_labels(self, app, settings, config):
        config: should be the config for the app obtained with self.app(app)
 
     '''
-    lookup = dict()
+    lookup = ''
     if "applabels" in config:
         labels = config['appfiles']
         bot.info('+ ' + 'applabels '.ljust(5) + app)
         for line in labels:
             label, value = get_parts(line, default='')
-            lookup[label] = value
- 
-        write_json(settings['applabels'], lookup)
+            lookup += '%s=%s\n' %(label,value))
+        print(lookup)
     return lookup
 
 
-def install_files(self, app, settings, config):
+def preview_files(self, app, settings, config):
     '''install files will add files (or directories) to a destination.
        If none specified, they are placed in the app base
 
@@ -134,7 +149,7 @@ def install_files(self, app, settings, config):
        config: should be the config for the app obtained with self.app(app)
 
     '''
-    files = []
+    files = ''
     if "appfiles" in config:
         files = config['appfiles']
         bot.info('+ ' + 'appfiles '.ljust(5) + app)
@@ -143,20 +158,11 @@ def install_files(self, app, settings, config):
 
             # Step 1: determine source and destination
             src, dest = get_parts(pair, default=settings['approot'])
-
-            # Step 2: copy source to destination
-            cmd = ['cp']
-
-            if os.path.isdir(src):
-                cmd.append('-R')
-
-            cmd.append(dest)
-            result = self._run_command(cmd)
-            files.append(dest)
-
+            files += ('%s --> %s \n' %(src,dest)) 
+            
     return files
 
-def install_commands(self, app, settings, config):
+def preview_commands(self, app, settings, config):
     '''install will finally, issue commands to install the app.
 
        Parameters
@@ -166,13 +172,15 @@ def install_commands(self, app, settings, config):
        config: should be the config for the app obtained with self.app(app)
 
     '''
+    cmd = ''
     if "appinstall" in config:
         cmd = config['appinstall']
         bot.info('+ ' + 'appinstall '.ljust(5) + app)
-        return self._run_command(cmd)
+        print('\n'.join(cmd))
+    return cmd
 
 
-def install_recipe(self, app, settings, config):
+def preview_recipe(self, app, settings, config):
     '''Write the initial recipe for the app to its metadata folder.
 
        Parameters
@@ -183,19 +191,23 @@ def install_recipe(self, app, settings, config):
 
     '''
     recipe_file = settings['apprecipe']
-    recipe = '' 
+    recipe = '# [scif] scientific filesystem recipe\n' 
+    recipe += '# [date] %s\n' %datetime.now().strftime('%b-%d-%Y')
+    print(recipe)
 
+    bot.info('+ ' + 'apprecipe '.ljust(5) + app)
     for section_name, section_content in config.items():
-        content = '\n'.join(content)
-        header = '%' + section_name
-        recipe += '%s %s\n%s\n' %(header, app, content)
+        content = "%s\n" %'\n'.join(section_content)
+        header = '%' + section_name + ' %s' %app
+        recipe += '%s\n%s\n' %(header, content)
+        bot.info(header)
+        print(content)
 
-    write_file(recipe_file, recipe)
     return recipe
 
             
-def install_environment(self, app, settings, config):
-    '''install will run the content to export environment variables, if defined
+def preview_environment(self, app, settings, config):
+    '''preview the environment section
 
        Parameters
        ==========
@@ -203,7 +215,9 @@ def install_environment(self, app, settings, config):
        settings: the output of _init_app(), a dictionary of environment vars
 
     '''
+    content = ''
     if "appenv" in config:
-        cmd = config['install']
+        content = '\n'.join(config['appenv'])
         bot.info('+ ' + 'appenv '.ljust(5) + app)
-        return self._run_command(cmd)
+        print(content)
+    return content

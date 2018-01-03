@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 from scif.logger import bot
+from scif.utils import mkdir_p
 import sys
 import os
 
@@ -32,6 +33,9 @@ def set_base(self, base='/'):
         ==========
         base: the full path to the root folder to create /scif
     '''
+    # The user is likely to give path to scif (should still work)
+    base = base.strip('scif')
+
     if not os.path.exists(base):
         bot.error('%s does not exist!' %base)
         sys.exit(1)
@@ -66,4 +70,3 @@ def install_base(self):
 
     mkdir_p(self.path_apps)
     mkdir_p(self.path_data)
-

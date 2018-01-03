@@ -19,15 +19,27 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
+from scif.main.apps import ( app, apps, get_appenv )
 from scif.main.base import ScifRecipe
 from scif.main.environment import ( add_env, env, get_env, get_appenv )
-from scif.main.apps import ( app, apps, get_appenv )
-from scif.main.setup import ( install_base, set_base )
 from scif.main.helpers import run_command
+from scif.main.preview import ( 
+    preview, 
+    preview_apps, 
+    preview_base, 
+    init_app_preview,
+    preview_runscript,
+    preview_labels,
+    preview_environment,
+    preview_files,
+    preview_commands,
+    preview_recipe
+)
+from scif.main.setup import ( install_base, set_base )
 from scif.main.install import (
     init_app,
     install,
-    install_app,
+    install_apps,
     install_runscript,
     install_environment,
     install_labels,
@@ -45,9 +57,20 @@ ScifRecipe._run_command = run_command
 ScifRecipe.add_env = add_env
 ScifRecipe.get_env = get_env
 
+# Preview
+ScifRecipe.preview = preview
+ScifRecipe._preview_base = preview_base
+ScifRecipe._init_app_preview = init_app_preview
+ScifRecipe._preview_runscript = preview_runscript
+ScifRecipe._preview_labels = preview_labels
+ScifRecipe._preview_environment = preview_environment
+ScifRecipe._preview_commands = preview_commands
+ScifRecipe._preview_files = preview_files
+ScifRecipe._preview_recipe = preview_recipe
+
 # Setup
 ScifRecipe._install_base = install_base
-ScifRecipe._set_base = set_base
+ScifRecipe.set_base = set_base
 
 # Apps
 ScifRecipe.get_appenv = get_appenv
@@ -57,7 +80,7 @@ ScifRecipe.apps = apps
 # Installation
 ScifRecipe.install = install
 ScifRecipe._init_app = init_app
-ScifRecipe._install_app = install_app
+ScifRecipe._install_apps = install_apps
 ScifRecipe._install_runscript = install_runscript
 ScifRecipe._install_environment = install_environment
 ScifRecipe._install_labels = install_labels
