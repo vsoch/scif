@@ -79,6 +79,7 @@ def load(path):
 
             # If we have a section, and are adding it
             elif section is not None:
+                spec = [line] + spec
                 config = read_section(config=config,
                                       spec=spec,
                                       section=section,
@@ -100,15 +101,17 @@ def read_section(config, spec, section, name):
 
     while True:
 
+        if len(spec) == 0:
+            break
         next_line = spec[0]                
         if next_line.upper().strip().startswith("%"):
             break
         else:
             new_member = spec.pop(0)
-            members.append(new_member)
-        if len(spec) == 0:
-            break
+            if not new_member.startswith('#'):
+                members.append(new_member)
 
+    print(members)
     # Add the list to the config
     if len(members) > 0:
         if section is not None and name is not None:
@@ -126,8 +129,14 @@ def add_section(config, section, name=None):
     Parameters
     ==========
     config: the config (dict) parsed thus far
-    section: the section type
-    name: an optional name, added as a level
+    section: the section type (e.g., appinstall)
+    name: an optional name, added as a level (e.g., google-drive)
+
+    Resulting data structure is:
+
+            config['registry']['apprun']
+            config[name][section]
+
     '''
 
     if section is None:
@@ -144,14 +153,12 @@ def add_section(config, section, name=None):
     if global_section not in config:
         config[global_section] = OrderedDict()
 
-    if name is not None and name not in config[global_section]:
-
-        if section is not None:
+    if name is not None:        
+        if name not in config[global_section]:
             config[global_section][name] = OrderedDict()
+
+        if section not in config[global_section][name]: 
             config[global_section][name][section] = []
             bot.debug("Adding section %s %s" %(name, section))
-        else:
-            config[global_section][name] = []
-            bot.debug("Adding section %s" %name)
 
     return config

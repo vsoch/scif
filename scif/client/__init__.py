@@ -110,7 +110,6 @@ def main():
        organized filesystem.
     '''
 
-    from scif.main import ScifRecipe
     parser = get_parser()
     subparsers = get_subparsers(parser)
 

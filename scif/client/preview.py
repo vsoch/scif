@@ -28,3 +28,9 @@ import os
 def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
+    recipe = os.path.abspath(args.recipe[0])
+    if not os.path.exists(recipe):
+        bot.error("Cannot find recipe file %s" %recipe)
+        sys.exit(1)
+
+    client = ScifRecipe(recipe)
