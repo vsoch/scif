@@ -183,5 +183,5 @@ def get_env(self, key=None):
            return self.environment[key]
 
     # otherwise, return the entire environment lookup
-    if hasattr(self, 'environment')
+    if hasattr(self, 'environment'):
         return self.environment
