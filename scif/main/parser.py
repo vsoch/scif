@@ -111,7 +111,6 @@ def read_section(config, spec, section, name):
             if not new_member.startswith('#'):
                 members.append(new_member)
 
-    print(members)
     # Add the list to the config
     if len(members) > 0:
         if section is not None and name is not None:
