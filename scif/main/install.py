@@ -82,7 +82,7 @@ def install_apps(self, apps=None):
         self._install_labels(app, settings, config)
         self._install_commands(app, settings, config)
         self._install_files(app, settings, config)
-        self._install_recipe(app, settings, settings, config)
+        self._install_recipe(app, settings, config)
 
 
 def install_runscript(self, app, settings, config):

@@ -101,6 +101,6 @@ sections = ('appenv',
 
 SCIF_APPS = getenv_namespace(namespace="SCIF_APP")
 SCIF_BASE = getenv('SCIF_BASE', '/scif')
-SCIF_DATA = getenv('SCIF_DATA', '%s/data' %SCIF_ROOT)
-SCIF_APPS = getenv('SCIF_APPS', '%s/apps' %SCIF_ROOT)
+SCIF_DATA = getenv('SCIF_DATA', '%s/data' %SCIF_BASE)
+SCIF_APPS = getenv('SCIF_APPS', '%s/apps' %SCIF_BASE)
 SCIF_SHELL = getenv('SCIF_SHELL', 'ipython')

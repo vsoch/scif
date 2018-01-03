@@ -25,7 +25,7 @@ import sys
 import os
 
 
-def set_base(self, base='/'):
+def set_base(self, base='/', writable=True):
     ''' set the base (the root where to create /scif) and determine if
         it is writable
 
@@ -50,9 +50,10 @@ def set_base(self, base='/'):
     self.add_env('SCIF_APPS', self.path_apps)
 
     # Check if it's writable
-    if not os.access(base, os.W_OK):
-        bot.error('%s is not writable.' %base)
-        sys.exit(1)
+    if writable is True:
+        if not os.access(base, os.W_OK):
+            bot.error('%s is not writable.' %base)
+            sys.exit(1)
 
 
 def install_base(self):

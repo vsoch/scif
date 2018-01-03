@@ -60,6 +60,7 @@ ScifRecipe.get_env = get_env
 # Preview
 ScifRecipe.preview = preview
 ScifRecipe._preview_base = preview_base
+ScifRecipe._preview_apps = preview_apps
 ScifRecipe._init_app_preview = init_app_preview
 ScifRecipe._preview_runscript = preview_runscript
 ScifRecipe._preview_labels = preview_labels

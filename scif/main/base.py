@@ -21,6 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from scif.logger import bot
 from scif.main.parser import load
+import os
+import sys
 
 bot.level = 3
 
@@ -35,7 +37,7 @@ class ScifRecipe:
 
     '''
     
-    def __init__(self, path=None):
+    def __init__(self, path=None, writable=True):
         '''initialize the scientific filesystem by creating a scif folder
            at the base, and loading the recipe to fill it.
 
@@ -54,21 +56,23 @@ class ScifRecipe:
 
             # 1. path is a recipe
             if os.path.isfile(path):
-                self.load(path)      # recipe, environment
-                self.set_base(base) # /scif
+                self.set_base(base, 
+                              writable=writable) # /scif
+                self.load(path)                        # recipe, environment
 
             # 1. path is a base
             elif os.path.isdir(path):   
-                #TODO: write functoin to try loading base from here...
-                self.set_base(path) # /scif
+                #TODO: write function to try loading base from here...
+                self.set_base(path,
+                              writable=writable) # /scif
 
             else:
                 bot.warning('%s is not detected as a recipe or base.')
-                self.set_base(base) # /scif
+                self.set_base(base, writable=writable) # /scif
 
         # 2. Neither, development client
         else:
-            bot.info('[skeleton] session!'
+            bot.info('[skeleton] session!')
             bot.info('           load a recipe: client.load("recipe.scif")')
             bot.info('           change default base:  client.set_base("/")')
 

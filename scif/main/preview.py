@@ -29,12 +29,12 @@ import os
 
 
 
-def preview(self, app=None):
+def preview(self, apps=None):
     '''preview the complete setup for a scientific filesytem. This is useful 
        to print out actions for install (without doing them).
     '''
     self._preview_base()             # preview the folder structure
-    self._preview_apps(app)          # App install
+    self._preview_apps(apps)          # App install
 
 
 def preview_base(self):
@@ -48,20 +48,21 @@ def preview_base(self):
         bot.error('Please set the base before preview.')
         sys.exit(1)
     
-    bot.info('[base] %s' %self._base)  
-    bot.info('[apps] %s' %self.path_apps)  
-    bot.info('[data] %s' %self.path_data)  
+    bot.custom(prefix='[base] %s' %self._base, color='CYAN')  
+    bot.custom(prefix='[apps] %s' %self.path_apps, color='CYAN')  
+    bot.custom(prefix='[data] %s\n' %self.path_data, color='CYAN')
 
 
 def preview_apps(self, apps=None):
     '''install one or more apps to the base. If app is defined, only
        install app specified. Otherwise, install all found in config.
     '''
-    if apps is None:
+    if apps in [None,[]]:
         apps = self.apps()
 
     if not isinstance(apps, list):
         apps = [apps]
+
 
     for app in apps:
 
@@ -71,6 +72,7 @@ def preview_apps(self, apps=None):
             sys.exit(1)
 
         # Make directories
+        bot.newline()
         settings = self._init_app_preview(app)
 
         # Get the app configuration
@@ -82,9 +84,8 @@ def preview_apps(self, apps=None):
         self._preview_labels(app, settings, config)
         self._preview_commands(app, settings, config)
         self._preview_files(app, settings, config)
-        self._preview_recipe(app, settings, settings, config)
-
-
+        self._preview_recipe(app, settings, config)
+        bot.newline()
 
 def init_app_preview(self, app):
     '''initialize an app, meaning adding the metadata folder, bin, and 
@@ -93,13 +94,11 @@ def init_app_preview(self, app):
     from scif.main.environment import get_appenv
     settings = get_appenv(app, self._base)[app]
 
-    # Create base directories for metadata
-    for folder, path in settings.items():
-        if path.startswith(self._base):
-            section_name = folder.replace('app','')
-            bot.info(('[%s]' %section_name).ljust(10) + path)
+    for key in ['root', 'lib', 'bin', 'data']:
+        val = settings['app%s' %key]
+        bot.custom(prefix="[%s] %s" %(key, val), color='CYAN')
+    
     return settings
-
 
 def preview_runscript(self, app, settings, config):
     '''preview the runscript for an app
@@ -114,6 +113,8 @@ def preview_runscript(self, app, settings, config):
     if "apprun" in config:
         content = '\n'.join(config['apprun'])
         bot.info('+ ' + 'apprun '.ljust(5) + app)
+        print(settings['apprun'])
+        print(settings['apphelp'])
         print(content)
 
 
@@ -131,9 +132,10 @@ def preview_labels(self, app, settings, config):
     if "applabels" in config:
         labels = config['appfiles']
         bot.info('+ ' + 'applabels '.ljust(5) + app)
+        print(settings['applabels'])
         for line in labels:
             label, value = get_parts(line, default='')
-            lookup += '%s=%s\n' %(label,value))
+            lookup += '%s=%s\n' %(label,value)
         print(lookup)
     return lookup
 
@@ -193,15 +195,13 @@ def preview_recipe(self, app, settings, config):
     recipe_file = settings['apprecipe']
     recipe = '# [scif] scientific filesystem recipe\n' 
     recipe += '# [date] %s\n' %datetime.now().strftime('%b-%d-%Y')
-    print(recipe)
-
     bot.info('+ ' + 'apprecipe '.ljust(5) + app)
+    print(recipe_file)
+
     for section_name, section_content in config.items():
         content = "%s\n" %'\n'.join(section_content)
         header = '%' + section_name + ' %s' %app
         recipe += '%s\n%s\n' %(header, content)
-        bot.info(header)
-        print(content)
 
     return recipe
 
@@ -219,5 +219,6 @@ def preview_environment(self, app, settings, config):
     if "appenv" in config:
         content = '\n'.join(config['appenv'])
         bot.info('+ ' + 'appenv '.ljust(5) + app)
+        print(settings['appenv'])
         print(content)
     return content

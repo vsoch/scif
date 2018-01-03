@@ -61,6 +61,7 @@ def get_parser():
     preview = subparsers.add_parser("preview",
                                      help="preview changes to a filesytem")
 
+    # if the user provides more than one argument here, they are apps
     preview.add_argument("recipe", nargs=1, 
                          help="recipe file for the filesystem", 
                          type=str)
@@ -145,7 +146,7 @@ def main():
 
     # Show the version and exit
     if args.command == "version":
-        print(sregistry.__version__)
+        print(scif.__version__)
         sys.exit(0)
 
     # Does the user want a shell?
