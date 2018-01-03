@@ -59,5 +59,6 @@ class ScifRecipe:
         self._config = load(path)
 
         # Update environment with app information
+        from scif.main.environment import env
         updates = env(self._config, self._base)
         self.environment.update(updates)
