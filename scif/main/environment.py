@@ -123,8 +123,8 @@ def get_appenv(app, base):
     envars = {app:{}}
 
     # Roots for app data and app files
-    appdata = "%s/data/%s" %(base, name)
-    approot = "%s/apps/%s" %(base, name)
+    appdata = "%s/data/%s" %(base, app)
+    approot = "%s/apps/%s" %(base, app)
     appmeta = "%s/scif"  %(approot)
 
     envars[app]['appdata'] = appdata
@@ -169,7 +169,7 @@ def add_env(self, key, value):
         action = 'update'
 
     self.environment[key] = value
-    bot.info('%s [%s:%s]' %(action.ljust(10), key, value))
+    bot.info('[environment:%s][%s:%s]' %(action.ljust(5), key, value))
 
 
 def get_env(self, key=None):
