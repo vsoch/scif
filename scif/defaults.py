@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-from sregistry.logger import bot
+from scif.logger import bot
 import tempfile
 import os
 import pwd
@@ -73,9 +73,22 @@ def getenv_namespace(namespace="SCIF", func=None):
         def func(key, namespace):
             return key.startswith(namespace)
 
-    env os.environ.items()
+    env = os.environ.items()
     return [{key:value} for key,value in env if func(key,namespace)]
 
+
+################################################################################
+# Defaults
+
+
+# Supported Sections
+sections = ('appenv',
+            'applabels',
+            'appinstall',
+            'appsetup',
+            'appfiles',
+            'apprun',
+            'apptest')
 
 
 ################################################################################

@@ -19,13 +19,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-from scif.logger import bot
-from scif.recipes.parser import load
-from scif.recipes.environment import ( add_env, env, get_env, get_appenv )
-from scif.recipes.apps import ( app, apps, get_appenv )
-from scif.recipes.setup import ( init_base, set_base )
-from scif.recipes.helpers import run_command
-from scif.recipes.install import (
+from scif.main.base import ScifRecipe
+from scif.main.environment import ( add_env, env, get_env, get_appenv )
+from scif.main.apps import ( app, apps, get_appenv )
+from scif.main.setup import ( init_base, set_base )
+from scif.main.helpers import run_command
+from scif.main.install import (
     init_app,
     install,
     install_app,
@@ -38,46 +37,8 @@ from scif.recipes.install import (
 )
 
 
-bot.level = 3
+# We can eventually add logic here for customizing the client
 
-class ScifRecipe:
-    '''Create and work with a scif recipe. Usage typically looks like:
-
-       recipe = ScifRecipe('sregistry.scif')
-       
-       Parameters
-       ==========
-       path: the path to the scif recipe flie.
-
-    '''
-    
-    def __init__(self, path, base='/'):
-        '''initialize the scientific filesystem by creating a scif folder
-           at the base, and loading the recipe to fill it.
-        '''
-        self._set_base(base) # /scif
-        self.load(path)      # recipe, environment
-
-    def __str__(self):
-        return '[scif]'
-
-    def __repr__(self):
-        return '[scif]'
-
-    def load(self, path):
-        '''load a scif recipe into the object
-
-        Parameters
-        ==========
-        path: the complete path to the config (recipe file) to load
-
-        '''
-        self._config = load(path)
-
-        # Update environment with app information
-        updates = env(self._config, self._base)
-        self.environment.update(updates)
-    
 
 # Helpers
 ScifRecipe._run_command = run_command

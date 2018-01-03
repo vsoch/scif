@@ -19,13 +19,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
+from collections import OrderedDict
 from scif.logger import bot
 from scif.utils import read_file
-from scif.recipes.defaults import sections
+from scif.defaults import sections
 import os
 import re
 import sys
-from collections import OrderedDict
 
 
 def load(path):

@@ -165,7 +165,7 @@ def add_env(self, key, value):
 
     # If the variable already exists, status is "update"
     action = 'new'
-    if key in self.environment
+    if key in self.environment:
         action = 'update'
 
     self.environment[key] = value

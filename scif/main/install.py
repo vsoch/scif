@@ -22,7 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from scif.logger import bot
 from scif.utils import ( mkdir_p, run_command, write_file, write_json )
-from scif.recipes.helpers import get_parts
+from scif.main.helpers import get_parts
 import sys
 import os
 

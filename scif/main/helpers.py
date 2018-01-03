@@ -55,7 +55,7 @@ def run_command(self, cmd, spinner=True):
     if spinner is True:
         bot.spinner.start()
     
-    result = run_command(cmd)
+    result = run_cmd(cmd)
 
     if spinner is True:
         bot.spinner.stop()

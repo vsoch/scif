@@ -26,7 +26,7 @@ import shutil
 import requests
 
 import json
-from sregistry.logger import bot
+from scif.logger import bot
 import sys
 
 

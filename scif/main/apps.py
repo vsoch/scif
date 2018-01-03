@@ -59,5 +59,5 @@ def apps(self):
     '''
     apps = []
     if "apps" in self._config:
-        return apps = list(self._config['apps'])
+        apps = list(self._config['apps'])
     return apps
