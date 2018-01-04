@@ -28,7 +28,34 @@ import re
 import sys
 
 
-def load(path):
+def load_filesystem(base, quiet=False):
+    '''load a filesystem based on a root path, which is usually /scif
+
+    Parameters
+    ==========
+    base: base to load.
+
+    Returns
+    =======
+    config: a parsed recipe configuration for SCIF
+    '''
+    from scif.defaults import SCIF_APPS
+    apps = os.listdir(SCIF_APPS)
+    config = {'apps': {}}
+    for app in apps:
+        path = '%s/%s/scif/%s.scif' %(SCIF_APPS, app, app)
+        if os.path.exists(path):
+            recipe = load_recipe(path)
+            config['apps'][app] = recipe['apps'][app]
+
+    if len(config['apps']) > 0:
+        if quiet is False:
+            bot.info('Found configurations for %s scif apps' %len(config['apps']))
+            bot.info('\n'.join(list(config['apps'].keys())))
+        return config
+    
+
+def load_recipe(path):
     '''load will return a loaded in (user) scif configuration file
 
     Parameters
@@ -37,7 +64,7 @@ def load(path):
 
     Returns
     =======
-    config: a parsed deid (dictionary) with valid sections
+    config: a parsed recipe configuration for SCIF
     '''
 
     path = os.path.abspath(path)

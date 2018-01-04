@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 from scif.logger import bot
-from scif.main.parser import load
+from scif.main.parser import ( load_filesystem, load_recipe )
 import os
 import sys
 
@@ -37,7 +37,7 @@ class ScifRecipe:
 
     '''
     
-    def __init__(self, path=None, writable=True):
+    def __init__(self, path=None, app=None, writable=True):
         '''initialize the scientific filesystem by creating a scif folder
            at the base, and loading the recipe to fill it.
 
@@ -48,27 +48,20 @@ class ScifRecipe:
                  1. If path is not defined, we want (empty) interactive session
                  2. We derive the base from the environment SCIF_BASE
         '''
+
         # 0. base determined from environment
-        from scif.defaults import SCIF_BASE as base
+        from scif.defaults import SCIF_BASE
+        self.set_defaults()
+
+        # If recipe path not provided, try default base
+        if path is None:
+            path = SCIF_BASE
 
         # 1. Determine if path is a recipe or base
         if path is not None:
 
-            # 1. path is a recipe
-            if os.path.isfile(path):
-                self.set_base(base, 
-                              writable=writable) # /scif
-                self.load(path)                        # recipe, environment
-
-            # 1. path is a base
-            elif os.path.isdir(path):   
-                #TODO: write function to try loading base from here...
-                self.set_base(path,
-                              writable=writable) # /scif
-
-            else:
-                bot.warning('%s is not detected as a recipe or base.')
-                self.set_base(base, writable=writable) # /scif
+            self.set_base(SCIF_BASE, writable=writable) # /scif
+            self.load(path, app)                   # recipe, environment
 
         # 2. Neither, development client
         else:
@@ -83,17 +76,40 @@ class ScifRecipe:
     def __repr__(self):
         return '[scif]'
 
-    def load(self, path):
+
+    def speak(self):
+        '''the client should announce self given that the shell is being used.
+        '''
+        if self._base is not None:
+            apps = " | ".join(self.apps())
+            bot.custom(prefix="%s %s" %(self, self._base), 
+                                        message=apps, 
+                                        color="CYAN")
+        else:
+            bot.info(self)
+
+
+    def load(self, path, app=None):
         '''load a scif recipe into the object
 
         Parameters
         ==========
-        path: the complete path to the config (recipe file) to load
-
+        path: the complete path to the config (recipe file) to load, or 
+              root path of filesystem (that from calling function defaults to
+              /scif)
+        app:  if running with context of an active app, this will load the
+              active app environment for it as well.
         '''
-        self._config = load(path)
+        # 1. path is a recipe
+        if os.path.isfile(path):
+            self._config = load_recipe(path)
 
-        # Update environment with app information
-        from scif.main.environment import env
-        updates = env(self._config, self._base)
-        self.environment.update(updates)
+        # 2. path is a base
+        elif os.path.isdir(path):
+            self._config = load_filesystem(path)
+
+        else:
+            bot.warning('%s is not detected as a recipe or base.')
+            self._config = None
+
+        self.update_env(app)

@@ -24,15 +24,11 @@ import sys
 import pwd
 import os
 
+    
 
 def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
-    apps = args.recipe or None
-    if len(apps) == 0:
-        apps = None
-
-    client = ScifRecipe(recipe)
-
-    # Preview the entire recipe, or the apps chosen
-    client.install(apps)
+    app = args.app
+    client = ScifRecipe()
+    client.run(app)

@@ -27,7 +27,7 @@ import sys
 
 # External Environment Functions
 
-def env(config, base='/scif'):
+def init_env(self, config, base='/scif', active=None):
     '''env will parse the complete SCIF namespace environment from a config.
     this will be defined for all apps to allow for easy interaction between
     them, regardless of which individual app is active.
@@ -35,6 +35,7 @@ def env(config, base='/scif'):
     Parameters
     ==========
     config: the config loaded in with "load" in this file.
+    active: the name of the active app, if relevant.
 
     Example: the following environment variables would be defined for an app
              called "google-drive" Note that for the variable, the slash is
@@ -57,12 +58,41 @@ def env(config, base='/scif'):
     if "apps" in config:
         for name, app in config['apps'].items(): 
 
-            appenv = get_appenv(name, base)
+            # Here we are adding variables for all apps.
+            appenv = self.get_appenv_lookup(name, base)
             for varname, varval in appenv[name].items():
-                updates = mk_env(name, varname, varval)
+                updates = mk_env(key=varname, val=varval, app=name)
                 envars.update(updates)
 
+            # If this is the active app
+            if active is not None:
+                if active == name:
+                    for varname, varval in appenv[name].items():
+                        updates = mk_env(key=varname, val=varval)
+                        envars.update(updates)
+
     return envars
+
+
+def update_env(self, reset=False):
+    '''If the SCIF is loaded, upload the object's environment.
+
+    Parameters
+    ==========
+    reset: if True, empty the environment before parsing from config
+
+    '''
+
+    if reset is True:
+        self.environment = dict()
+
+    if self._config is not None:
+
+        # Update environment with app information
+        updates = self._init_env(self._config, self._base)
+        self.environment.update(updates)
+
+    return self.environment
 
 
 def mk_env(key, val, app=None):
@@ -77,16 +107,41 @@ def mk_env(key, val, app=None):
     '''
     key = "SCIF_%s" % key.upper()
     if app is not None:
-        key = "_%s" %app
+        key = "%s_%s" %(key,app)
     key = key.replace('-','_')
     return { key:val }
 
 
-def get_appenv(app, base):
-    '''get_appenv will create a dictionary with a highest level index the
+
+def get_appenv(self, app, isolated=False):
+    '''return environment for a specific app, meaning the variables active
+       when it is running. If isolated is True, don't include other apps.       
+    '''
+    if app in self.apps():
+        environ = self.get_appenv_lookup(app, isolated=isolated)
+        for var, val in environ[app].items():
+            updates = mk_env(key=var, val=var)
+            environ.update(updated)
+
+        if isolated is False and hasattr(self,'environment'):
+            environ.update(self.environment)
+        return environ
+
+    valid = ' '.join(self.apps())
+    bot.error('%s is not a valid app. Found %s' %(app, valid))
+
+
+def get_appenv_lookup(self, app, isolated=False):
+    '''create a dictionary with a highest level index the
        app name, and underneath a generic lookup (without the app name) for
-       different variable types.  Eg, app with name "google-drive" would look
-       like:
+       different variable types.  
+
+       Parameters
+       ==========
+       app: the new of the app to get the environment for
+       isolated: if True don't include other apps
+
+       Eg, app with name "google-drive" would look like:
 
 
        {'registry': {
@@ -120,27 +175,37 @@ def get_appenv(app, base):
         'SCIF_APPRUN_registry': '/scif/apps/registry/scif/runscript'}
 
     '''
-    envars = {app:{}}
 
-    # Roots for app data and app files
-    appdata = "%s/data/%s" %(base, app)
-    approot = "%s/apps/%s" %(base, app)
-    appmeta = "%s/scif"  %(approot)
+    if app in self.apps():
 
-    envars[app]['appdata'] = appdata
-    envars[app]['approot'] = approot
-    envars[app]['appmeta'] = appmeta
+        base = self._base
+        envars = {app:{}}
 
-    envars[app]['appbin'] = "%s/bin"  %(approot)
-    envars[app]['applib'] = "%s/lib"  %(approot)
-    envars[app]['apprun'] = "%s/runscript"  %(appmeta)
-    envars[app]['apphelp'] = "%s/runscript.help"  %(appmeta)
-    envars[app]['applabels'] = "%s/labels.json"  %(appmeta)
-    envars[app]['appenv'] = "%s/environment.sh"  %(appmeta)
-    envars[app]['apprecipe'] = "%s/%s.scif"  %(appmeta, app)
-    envars[app]['appname'] = app
+        # Roots for app data and app files
+        appdata = "%s/data/%s" %(base, app)
+        approot = "%s/apps/%s" %(base, app)
+        appmeta = "%s/scif"  %(approot)
 
-    return envars
+        envars[app]['appdata'] = appdata
+        envars[app]['approot'] = approot
+        envars[app]['appmeta'] = appmeta
+
+        envars[app]['appbin'] = "%s/bin"  %(approot)
+        envars[app]['applib'] = "%s/lib"  %(approot)
+        envars[app]['apprun'] = "%s/runscript"  %(appmeta)
+        envars[app]['apphelp'] = "%s/runscript.help"  %(appmeta)
+        envars[app]['applabels'] = "%s/labels.json"  %(appmeta)
+        envars[app]['appenv'] = "%s/environment.sh"  %(appmeta)
+        envars[app]['apprecipe'] = "%s/%s.scif"  %(appmeta, app)
+        envars[app]['appname'] = app
+
+        if isolated is False and hasattr(self,'environment'):
+            envars.update(self.environment)
+        return envars
+
+    # if we get down here, didn't have the app in the first place
+    valid = ' '.join(self.apps())
+    bot.error('%s is not a valid app. Found %s' %(app, valid))
 
 
 # ScifRecipe Environment Helpers
@@ -169,7 +234,7 @@ def add_env(self, key, value):
         action = 'update'
 
     self.environment[key] = value
-    bot.info('[environment:%s][%s=%s]' %(action, key, value))
+    bot.debug('[environment:%s][%s=%s]' %(action, key, value))
 
 
 def get_env(self, key=None):

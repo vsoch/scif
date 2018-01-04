@@ -27,18 +27,13 @@ import os
 def main(args,parser,subparser):
 
     from scif.defaults import SCIF_SHELL as shell
-    from scif.defaults import SCIF_ROOT
+    from scif.defaults import SCIF_BASE
 
     # Did the user give a recipe or a base?
 
-    recipe = None
-    if len(args.recipe) > 0:
-        recipe = args.recipe[0]
-
-    # Second priority goes to environment for root
-
-    else: 
-        recipe = SCIF_ROOT
+    recipe = args.recipe
+    if recipe is None:
+        recipe = SCIF_BASE
 
     # The client will either load the recipe or the base
 
@@ -71,14 +66,19 @@ def ipython(recipe):
     from scif.main import ScifRecipe
     from IPython import embed
     client = ScifRecipe(recipe)
+    client.speak()
     embed()
 
 def bpython(recipe):
+    from scif.main import ScifRecipe
     import bpython
     client = ScifRecipe(recipe)
+    client.speak()
     bpython.embed(locals_={'client': client})
 
-def python():
+def python(recipe):
+    from scif.main import ScifRecipe
     import code
     client = ScifRecipe(recipe)
+    client.speak()
     code.interact(local={"client":client})

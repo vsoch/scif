@@ -45,15 +45,11 @@ def get_parser():
                                     help="show software version")
  
 
-    #TODO: need to decide on functions/actions to do here...
-    # inspect?
-    # else?
-
     # Preview changes to the filesystem
     shell = subparsers.add_parser("shell",
                                   help="shell to interact with scientific filesystem")
 
-    shell.add_argument("recipe", nargs=1, 
+    shell.add_argument("recipe", nargs='?',
                        help="recipe file or scientific filesystem base", 
                        type=str)
 
@@ -70,29 +66,39 @@ def get_parser():
     install = subparsers.add_parser("install",
                                      help="install a recipe on the filesystem")
 
-    install.add_argument("recipe", nargs=1, 
+    install.add_argument("recipe", nargs="*", 
                          help="recipe file for the filesystem", 
                          type=str)
 
+    inspect = subparsers.add_parser("inspect",
+                                     help="inspect an attribute for a scif installation")
+
+    inspect.add_argument('attribute',
+                         default='a',
+                         const='a',
+                         nargs='?',
+                         choices=['r', 'e', 'a', 'd', 'l'],
+                         help='''attribute to inspect (runscript, environment, definition,
+                                 labels, or all''')
 
     run = subparsers.add_parser("run",
-                                 help="install a recipe on the filesystem")
+                                 help="entrypoint to run a scientific filesystem")
 
 
-    write = subparsers.add_parser("record",
-                                   help="interact with a container record.")
+    run.add_argument("app", nargs='?',
+                     help="app to target for the entry, defaults to shell if not set.", 
+                     type=str)
 
-    # Generate a recipe file for a container build
-    # STOPPED HERE - edit the deid config file to read in a recipe, write out
-    # a dockerfile or singularity recipe.
-    write.add_argument('--write', '-w',
+    write = subparsers.add_parser("write",
+                                   help="write a Dockerfile (default) or Singularity Recipe.")
+
+    write.add_argument('--write',
                        default='docker',
                        const='docker',
                        nargs='?',
                        choices=['docker', 'singularity'],
                        help='write a container build specification from the scif recipe (default: %(default)s)')
         
-
 
     return parser
 
@@ -142,7 +148,7 @@ def main():
 
     # if environment logging variable not set, make silent
     if args.debug is False:
-        os.environ['MESSAGELEVEL'] = "INFO"
+        os.environ['SCIF_MESSAGELEVEL'] = "INFO"
 
     # Show the version and exit
     if args.command == "version":
@@ -150,9 +156,11 @@ def main():
         sys.exit(0)
 
     # Does the user want a shell?
+    if args.command == "install": from .install import main
     if args.command == "preview": from .preview import main
     if args.command == "shell": from .shell import main
     if args.command == "inspect": from .inspect import main
+    if args.command == "run": from .run import main
 
     # Pass on to the correct parser
     return_code = 0

@@ -19,9 +19,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-from scif.main.apps import ( app, apps, get_appenv )
+from scif.main.apps import ( app, apps, activate, deactivate, reset )
 from scif.main.base import ScifRecipe
-from scif.main.environment import ( add_env, env, get_env, get_appenv )
+from scif.main.commands import run
+from scif.main.environment import ( 
+    add_env, 
+    get_env, 
+    get_appenv, 
+    get_appenv_lookup, 
+    init_env, 
+    update_env
+)
 from scif.main.helpers import run_command
 from scif.main.preview import ( 
     preview, 
@@ -35,7 +43,7 @@ from scif.main.preview import (
     preview_commands,
     preview_recipe
 )
-from scif.main.setup import ( install_base, set_base )
+from scif.main.setup import ( install_base, set_base, set_defaults )
 from scif.main.install import (
     init_app,
     install,
@@ -52,8 +60,15 @@ from scif.main.install import (
 # We can eventually add logic here for customizing the client
 
 
+# Commands
+ScifRecipe.run = run
+
 # Helpers
 ScifRecipe._run_command = run_command
+
+# Environment
+ScifRecipe.update_env = update_env
+ScifRecipe._init_env = init_env
 ScifRecipe.add_env = add_env
 ScifRecipe.get_env = get_env
 
@@ -72,11 +87,16 @@ ScifRecipe._preview_recipe = preview_recipe
 # Setup
 ScifRecipe._install_base = install_base
 ScifRecipe.set_base = set_base
+ScifRecipe.set_defaults = set_defaults
 
 # Apps
+ScifRecipe.get_appenv_lookup = get_appenv_lookup
 ScifRecipe.get_appenv = get_appenv
 ScifRecipe.app = app
 ScifRecipe.apps = apps
+ScifRecipe.activate = activate
+ScifRecipe.deactivate = deactivate
+ScifRecipe.reset = reset
 
 # Installation
 ScifRecipe.install = install

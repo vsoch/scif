@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from scif.logger import bot
 from scif.utils import mkdir_p
+from scif.main.helpers import parse_entrypoint
 import sys
 import os
 
@@ -54,6 +55,24 @@ def set_base(self, base='/', writable=True):
         if not os.access(base, os.W_OK):
             bot.error('%s is not writable.' %base)
             sys.exit(1)
+
+
+
+def set_defaults(self, entry_point=None):
+    '''set the defaults for the SCIF state at start up. 
+       Usually this means parsing them from the environment. We hold these
+       with the object so we can easily maintain and change state.
+    '''
+
+    # The entrypoint is the runscript (or /bin/bash default)
+    self._entry_point = parse_entrypoint(entry_point)   
+                                          
+    # Set the default entry folder, changed to app if in context of app
+    from scif.defaults import SCIF_ENTRYFOLDER
+    self._entry_folder = SCIF_ENTRYFOLDER       # Defaults to None
+
+    # The active app, coinciding with the entry_point
+    self._active = None
 
 
 def install_base(self):

@@ -28,7 +28,13 @@ import os
 def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
-    apps = args.recipe or None
+    apps = args.recipe
+    recipe = apps.pop(0)
+
+    if not os.path.exists(recipe):
+        bot.error("Cannot find recipe file %s" %recipe)
+        sys.exit(1)
+
     if len(apps) == 0:
         apps = None
 

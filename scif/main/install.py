@@ -45,7 +45,7 @@ def init_app(self, app):
     '''initialize an app, meaning adding the metadata folder, bin, and 
        lib to it. The app is created at the base
     '''
-    settings = get_appenv(app, self._base)[app]
+    settings = self.get_appenv_lookup(app)[app]
 
     # Create base directories for metadata
     for folder in ['appmeta', 'appbin', 'applib', 'appdata']:
@@ -57,7 +57,7 @@ def install_apps(self, apps=None):
     '''install one or more apps to the base. If app is defined, only
        install app specified. Otherwise, install all found in config.
     '''
-    if apps is None:
+    if apps in [None, '']:
         apps = self.apps()
 
     if not isinstance(apps, list):
@@ -114,6 +114,7 @@ def install_labels(self, app, settings, config):
     lookup = dict()
     if "applabels" in config:
         labels = config['appfiles']
+        bot.level
         bot.info('+ ' + 'applabels '.ljust(5) + app)
         for line in labels:
             label, value = get_parts(line, default='')
@@ -167,9 +168,9 @@ def install_commands(self, app, settings, config):
 
     '''
     if "appinstall" in config:
-        cmd = config['appinstall']
+        cmd = '\n'.join(config['appinstall'])
         bot.info('+ ' + 'appinstall '.ljust(5) + app)
-        return self._run_command(cmd)
+        os.system(cmd)
 
 
 def install_recipe(self, app, settings, config):
@@ -186,7 +187,7 @@ def install_recipe(self, app, settings, config):
     recipe = '' 
 
     for section_name, section_content in config.items():
-        content = '\n'.join(content)
+        content = '\n'.join(section_content)
         header = '%' + section_name
         recipe += '%s %s\n%s\n' %(header, app, content)
 
@@ -203,7 +204,10 @@ def install_environment(self, app, settings, config):
        settings: the output of _init_app(), a dictionary of environment vars
 
     '''
+    env_file = settings['appenv']
+
     if "appenv" in config:
-        cmd = config['install']
+        content = '\n'.join(config['appenv'])
         bot.info('+ ' + 'appenv '.ljust(5) + app)
-        return self._run_command(cmd)
+        write_file(env_file, content)
+    return content

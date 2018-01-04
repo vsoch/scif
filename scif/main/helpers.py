@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from scif.utils import run_command as run_cmd
 from scif.logger import bot
+import shlex
 import sys
 import os
 
@@ -66,3 +67,27 @@ def run_command(self, cmd, spinner=True):
         bot.error('Return code %s' %retval)
         sys.exit(retval)
     return result
+
+
+
+def parse_entrypoint(entry_point=None):
+    '''parse entrypoint will return a list, where the first argument is the
+       executable, followed by arguments
+ 
+       Parameters
+       ==========
+       entry_point: the entry point for the application, is 
+    '''
+
+    if entry_point is None:
+        from scif.defaults import SCIF_ENTRYPOINT as entry_point
+
+    # We expect an [executable, arg1, arg2]
+    if not isinstance(entry_point, list):
+        entry_point = [entry_point]
+
+    # The first item in the list has the executable (shouldn't be more than one line)
+    executable = entry_point[0]
+
+    # Split into executable, arguments
+    return shlex.split(executable)

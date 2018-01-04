@@ -148,6 +148,8 @@ SCI-F does not enforce or state how the container creator should use the data fo
 |--------------|--------------------------------------------------|
 | SCIF_DATA    | /scif/data | the root location for apps data     |
 | SCIF_APPS    | /scif/apps | the root location for installed apps|
+| SCIF_ENTRYPOINT    | /scif/apps | the command to run given no runscript or app defined |
+| SCIF_ENTRYFOLDER    | SCIF_BASE | the entry folder to run the entrypoint command |
 | SCIF_MESSAGELEVEL    | INFO | a client level of verbosity. Must be one of `CRITICAL`, `ABORT`, `ERROR`, `WARNING`, `LOG`, `INFO`, `QUIET`, `VERBOSE`, `DEBUG`|
 
 **Table 1** During interaction and runtime of SCIF, the following environment variables must be defined.

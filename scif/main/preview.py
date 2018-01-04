@@ -91,8 +91,7 @@ def init_app_preview(self, app):
     '''initialize an app, meaning adding the metadata folder, bin, and 
        lib to it. The app is created at the base
     '''
-    from scif.main.environment import get_appenv
-    settings = get_appenv(app, self._base)[app]
+    settings = self.get_appenv_lookup(app)[app]
 
     for key in ['root', 'lib', 'bin', 'data']:
         val = settings['app%s' %key]
