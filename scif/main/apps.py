@@ -41,8 +41,9 @@ def apps(self):
     '''get a list of apps to show the user
     '''
     apps = []
-    if "apps" in self._config:
-        apps = list(self._config['apps'])
+    if self._config is not None:
+        if "apps" in self._config:
+            apps = list(self._config['apps'])
     return apps
 
 

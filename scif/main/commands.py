@@ -43,6 +43,9 @@ def run(self, app=None):
                           # updates environment
                           # sets entrypoint
                           # sets entryfolder
+    name = ''
+    if app is not None:
+        name = '[%s] :' %app
 
     # If the entry folder still not set, we don't have an app
     if self._entry_folder is None:
@@ -55,4 +58,5 @@ def run(self, app=None):
     executable = self._entry_point[0]
     args = self._entry_point
 
-    os.execve(executable, args ,self.environment)
+    bot.info('%sexecuting %s' %(name,executable))
+    os.execve(executable, args , self.environment)

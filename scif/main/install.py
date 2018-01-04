@@ -63,6 +63,9 @@ def install_apps(self, apps=None):
     if not isinstance(apps, list):
         apps = [apps]
 
+    if len(apps) == 0:
+        bot.warning('No apps to install. Load a recipe or base with .load()')
+
     for app in apps:
 
         # We must have the app defined in the config

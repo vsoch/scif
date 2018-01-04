@@ -109,7 +109,7 @@ class ScifRecipe:
             self._config = load_filesystem(path)
 
         else:
-            bot.warning('%s is not detected as a recipe or base.')
+            bot.warning('%s is not detected as a recipe or base.' %path)
             self._config = None
 
         self.update_env(app)
