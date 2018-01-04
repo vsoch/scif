@@ -62,7 +62,7 @@ def get_parser():
                                      help="preview changes to a filesytem")
 
     # if the user provides more than one argument here, they are apps
-    preview.add_argument("recipe", nargs=1, 
+    preview.add_argument("recipe", nargs="*", 
                          help="recipe file for the filesystem", 
                          type=str)
 

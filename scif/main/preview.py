@@ -100,6 +100,7 @@ def init_app_preview(self, app):
     
     return settings
 
+
 def preview_runscript(self, app, settings, config):
     '''preview the runscript for an app
        

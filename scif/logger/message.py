@@ -301,11 +301,11 @@ def get_logging_level():
     (5) is assumed (all messages).
     '''
     try:
-        level = int(os.environ.get("MESSAGELEVEL", INFO))
+        level = int(os.environ.get("SCIF_MESSAGELEVEL", INFO))
 
     except ValueError:
 
-        level = os.environ.get("MESSAGELEVEL", INFO)
+        level = os.environ.get("SCIF_MESSAGELEVEL", INFO)
         if level == "CRITICAL":
             return CRITICAL
         elif level == "ABORT":
@@ -331,7 +331,7 @@ def get_logging_level():
 
 
 def get_user_color_preference():
-    COLORIZE = os.environ.get('SINGULARITY_COLORIZE', None)
+    COLORIZE = os.environ.get('SCIF_COLORIZE', None)
     if COLORIZE is not None:
         COLORIZE = convert2boolean(COLORIZE)
     return COLORIZE
