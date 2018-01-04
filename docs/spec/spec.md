@@ -141,9 +141,8 @@ The base of `/scif/data` is structured akin to apps - each installed application
 
 SCI-F does not enforce or state how the container creator should use the data folders, but rather encourages the creator to use the organization so that a user can intutiively know that any input for app `foo` might go into `/scif/data/foo/input`, general data for `foo` might be in `/scif/data/foo`, and global data for the entire container might be in `/scif/data`. For example, <a href="http://containers-ftw.org/apps/examples/carrierseq" target="_blank">this scientific workflow</a> mounts a host folder at `/scif/data`, and then each application creates it's needed data folders at runtime simply by referencing an environment variable specific to the app. 
 
-### Environment Namespace
-During interaction and runtime of SCIF, the following environment variables must be defined:
 
+### Environment Namespace
 
 | Variable     | Default    | Definition                          |
 |--------------|--------------------------------------------------|
@@ -151,9 +150,9 @@ During interaction and runtime of SCIF, the following environment variables must
 | SCIF_APPS    | /scif/apps | the root location for installed apps|
 | SCIF_MESSAGELEVEL    | INFO | a client level of verbosity. Must be one of `CRITICAL`, `ABORT`, `ERROR`, `WARNING`, `LOG`, `INFO`, `QUIET`, `VERBOSE`, `DEBUG`|
 
+**Table 1** During interaction and runtime of SCIF, the following environment variables must be defined.
 
 #### Active App Environment Namespace
-During interaction with a specific app (e.g., `example`) in the table below, the following environment variables must be defined in additional to the global SCIF variables above:
 
 | Variable     | Default    | Definition                          |
 |--------------|--------------------------------------------------|
@@ -168,12 +167,11 @@ During interaction with a specific app (e.g., `example`) in the table below, the
 | SCIF_APPLABELS | /scif/apps/example/scif/labels.json | a key:value json lookup dictionary of labels |
 | SCIF_APPENV | /scif/apps/example/scif/environment.sh | a shell script to source for the software app environment |
 
+**Table 2**: During interaction with a specific app (e.g., `example`) in the table above, these environment variables must be defined in additional to the global SCIF variables above.
 
 With the convention above, any tool that interacts with SCIF could, for example, know that data is expected to be written to `SCIF_APPDATA`, or that a label (e.g., a parameter) can be read from the `SCIF_APPLABELS`, or that an application has its binaries at `SCIF_APPBIN`. The integration doesn't need to know that `example` is running.
 
 #### Sleeping App Environment Namespace
-During interaction with a specific app, the other apps (not active) must also reveal themselves through an equivalent set of environment variables specific to them. In the table below we describe environment variables defined for such an app (e.g., `sleeper`). The variables are equivalent except for the appending of the app name at the end:
-
 
 | Variable     | Default    | Definition                          |
 |--------------|--------------------------------------------------|
@@ -188,6 +186,7 @@ During interaction with a specific app, the other apps (not active) must also re
 | SCIF_APPLABELS_sleeper | /scif/apps/sleeper/scif/labels.json | a key:value json lookup dictionary of labels |
 | SCIF_APPENV_sleeper | /scif/apps/sleeper/scif/environment.sh | a shell script to source for the software app environment |
 
+**Table 3** :During interaction with a specific app, the other apps (not active) must also reveal themselves through an equivalent set of environment variables specific to them. In the table below we describe environment variables defined for such an app (e.g., `sleeper`). The variables are equivalent except for the appending of the app name at the end:
 
 This strategy ensures that any application built to have applications interact (e.g., a container installed with several steps that internally work together) can easily reference another application within the same container without knowing the exact path. Further, it ensures that entire spaces of environment variables (e.g., all application help text files) can be revealed by way of discovering environment variables that match a particular pattern.
 
