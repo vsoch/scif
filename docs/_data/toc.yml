@@ -1,0 +1,19 @@
+  - title: Abstract
+    url: "/scif/"
+    slug: abstract
+
+  - title: Goals
+    url: "/scif/goals"
+    slug: goals
+
+  - title: Specification
+    url: "/scif/spec"
+    slug: spec
+
+  - title: Tutorials
+    url: "/scif/tutorials"
+    slug: tutorials
+
+  - title: Community
+    url: "/scif/community"
+    slug: community

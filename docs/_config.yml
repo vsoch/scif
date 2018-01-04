@@ -1,0 +1,27 @@
+# Setup
+title:        The Scientific Filesystem
+tagline:      ""
+baseurl:      "/scif"
+paginate:     1
+github:       "https://www.github.com/vsoch/scif"
+url:          "https://vsoch.github.io/scif"
+
+# About/contact
+author:
+  name:       Vanessa Sochat
+  url:        https://vsoch.github.io
+
+# SCI-F Version
+version: 0.0.2
+
+# Defaults
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+
+#Others
+markdown: kramdown
