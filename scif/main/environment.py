@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 from scif.logger import bot
+import subprocess
 import os
 import re
 import sys
@@ -59,7 +60,7 @@ def init_env(self, config, base='/scif', active=None):
         for name, app in config['apps'].items(): 
 
             # Here we are adding variables for all apps.
-            appenv = self.get_appenv_lookup(name, base)
+            appenv = self.get_appenv_lookup(name)
             for varname, varval in appenv[name].items():
                 updates = mk_env(key=varname, val=varval, app=name)
                 envars.update(updates)
@@ -112,12 +113,44 @@ def mk_env(key, val, app=None):
     return { key:val }
 
 
-def export_env(self):
-    '''export the current environment
+def load_env(self, app):
+    '''load an environment file for an app. We don't allow for manual entry
+       of any file, but limit to predetermined environment.sh file, if exists.
     '''
-    if hasattr(self,'environemnt'):
-        for key,val in self.environment.items():
-            os[key] = val
+    updates = dict()
+
+    if app in self.apps():
+        config = self.app(app)
+
+        if 'appenv' in config:
+
+            envfile = config['appenv']
+
+            if len(envfile) > 0:
+                envfile = envfile[0]
+                if os.path.exists(envfile):    
+                    #cmd = ['/bin/bash', '-c', 'source %s && env' %envfile]
+                    #proc = subprocess.Popen(cmd, stdout = subprocess.PIPE)
+                    #for line in proc.stdout:
+                    #    (key, _, val) = line.partition("=")
+                    #    updates[key] = val    
+                    #proc.communicate()
+                    print('TODO: need to parse environment.sh')
+
+
+def export_env(self):
+    '''export the current environment, and add the PS1 variable to indicate
+       the active shell display. This will start with values from the currently
+       active environment, and then add those from scif.
+    '''  
+    runtime_environ = os.environ.copy()
+    runtime_environ['PS1'] = "scif> "
+
+    if hasattr(self,'envirnment'):
+        runtime_environ.update(self.environment)
+        for key,val in runtime_environ.items():
+            os.environ[key] = val
+    return runtime_environ
 
 
 def get_appenv(self, app, isolated=True, update=False):

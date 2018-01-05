@@ -29,13 +29,18 @@ def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
     apps = args.recipe
-    recipe = apps.pop(0)
 
-    if not os.path.exists(recipe):
-        bot.error("Cannot find recipe file %s" %recipe)
-        sys.exit(1)
+    if len(apps) > 0:
+        recipe = apps.pop(0)
 
-    client = ScifRecipe(recipe, writable=False)
+        if not os.path.exists(recipe):
+            bot.error("Cannot find recipe file %s" %recipe)
+            sys.exit(1)
 
-    # Preview the entire recipe, or the apps chosen
-    client.preview(apps)
+        client = ScifRecipe(recipe, writable=False)
+
+        # Preview the entire recipe, or the apps chosen
+        client.preview(apps)
+
+    else:
+        bot.info('You must provide a recipe file to preview!')

@@ -29,11 +29,38 @@ def main(args,parser,subparser):
     from scif.defaults import SCIF_SHELL as shell
     from scif.defaults import SCIF_BASE
 
-    # Did the user give a recipe or a base?
-
     recipe = args.recipe
-    if recipe is None:
-        recipe = SCIF_BASE
+    quiet = args.quiet
+
+    # First case: recipe and app
+    if len(recipe) > 1:
+
+        app = recipe[1]
+        recipe = recipe[0]    
+        quiet = True
+
+    # Second case, no input or recipe|app
+    else:
+
+        app = None
+
+        # If no recipe provided, assume loading base
+
+        if len(recipe) == 0:
+            recipe = SCIF_BASE
+
+        # Otherwise, we need to figure out if recipe or base
+        else:
+            recipe = recipe[0]
+
+            # If recipe doesn't exist as a file, assume it's an app
+            if not os.path.exists(recipe):
+                app = recipe
+                recipe = SCIF_BASE        
+
+            # If the recipe provided is a file, no app detection
+            else:
+               quiet = True
 
     # The client will either load the recipe or the base
 
@@ -48,37 +75,47 @@ def main(args,parser,subparser):
         shell = shell.lower()
         if shell in lookup:
             try:    
-                return lookup[shell](recipe)
+                return lookup[shell](recipe=recipe, 
+                                     app=app, 
+                                     quiet=quiet)
             except ImportError:
                 pass
 
     # Otherwise present order of liklihood to have on system
     for shell in shells:
         try:
-            return lookup[shell](recipe)
+            return lookup[shell](recipe=recipe, 
+                                 app=app, 
+                                 quiet=quiet)
         except ImportError:
             pass
     
 
-def ipython(recipe):
+def ipython(recipe, app=None, quiet=False):
     '''embed the client with loaded recipe into an ipython session
     '''
     from scif.main import ScifRecipe
     from IPython import embed
-    client = ScifRecipe(recipe)
+    client = ScifRecipe(recipe, quiet=quiet)
     client.speak()
+    if app is not None:
+        client.activate(app)
     embed()
 
-def bpython(recipe):
+def bpython(recipe, app=None, quiet=False):
     from scif.main import ScifRecipe
     import bpython
-    client = ScifRecipe(recipe)
+    client = ScifRecipe(recipe, quiet=quiet)
     client.speak()
+    if app is not None:
+        client.activate(app)
     bpython.embed(locals_={'client': client})
 
-def python(recipe):
+def python(recipe, app=None, quiet=False):
     from scif.main import ScifRecipe
     import code
-    client = ScifRecipe(recipe)
+    client = ScifRecipe(recipe, quiet=quiet)
     client.speak()
+    if app is not None:
+        client.activate(app)
     code.interact(local={"client":client})

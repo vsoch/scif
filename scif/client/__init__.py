@@ -30,8 +30,15 @@ import os
 def get_parser():
     parser = argparse.ArgumentParser(description="scientific filesystem tools")
 
+
+    # Global
+    
     parser.add_argument('--debug', dest="debug", 
                         help="use verbose logging to debug.", 
+                        default=False, action='store_true')
+
+    parser.add_argument('--quiet', dest="quiet", 
+                        help="suppress print output", 
                         default=False, action='store_true')
 
     description = 'actions for Scientific Filesystem'
@@ -40,20 +47,19 @@ def get_parser():
                                        description=description,
                                        dest="command")
 
-    # print version and exit
     version = subparsers.add_parser("version",
                                     help="show software version")
  
 
-    # Preview changes to the filesystem
+    # Shell
+
     shell = subparsers.add_parser("shell",
                                   help="shell to interact with scientific filesystem")
 
-    shell.add_argument("recipe", nargs='?',
+    shell.add_argument("recipe", nargs='*',
                        help="recipe file or scientific filesystem base", 
                        type=str)
 
-    # Preview changes to the filesystem
     preview = subparsers.add_parser("preview",
                                      help="preview changes to a filesytem")
 
@@ -62,13 +68,18 @@ def get_parser():
                          help="recipe file for the filesystem", 
                          type=str)
 
-    # Install a recipe to the filesystem
+
+    # Install
+
     install = subparsers.add_parser("install",
                                      help="install a recipe on the filesystem")
 
     install.add_argument("recipe", nargs="*", 
                          help="recipe file for the filesystem", 
                          type=str)
+
+
+    # Inspect
 
     inspect = subparsers.add_parser("inspect",
                                      help="inspect an attribute for a scif installation")
@@ -81,6 +92,9 @@ def get_parser():
                          help='''attribute to inspect (runscript, environment, definition,
                                  labels, or all''')
 
+
+    # Run
+
     run = subparsers.add_parser("run",
                                  help="entrypoint to run a scientific filesystem")
 
@@ -88,6 +102,26 @@ def get_parser():
     run.add_argument("app", nargs='?',
                      help="app to target for the entry, defaults to shell if not set.", 
                      type=str)
+
+
+
+    # List
+
+    ls = subparsers.add_parser("list",
+                                help="list apps installed")
+
+
+
+
+    # Execute
+
+    execute = subparsers.add_parser("exec",
+                                     help="execute a command to a scientific filesystem")
+
+
+    execute.add_argument("cmd", nargs='*',
+                         help="app and command to execute. Eg, exec appname echo $SCIF_APPNAME", 
+                         type=str)
 
     write = subparsers.add_parser("write",
                                    help="write a Dockerfile (default) or Singularity Recipe.")
@@ -155,8 +189,10 @@ def main():
         print(scif.__version__)
         sys.exit(0)
 
-    # Does the user want a shell?
+    # Does the user want a shell?   
+    if args.command == "exec": from .exec import main
     if args.command == "install": from .install import main
+    if args.command == "list": from .list import main
     if args.command == "preview": from .preview import main
     if args.command == "shell": from .shell import main
     if args.command == "inspect": from .inspect import main

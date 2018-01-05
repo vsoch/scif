@@ -21,7 +21,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from scif.logger import bot
 import sys
-import pwd
 import os
 
     
@@ -29,6 +28,14 @@ import os
 def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
-    app = args.app
-    client = ScifRecipe(quiet=True)
-    client.run(app)
+    client = ScifRecipe(writable=False, quiet=True)
+    
+    result = []
+    for app in client.apps():
+        config = client.get_appenv(app)
+        result.append([app.rjust(10), config['SCIF_APPROOT']]) 
+
+    if len(result) > 0:
+        header = "[app]              [root]"
+        bot.custom(prefix="SCIF", message=header, color="CYAN")
+        bot.table(result)

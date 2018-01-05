@@ -13,6 +13,10 @@
   - title: Tutorials
     url: "/scif/tutorials"
     slug: tutorials
+    sections:
+      - title: Preview and Install
+        url: "/scif/tutorial-preview-install"
+        slug: tutorial-preview-install
 
   - title: Community
     url: "/scif/community"

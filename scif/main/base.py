@@ -37,7 +37,7 @@ class ScifRecipe:
 
     '''
     
-    def __init__(self, path=None, app=None, writable=True):
+    def __init__(self, path=None, app=None, writable=True, quiet=False):
         '''initialize the scientific filesystem by creating a scif folder
            at the base, and loading the recipe to fill it.
 
@@ -61,7 +61,7 @@ class ScifRecipe:
         if path is not None:
 
             self.set_base(SCIF_BASE, writable=writable) # /scif
-            self.load(path, app)                   # recipe, environment
+            self.load(path, app, quiet)                 # recipe, environment
 
         # 2. Neither, development client
         else:
@@ -89,7 +89,7 @@ class ScifRecipe:
             bot.info(self)
 
 
-    def load(self, path, app=None):
+    def load(self, path, app=None, quiet=False):
         '''load a scif recipe into the object
 
         Parameters
@@ -106,7 +106,7 @@ class ScifRecipe:
 
         # 2. path is a base
         elif os.path.isdir(path):
-            self._config = load_filesystem(path)
+            self._config = load_filesystem(path, quiet=quiet)
 
         else:
             bot.warning('%s is not detected as a recipe or base.' %path)
