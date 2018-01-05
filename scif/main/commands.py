@@ -38,14 +38,14 @@ def run(self, app=None):
     app: the name of the scif app to run
 
     '''
-    self.activate(app)  # checks for existence
+    self.activate(app)    # checks for existence
                           # sets _active to app's name
                           # updates environment
                           # sets entrypoint
                           # sets entryfolder
     name = ''
     if app is not None:
-        name = '[%s] :' %app
+        name = '[%s] ' %app
 
     # If the entry folder still not set, we don't have an app
     if self._entry_folder is None:
@@ -54,9 +54,15 @@ def run(self, app=None):
     # Change directory to the relevant place
     os.chdir(self._entry_folder)
 
+    # Get export environment (do I need to do this?)
+    # self.export_env()   
+    runtime_environ = os.environ.copy()
+    runtime_environ.update(self.environment)
+
     # Execv to the entrypoint
     executable = self._entry_point[0]
     args = self._entry_point
 
+    # STOPPED HERE - need more testing with execv
     bot.info('%sexecuting %s' %(name,executable))
-    os.execve(executable, args , self.environment)
+    os.execve(executable, args , runtime_environ)

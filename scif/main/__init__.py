@@ -24,6 +24,7 @@ from scif.main.base import ScifRecipe
 from scif.main.commands import run
 from scif.main.environment import ( 
     add_env, 
+    export_env,
     get_env, 
     get_appenv, 
     get_appenv_lookup, 
@@ -71,6 +72,7 @@ ScifRecipe.update_env = update_env
 ScifRecipe._init_env = init_env
 ScifRecipe.add_env = add_env
 ScifRecipe.get_env = get_env
+ScifRecipe.export_env = export_env
 
 # Preview
 ScifRecipe.preview = preview

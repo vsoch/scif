@@ -112,26 +112,63 @@ def mk_env(key, val, app=None):
     return { key:val }
 
 
-
-def get_appenv(self, app, isolated=False):
-    '''return environment for a specific app, meaning the variables active
-       when it is running. If isolated is True, don't include other apps.       
+def export_env(self):
+    '''export the current environment
     '''
-    if app in self.apps():
-        environ = self.get_appenv_lookup(app, isolated=isolated)
-        for var, val in environ[app].items():
-            updates = mk_env(key=var, val=var)
-            environ.update(updated)
+    if hasattr(self,'environemnt'):
+        for key,val in self.environment.items():
+            os[key] = val
 
+
+def get_appenv(self, app, isolated=True, update=False):
+    '''return environment for a specific app, meaning the variables active
+       when it is running. 
+
+       Parameters
+       ==========
+       isolated: if True, only return the active app variables (example  below)
+       update: also update the global self.environment.
+
+       If isolated is True, don't include other apps. For
+       example, for an app `hello-world-echo` and isolated True, the following
+       is returned:
+
+       {
+           'SCIF_APPBIN': '/scif/apps/hello-world-echo/bin',
+           'SCIF_APPDATA': '/scif/data/hello-world-echo',
+           'SCIF_APPENV': '/scif/apps/hello-world-echo/scif/environment.sh',
+           'SCIF_APPHELP': '/scif/apps/hello-world-echo/scif/runscript.help',
+           'SCIF_APPLABELS': '/scif/apps/hello-world-echo/scif/labels.json',
+           'SCIF_APPLIB': '/scif/apps/hello-world-echo/lib',
+           'SCIF_APPMETA': '/scif/apps/hello-world-echo/scif',
+           'SCIF_APPNAME': 'hello-world-echo',
+           'SCIF_APPRECIPE': '/scif/apps/hello-world-echo/scif/hello-world-echo.scif',
+           'SCIF_APPROOT': '/scif/apps/hello-world-echo',
+           'SCIF_APPRUN': '/scif/apps/hello-world-echo/scif/runscript'
+       }
+    '''
+    final = dict()
+    if app in self.apps():
+        environ = self.get_appenv_lookup(app)
+        for var, val in environ[app].items():
+            updates = mk_env(key=var, val=val)
+            final.update(updates)
+
+        # The user wants to include the current SCIF environment
         if isolated is False and hasattr(self,'environment'):
-            environ.update(self.environment)
-        return environ
+            final.update(self.environment)
+
+        # The user also wants to update the SCIF environment
+        if update is True:
+            self.environment = final
+        
+        return final
 
     valid = ' '.join(self.apps())
     bot.error('%s is not a valid app. Found %s' %(app, valid))
 
 
-def get_appenv_lookup(self, app, isolated=False):
+def get_appenv_lookup(self, app):
     '''create a dictionary with a highest level index the
        app name, and underneath a generic lookup (without the app name) for
        different variable types.  
@@ -198,9 +235,6 @@ def get_appenv_lookup(self, app, isolated=False):
         envars[app]['appenv'] = "%s/environment.sh"  %(appmeta)
         envars[app]['apprecipe'] = "%s/%s.scif"  %(appmeta, app)
         envars[app]['appname'] = app
-
-        if isolated is False and hasattr(self,'environment'):
-            envars.update(self.environment)
         return envars
 
     # if we get down here, didn't have the app in the first place

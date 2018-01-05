@@ -71,9 +71,9 @@ def activate(self, app):
             self._entry_point = parse_entrypoint(config['apprun'])
  
         # Update the environment for active app (updates ScifRecipe object)
-        appenv = self.get_appenv(app)
+        appenv = self.get_appenv(app, isolated=False, update=True)
 
-        # Only set entryfolder if user didn't set to something else
+       # Only set entryfolder if user didn't set to something else
         if not SCIF_ENTRYFOLDER:
             self._entry_folder = appenv['SCIF_APPROOT']
 
