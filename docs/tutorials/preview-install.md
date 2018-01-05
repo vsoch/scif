@@ -8,10 +8,10 @@ toc: false
 
 Here we will start with a scientific filesystem recipe, preview what it produces, and then install a scientific filesystem. This is likely the most common use case, and we will do the following:
 
- 0. Writing a SCIF recipe
- 1. Preview recipe install on the host
- 2. Install SCIF in container (Docker or Singularity) using Recipe
- 3. Reverse engineer recipe from SCIF
+ 0. **Create** a SCIF recipe
+ 1. **Preview** recipe install on the host
+ 2. **Install** SCIF in container (Docker or Singularity) using Recipe
+ 3. **Export** or reverse engineer recipe from SCIF
 
 In the above, you will see that we will go full circle! Using SCIF, we are able to start with a text description of a set of applications (the recipe), produce a SCIF, and then reverse engineer the recipe from the SCIF.
 
@@ -159,8 +159,10 @@ ERROR Cannot find app hello-world in config.
 We can also do this interactively! scif comes with a shell command that will either let you interact with a recipe, **or** a filesystem. The general command works as follows:
 
 
+#### SCIF shell Options
+
 |  example            | use case                                | 
------------------------------------------------------------------  
+|---------------------|-------------------------------------------|
 | scif shell <recipe> | interact with a recipe, no changes to the filesystem (akin to preview) |
 | scif shell          | interact with a SCIF (no SCIF app active) |
 | scif shell <app>    | interact with a SCIF with an app active.  |
