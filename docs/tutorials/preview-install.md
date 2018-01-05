@@ -163,10 +163,10 @@ We can also do this interactively! scif comes with a shell command that will eit
 
 |  example            | use case                                | 
 |---------------------|-------------------------------------------|
-| scif shell <recipe> | interact with a recipe, no changes to the filesystem (akin to preview) |
+| scif shell [recipe] | interact with a recipe, no changes to the filesystem (akin to preview) |
 | scif shell          | interact with a SCIF (no SCIF app active) |
-| scif shell <app>    | interact with a SCIF with an app active.  |
-| scif shell <recipe> <app>    | interact with a recipe, still no changes, but load context of an app|
+| scif shell [app]    | interact with a SCIF with an app active.  |
+| scif shell [recipe] [app]    | interact with a recipe, still no changes, but load context of an app|
 
 
 For our current need, we want to interactively explore a recipe, so we will start with the first row in the table above to explore a recipe file.
