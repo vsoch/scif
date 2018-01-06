@@ -85,7 +85,8 @@ def write_json(json_obj, filename, mode="w", print_pretty=True):
                     indent=4,
                     separators=(
                         ',',
-                        ': ')))
+                        ': '))
+                )
         else:
             filey.writelines(json.dumps(json_obj))
     return filename

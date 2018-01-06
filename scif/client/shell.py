@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
+from scif.client.utils import parse_input_preferences
 from scif.logger import bot
 import sys
 import os
@@ -27,40 +28,11 @@ import os
 def main(args,parser,subparser):
 
     from scif.defaults import SCIF_SHELL as shell
-    from scif.defaults import SCIF_BASE
 
-    recipe = args.recipe
-    quiet = args.quiet
-
-    # First case: recipe and app
-    if len(recipe) > 1:
-
-        app = recipe[1]
-        recipe = recipe[0]    
-        quiet = True
-
-    # Second case, no input or recipe|app
-    else:
-
-        app = None
-
-        # If no recipe provided, assume loading base
-
-        if len(recipe) == 0:
-            recipe = SCIF_BASE
-
-        # Otherwise, we need to figure out if recipe or base
-        else:
-            recipe = recipe[0]
-
-            # If recipe doesn't exist as a file, assume it's an app
-            if not os.path.exists(recipe):
-                app = recipe
-                recipe = SCIF_BASE        
-
-            # If the recipe provided is a file, no app detection
-            else:
-               quiet = True
+    parsed = parse_input_preferences(args.recipe, args.quiet)
+    recipe = parsed['recipe']
+    quiet = parsed['quiet']
+    app = parsed['app']
 
     # The client will either load the recipe or the base
 

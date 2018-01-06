@@ -84,13 +84,11 @@ def get_parser():
     inspect = subparsers.add_parser("inspect",
                                      help="inspect an attribute for a scif installation")
 
-    inspect.add_argument('attribute',
-                         default='a',
-                         const='a',
-                         nargs='?',
-                         choices=['r', 'e', 'a', 'd', 'l'],
-                         help='''attribute to inspect (runscript, environment, definition,
-                                 labels, or all''')
+    inspect.add_argument('attributes',
+                         nargs='*',
+                         help='''attribute to inspect (runscript|r),
+                                                      (environment|e),
+                                                      (labels|l), or (all|a) (default)''')
 
 
     # Run

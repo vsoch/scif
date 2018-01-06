@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-from scif.main.apps import ( app, apps, activate, deactivate, reset )
+from scif.main.apps import ( app, apps, activate, deactivate, inspect, reset )
 from scif.main.base import ScifRecipe
 from scif.main.commands import ( run, exec, execute )
 from scif.main.environment import ( 
@@ -102,6 +102,7 @@ ScifRecipe.app = app
 ScifRecipe.apps = apps
 ScifRecipe.activate = activate
 ScifRecipe.deactivate = deactivate
+ScifRecipe.inspect = inspect
 ScifRecipe.reset = reset
 
 # Installation

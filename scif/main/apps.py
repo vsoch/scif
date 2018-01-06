@@ -122,3 +122,33 @@ def reset(self):
     # set entry folder back to use preference, if original is not None
     if not SCIF_ENTRYFOLDER:
         self._entry_folder = SCIF_ENTRYFOLDER        
+
+
+def inspect(self, app, attributes):
+    '''inspect an app based on a list of attributes to inspect.
+
+    Parameters
+    ==========
+    app: the name of the app to inspect
+    attributes: a list of attributes to return
+    '''
+    result = {}
+    if app not in self.apps():
+        return result
+
+    lookup = self.app(app)
+
+    if 'a' in attributes or 'all' in attributes:
+        return lookup
+
+    if 'f' in attributes or 'files' in attributes and 'appfiles' in lookup:
+        result['appfiles'] = lookup['appfiles']
+    if 'r' in attributes or 'runscript' in attributes and 'apprun' in lookup:
+        result['apprun'] = lookup['apprun']
+    if 'l' in attributes or 'labels' in attributes and 'applabels' in lookup:
+        result['applabels'] = lookup['applabels']
+    if 'e' in attributes or 'environment' in attributes and 'appenv' in lookup:
+        result['appenv'] = lookup['appenv']
+    if 'i' in attributes or 'install' in attributes and 'appinstall' in lookup:
+        result['appinstall'] = lookup['appinstall']
+    return result

@@ -78,6 +78,8 @@ Notice that I'm using three sections,
  - `apprun` for the entrypoint to the app. This could be executing of a script, or a general command. 
  - `appenv`  for any environment variables speific to the app.
 
+and you might not even need that many! An app can just be an environment, for example, or a single command to run. If you are interested in the different sections allowed for the specification, or the many flexible ways to generate an app, read our [recipes guide](/scif/recipes) to learn more.
+
 
 ## Preview the recipe
 I next would want to preview the recipe. What changes would be made on a host, and where? I feel comfortable doing this on my host because it isn't actually going to make any changes. After I have installed `scif` (`pip install scif`) I can do this from the command line:
@@ -477,8 +479,73 @@ sudo singularity build hello-world-scif.simg Singularity.scif
 
 
 ## Reverse engineer Recipe from SCIF
-Finally, given that you have an existing scientific filesystem, you can easily produce its recipe file from the various metadata folders that are discovered, and given that the creator has not changed this content manually, although you can't have guarantee that it's reproducible, there is a good chance given all previous depdendencies are still available. Let's use the container that we generated above, specifically with the command `inspect` to take a look.
+Finally, given that you have an existing scientific filesystem, you can easily produce its recipe file from the various metadata folders that are discovered, and given that the creator has not changed this content manually, although you can't have guarantee that it's reproducible, there is a good chance given all previous depdendencies are still available. Let's use the container that we generated above, specifically with the command `inspect` to take a look, and then `dump` to export the recipe. First, you can inspect an entire filesystem and get the results in json printed to the screen:
 
 ```
-vanessasaur is still writing me! :)
+scif inspect 
+{
+    "hello-world-script": {
+        "appinstall": [
+            "echo \"echo 'Hello World!'\" >> $SCIF_APPBIN/hello-world.sh",
+            "chmod u+x $SCIF_APPBIN/hello-world.sh"
+        ],
+        "appenv": [
+            "THEBESTAPP $SCIF_APPNAME"
+        ],
+        "apprun": [
+            "/bin/bash hello-world.sh"
+        ]
+    },
+    "hello-world-echo": {
+        "appenv": [
+            "THEBESTAPP $SCIF_APPNAME"
+        ],
+        "apprun": [
+            "echo \"The best app is $THEBESTAPP\""
+        ]
+    }
+}
 ```
+
+You can also inspect just a particular app installed:
+
+```
+scif inspect hello-world-echo
+{
+    "hello-world-echo": {
+        "appenv": [
+            "THEBESTAPP $SCIF_APPNAME"
+        ],
+        "apprun": [
+            "echo \"The best app is $THEBESTAPP\""
+        ]
+    }
+}
+```
+
+or limit it to a particular app and attribute. Your choices are `a` (all) `l` (labels) `e` (environment) `r` (runscript) `f` (files) or `i` (install). Here we ask to see the runscript (`r`)
+
+```
+scif inspect hello-world-echo r
+{
+    "hello-world-echo": {
+        "apprun": [
+            "echo \"The best app is $THEBESTAPP\""
+        ]
+    }
+}
+```
+
+Finally, to dump the originall recipe, just add `dump`
+
+```
+$ scif inspect hello-world-echo dump
+%appenv
+
+THEBESTAPP $SCIF_APPNAME
+%apprun
+
+echo "The best app is $THEBESTAPP"
+```
+
+Now that you've gotten a hang for writing recipes, previewing and installing SCIF, let's move on to look at some [commands](/scif/tutorial-commands).

@@ -19,20 +19,54 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
+from scif.client.utils import parse_input_preferences
 from scif.logger import bot
 import sys
-import pwd
+import json
 import os
 
 
 def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
-    apps = args.recipe or None
+
+    # Inspect choices, r, e, l, a
+    choices = ['r', 'e', 'l', 'a', 'f', 'i', 'dump',
+               'labels', 'all', 'files', "install",
+               'environment', 'definition', 'runscript'] 
+
+    attributes = [x for x in args.attributes if x in choices]
+
+    write_recipe = False
+    if "dump" in attributes:
+        write_recipe = True
+        attributes.pop(attributes.index('dump'))
+
+    apps = [x for x in args.attributes if x not in attributes]
+    
+    # First instantiate the client
+    client = ScifRecipe(quiet=True)
+
+    # Filter down to apps that we want
     if len(apps) == 0:
-        apps = None
+        apps = client.apps()
 
-    client = ScifRecipe(recipe)
+    if len(attributes) == 0:
+        attributes = ['a']
 
-    # Preview the entire recipe, or the apps chosen
-    client.install(apps)
+    result = {}
+    for app in apps:
+
+        inspection = client.inspect(app, attributes)
+        if len(inspection) > 0:
+            result[app] = inspection 
+
+    if write_recipe is True:
+        for app, atts in result.items():
+            for key,val in atts.items():
+                print('%' + key + '\n')
+                print('\n'.join(val))
+    else:
+        print(json.dumps(result,
+                         indent=4,
+                         separators=(',', ': ')))
