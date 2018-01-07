@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from scif.logger import bot
 from scif.main.helpers import parse_entrypoint
-from scif.defaults import SCIF_ENTRYFOLDER
+from scif.defaults import SCIF_ENTRYFOLDER, SCIF_SHELL
 import sys
 import os
 
@@ -61,25 +61,28 @@ def activate(self, app, cmd=None):
         self.reset()
 
     elif app in self.apps():
-        config = self.app(app)
+        config = self.get_appenv(app)
 
         # Make app active
         self._active = app
 
-        # Set the entry point
+        # Make sure bin is added to path, and lib to ld_library_path
+        self.append_path('PATH', config['SCIF_APPBIN'])
+        self.append_path('LD_LIBRARY_PATH', config['SCIF_APPLIB'])
+
+        # Set the runscript, first to cmd provided (exec) then runscript
         if cmd is not None:
             self._entry_point = parse_entrypoint(cmd)
         
-        elif 'apprun' in config:   
-            self._entry_point = parse_entrypoint(config['apprun'])
+        elif 'SCIF_APPRUN' in config:
+            if os.path.exists(config['SCIF_APPRUN']):
+                self._entry_point = [SCIF_SHELL, config['SCIF_APPRUN']]
  
         # Update the environment for active app (updates ScifRecipe object)
         appenv = self.get_appenv(app, isolated=False, update=True)
 
-        # We also want to load the environment script for running, and then
-        # export the environment (if it exists)
-        self.load_env(app)
-        self.export_env()
+        self.load_env(app)  # load environment variables from app itself
+        self.export_env()   # export all variables from client.environment
 
         # Only set entryfolder if user didn't set to something else
         if not SCIF_ENTRYFOLDER:

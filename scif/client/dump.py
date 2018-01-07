@@ -19,31 +19,23 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
+from scif.client.utils import parse_input_preferences
 from scif.logger import bot
 import sys
-import pwd
+import json
 import os
 
 
 def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
-    apps = args.recipe
 
-    if len(apps) == 0:
-        bot.error("You must provide a recipe (.scif) file to install.")
-        sys.exit(1)
+    client = ScifRecipe(quiet=True)
+    apps = client.apps()
 
-    recipe = apps.pop(0)
-
-    if not os.path.exists(recipe):
-        bot.error("Cannot find recipe file %s" %recipe)
-        sys.exit(1)
-
-    if len(apps) == 0:
-        apps = None
-
-    client = ScifRecipe(recipe)
-
-    # Preview the entire recipe, or the apps chosen
-    client.install(apps)
+    for app in apps:
+        inspection = client.inspect(app)
+        if len(inspection) > 0:
+            for key,val in inspection.items():
+                print('%' + key)
+                print('\n'.join(val) + '\n')

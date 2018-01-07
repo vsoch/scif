@@ -28,6 +28,20 @@ import sys
 
 # External Environment Functions
 
+def append_path(self, varname, value):
+    '''append another directory to a path indexed by "varname" in the os.environ
+
+    Parameters
+    ==========
+    varname: the variable in the environment to append to (e.g., PATH)
+    value: the path to append (no :)
+    '''
+    if varname in os.environ:
+        os.environ[varname] = "%s:%s" %(value, os.environ[varname])
+    else:
+        os.environ[varname] = value
+
+
 def init_env(self, config, base='/scif', active=None):
     '''env will parse the complete SCIF namespace environment from a config.
     this will be defined for all apps to allow for easy interaction between
@@ -116,35 +130,41 @@ def mk_env(key, val, app=None):
 def load_env(self, app):
     '''load an environment file for an app. We don't allow for manual entry
        of any file, but limit to predetermined environment.sh file, if exists.
+       this function is inteded for runtime commands (shell or exec not install)
+
+       Parameters
+       ==========
+       app: the app to export variables for
+
     '''
     updates = dict()
 
     if app in self.apps():
-        config = self.app(app)
+        config = self.get_appenv(app)
 
-        if 'appenv' in config:
-
-            envfile = config['appenv']
-
-            if len(envfile) > 0:
-                envfile = envfile[0]
+        if 'SCIF_APPENV' in config:
+            envfile = config['SCIF_APPENV']
+            if os.path.exists(envfile):
                 if os.path.exists(envfile):    
-                    #cmd = ['/bin/bash', '-c', 'source %s && env' %envfile]
-                    #proc = subprocess.Popen(cmd, stdout = subprocess.PIPE)
-                    #for line in proc.stdout:
-                    #    (key, _, val) = line.partition("=")
-                    #    updates[key] = val    
-                    #proc.communicate()
-                    print('TODO: need to parse environment.sh')
+                    with open(envfile, 'r') as filey:
+                        lines = filey.readlines()
+                        for line in lines:
+                            (key, _, val) = line.strip().partition("=")
+                            if val not in ['', None]: # skips export lines
+                                updates[key] = val   
+                                self.environment[key] = val
+    return updates
 
 
-def export_env(self):
+def export_env(self, ps1=True):
     '''export the current environment, and add the PS1 variable to indicate
        the active shell display. This will start with values from the currently
        active environment, and then add those from scif.
     '''  
     runtime_environ = os.environ.copy()
-    runtime_environ['PS1'] = "scif> "
+
+    if ps1 is True:
+        runtime_environ['PS1'] = "scif> "
 
     if hasattr(self,'environment'):
         runtime_environ.update(self.environment)

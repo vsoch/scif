@@ -149,6 +149,8 @@ SCI-F does not enforce or state how the container creator should use the data fo
 | SCIF_BASE    | /scif | the root location for SCIF               |
 | SCIF_DATA    | /scif/data | the root location for apps data     |
 | SCIF_APPS    | /scif/apps | the root location for installed apps|
+| SCIF_SHELL    | /bin/bash | shell to use for "shell" command |
+| SCIF_PYSHELL    | ipython | interactive python shell for pyshell command|
 | SCIF_ENTRYPOINT    | /scif/apps | the command to run given no runscript or app defined |
 | SCIF_ENTRYFOLDER    | SCIF_BASE | the entry folder to run the entrypoint command |
 | SCIF_MESSAGELEVEL    | INFO | a client level of verbosity. Must be one of `CRITICAL`, `ABORT`, `ERROR`, `WARNING`, `LOG`, `INFO`, `QUIET`, `VERBOSE`, `DEBUG`|

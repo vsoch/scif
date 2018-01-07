@@ -1,0 +1,27 @@
+Bootstrap: docker
+From: continuumio/miniconda3
+
+# sudo singularity build hello-world.simg Singularity
+
+########################################################
+##
+## SCIF:
+##
+## These sections are equivalent to a SCIF Recipe
+##
+########################################################
+
+%appenv hello-world-echo
+    THEBESTAPP=$SCIF_APPNAME
+    export THEBESTAPP
+%apprun hello-world-echo
+    echo "The best app is $THEBESTAPP"
+
+%appinstall hello-world-script
+    echo "echo 'Hello World!'" >> bin/hello-world.sh
+    chmod u+x bin/hello-world.sh
+%appenv hello-world-script
+    THEBESTAPP=$SCIF_APPNAME
+    export THEBESTAPP
+%apprun hello-world-script
+    /bin/bash hello-world.sh

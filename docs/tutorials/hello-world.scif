@@ -1,0 +1,13 @@
+%appenv hello-world-echo
+    THEBESTAPP $SCIF_APPNAME
+%apprun hello-world-echo
+    echo "The best app is $THEBESTAPP"
+
+%appinstall hello-world-script
+    echo "echo 'Hello World!'" >> $SCIF_APPBIN/hello-world.sh
+    chmod u+x $SCIF_APPBIN/hello-world.sh
+%appenv hello-world-script
+    THEBESTAPP $SCIF_APPNAME
+%apprun hello-world-script
+    /bin/bash hello-world.sh
+

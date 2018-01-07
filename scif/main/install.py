@@ -79,6 +79,10 @@ def install_apps(self, apps=None):
         # Get the app configuration
         config = self.app(app)
 
+        # Get the app environment and export for install
+        self.get_appenv(app, isolated=True, update=True)
+        self.export_env(ps1=False)
+
         # Handle environment, runscript, labels
         self._install_runscript(app, settings, config)
         self._install_environment(app, settings, config)
@@ -86,6 +90,9 @@ def install_apps(self, apps=None):
         self._install_commands(app, settings, config)
         self._install_files(app, settings, config)
         self._install_recipe(app, settings, config)
+
+        # After we install, in case interactive, deactivate last app
+        self.deactivate(app)
 
 
 def install_runscript(self, app, settings, config):
