@@ -86,6 +86,7 @@ def install_apps(self, apps=None):
         # Handle environment, runscript, labels
         self._install_runscript(app, settings, config)
         self._install_environment(app, settings, config)
+        self._install_help(app, settings, config)
         self._install_labels(app, settings, config)
         self._install_commands(app, settings, config)
         self._install_files(app, settings, config)
@@ -93,22 +94,6 @@ def install_apps(self, apps=None):
 
         # After we install, in case interactive, deactivate last app
         self.deactivate(app)
-
-
-def install_runscript(self, app, settings, config):
-    '''install runscript will prepare the runscript for an app.
-       
-       Parameters
-       ==========
-       app should be the name of the app, for lookup in config['apps']
-       settings: the output of _init_app(), a dictionary of environment vars
-       config: should be the config for the app obtained with self.app(app)
-
-    '''
-    if "apprun" in config:
-        content = '\n'.join(config['apprun'])
-        bot.info('+ ' + 'apprun '.ljust(5) + app)
-        write_file(settings['apprun'], content)
 
 
 def install_labels(self, app, settings, config):
@@ -204,6 +189,41 @@ def install_recipe(self, app, settings, config):
     write_file(recipe_file, recipe)
     return recipe
 
+
+# Scripts
+
+def install_script(self, section, app, settings, config):
+    '''a general function used by install_runscript, install_help, and
+       install_environment to write a script to a file from a config setting
+       section
+
+       Parameters
+       ==========
+       section: should be the name of the section in the config (e.g., apprun)
+       app should be the name of the app, for lookup in config['apps']
+       settings: the output of _init_app(), a dictionary of environment vars
+       config: should be the config for the app obtained with self.app(app)
+
+    '''
+    if section in config:
+        content = '\n'.join(config[section])
+        bot.info('+ ' + section + ' '.ljust(5) + app)
+        write_file(settings[section], content)
+    return content
+
+
+def install_runscript(self, app, settings, config):
+    '''install runscript will prepare the runscript for an app.
+       
+       Parameters
+       ==========
+       app should be the name of the app, for lookup in config['apps']
+       settings: the output of _init_app(), a dictionary of environment vars
+       config: should be the config for the app obtained with self.app(app)
+
+    '''
+    return self._install_script(self, 'apprun', app, settings, config)
+
             
 def install_environment(self, app, settings, config):
     '''install will run the content to export environment variables, if defined
@@ -214,10 +234,17 @@ def install_environment(self, app, settings, config):
        settings: the output of _init_app(), a dictionary of environment vars
 
     '''
-    env_file = settings['appenv']
+    return self._install_script(self, 'appenv', app, settings, config)
 
-    if "appenv" in config:
-        content = '\n'.join(config['appenv'])
-        bot.info('+ ' + 'appenv '.ljust(5) + app)
-        write_file(env_file, content)
-    return content
+
+
+def install_help(self, app, settings, config):
+    '''install will write the help section, if defined.
+
+       Parameters
+       ==========
+       app should be the name of the app, for lookup in config['apps']
+       settings: the output of _init_app(), a dictionary of environment vars
+
+    '''
+    return self._install_script(self, 'apphelp', app, settings, config)

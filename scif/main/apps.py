@@ -109,6 +109,30 @@ def deactivate(self, app):
         bot.warning('%s is not an installed SCIF app' %app)
 
 
+def help(self, app):
+    '''print the help file for an app, if it exists.
+
+       Parameters
+       ==========
+       app: the app to export variables for
+
+    '''
+    lines = None
+    if app in self.apps():
+        config = self.get_appenv(app)
+
+        if 'SCIF_APPHELP' in config:
+            helpfile = config['SCIF_APPHELP']
+            if os.path.exists(helpfile):
+                with open(helpfile, 'r') as filey:
+                    lines = filey.readlines()
+                print('' .join(lines))
+
+    if lines is None:
+        bot.info('No help is defined for %s' %app)
+    return lines
+
+
 def reset(self):
     '''reset the SCIF filesystem, meaning that defaults are set, the entrypoint
       if reset, and the environment is reset. Only maintain entry folder set
@@ -149,6 +173,8 @@ def inspect(self, app, attributes=None):
     if 'a' in attributes or 'all' in attributes:
         return lookup
 
+    if 'h' in attributes or 'help' in attributes and 'apphelp' in lookup:
+        result['apphelp'] = lookup['apphelp']
     if 'f' in attributes or 'files' in attributes and 'appfiles' in lookup:
         result['appfiles'] = lookup['appfiles']
     if 'r' in attributes or 'runscript' in attributes and 'apprun' in lookup:

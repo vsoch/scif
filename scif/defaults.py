@@ -87,6 +87,7 @@ sections = ('appenv',
             'appinstall',
             'appsetup',
             'appfiles',
+            'apphelp',
             'apprun',
             'apptest')
 

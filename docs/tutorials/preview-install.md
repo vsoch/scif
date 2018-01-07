@@ -481,8 +481,7 @@ For the last example, you don't see any obvious change in output because we've m
 
 
 ## Install SCIF in Singularity using Recipe
-You can install use SCIF within Singularity containers using the scif software (akin to what we did with Docker. For this example, the [Singularity build specification](Singularity.scif) would be adjusted to look like this:
-
+You can install use SCIF within Singularity containers using the scif software (akin to what we did with Docker. For this example, the [Singularity build specification](https://github.com/vsoch/scif/blob/master/docs/tutorials/Singularity.scif) would be adjusted to look like this:
 
 ```
 Bootstrap: docker
@@ -505,11 +504,37 @@ From: continuumio/anaconda3
     exec scif "$@"
 ```
 
-Notice how we are again just copying the recipe file into the container, installing scif, and then handing the container's entrypoint to scif to manage. I'm being very careful to add executables to the path and reference them directly, in the case that some future user might have a different version of the software installed locally. Any similar container or virtalization technology that follows these steps could support SCIF. To build the container, again we do:
+if you wanted a development version of scif, you could instead install from Github:
+
+```
+Bootstrap: docker
+From: continuumio/anaconda3
+
+# sudo singularity build hello-world-scif.simg Singularity.scif
+
+%files
+    hello-world.scif
+
+%environment
+    PATH=/opt/conda/bin:$PATH
+    export PATH
+
+%post
+    cd /opt && git clone https://www.github.com/vsoch/scif.git
+    cd scif && /opt/conda/bin/python setup.py install
+    /opt/conda/bin/scif install /hello-world.scif
+
+%runscript
+    exec scif "$@"
+```
+
+Notice that although the sections are similar, they **aren't** SCIF app sections, but rather [traditional Singularity](http://singularity.lbl.gov/docs-recipes#sections). Both are in spirit based on the idea of an rpm format: a description (recipe) to build an encapsulated environment. Also notice how we are again just copying the recipe file into the container, installing scif, and then handing the container's entrypoint to scif to manage. I'm being very careful to add executables to the path and reference them directly, in the case that some future user might have a different version of the software installed locally. Any similar container or virtalization technology that follows these steps could support SCIF. To build the container, again we do:
 
 ```
 sudo singularity build hello-world-scif.simg Singularity.scif
 ```
+
+Importantly, since we have defined the entrypoint to be the scif executable, all of our commands and functions to interact with the SCIF, given the user runs the container, are exposed for us, and the filesystem is built based on the recipe provided. Importantly, the container still can serve as a portable, reproducible product, and it isn't the case that it has complete dependency on SCIF for all of its needs. The user (you!) can of course use all of the other features that a container solution like Singularity provides.
 
 
 ## Reverse engineer Recipe from SCIF

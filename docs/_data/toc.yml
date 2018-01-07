@@ -7,8 +7,8 @@
     slug: goals
 
   - title: Specification
-    url: "/scif/spec"
-    slug: spec
+    url: "/scif/specification"
+    slug: specification
 
   - title: Tutorials
     url: "/scif/tutorials"

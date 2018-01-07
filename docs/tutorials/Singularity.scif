@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: continuumio/miniconda3
+From: continuumio/anaconda3
 
 # sudo singularity build hello-world-scif.simg Singularity.scif
 
@@ -11,7 +11,8 @@ From: continuumio/miniconda3
     export PATH
 
 %post
-    /opt/conda/bin/pip install scif
+    cd /opt && git clone https://www.github.com/vsoch/scif.git
+    cd scif && /opt/conda/bin/python setup.py install
     /opt/conda/bin/scif install /hello-world.scif
 
 %runscript

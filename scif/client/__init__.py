@@ -78,6 +78,16 @@ def get_parser():
                          type=str)
 
 
+    # Help
+    help = subparsers.add_parser("help",
+                                 help="look at help for an app, if it exists.")
+
+
+    help.add_argument("app", nargs='*',
+                       help="app(s) to print help for", 
+                       type=str)
+
+
     # Install
 
     install = subparsers.add_parser("install",
@@ -204,6 +214,7 @@ def main():
     if args.command == "apps": from .list import main
     if args.command == "dump": from .dump import main
     if args.command == "exec": from .exec import main
+    if args.command == "help": from .help import main
     if args.command == "install": from .install import main
     if args.command == "preview": from .preview import main
     if args.command == "pyshell": from .pyshell import main

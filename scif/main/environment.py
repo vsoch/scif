@@ -145,14 +145,13 @@ def load_env(self, app):
         if 'SCIF_APPENV' in config:
             envfile = config['SCIF_APPENV']
             if os.path.exists(envfile):
-                if os.path.exists(envfile):    
-                    with open(envfile, 'r') as filey:
-                        lines = filey.readlines()
-                        for line in lines:
-                            (key, _, val) = line.strip().partition("=")
-                            if val not in ['', None]: # skips export lines
-                                updates[key] = val   
-                                self.environment[key] = val
+                with open(envfile, 'r') as filey:
+                    lines = filey.readlines()
+                    for line in lines:
+                        (key, _, val) = line.strip().partition("=")
+                        if val not in ['', None]: # skips export lines
+                            updates[key] = val   
+                            self.environment[key] = val
     return updates
 
 

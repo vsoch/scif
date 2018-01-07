@@ -299,7 +299,7 @@ The minimal set of functions for the controlled must support the following highe
  * **run** the UA must provide a means for the user to execute the entrypoint for a chosen app (the `apprun` section from the recipe), e.g., `ctrl run example`. For a container, running the container in context of the app should direct to some central entrypoint that then can forward to the targeted app. If no specific apps are provided, the target should end in a reasonable default. 
  * **test** if an app has an `apptest` section defined, the UA must run the tests for the targeted app when the user specifies a test command.
  * **inspect**: if an app has any metadata (labels, environment, help) coinciding with the same sections in the recipe prefixed with `app` then the integration must provide some kind of inspect command.
- * **shell**: if applicable (e.g., continers) provide an entrypoint to an interactive shell where software app of choice is active (or none are active).
+ * **shell**: if applicable (e.g., containers) provide an entrypoint to an interactive shell where software app of choice is active (or none are active).
  * **help**: if an `apphelp` section is defined, a command must be exposed to show help for a targeted app. If no help section is provided, the software should alert the user and show the files provided for inspection or some other reasonable default.
  * **labels**: if an `applabels` section is defined, a command must be exposed to show labels for a targeted app.
  * **environment**: if an `appenv` section is defined, a command must be exposed to show labels for a targeted app.

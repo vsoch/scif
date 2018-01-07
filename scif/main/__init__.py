@@ -19,7 +19,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-from scif.main.apps import ( app, apps, activate, deactivate, inspect, reset )
+from scif.main.apps import ( app, apps, activate, deactivate, help, 
+                             inspect, reset )
 from scif.main.base import ScifRecipe
 from scif.main.commands import ( run, exec, execute )
 from scif.main.environment import ( 
@@ -53,6 +54,8 @@ from scif.main.install import (
     install_apps,
     install_runscript,
     install_environment,
+    install_help,
+    install_script,
     install_labels,
     install_commands,
     install_files,
@@ -70,6 +73,7 @@ ScifRecipe._exec = exec
 
 # Helpers
 ScifRecipe._run_command = run_command
+ScifRecipe.help = help
 
 # Environment
 ScifRecipe.append_path = append_path
@@ -112,9 +116,11 @@ ScifRecipe.reset = reset
 ScifRecipe.install = install
 ScifRecipe._init_app = init_app
 ScifRecipe._install_apps = install_apps
-ScifRecipe._install_runscript = install_runscript
-ScifRecipe._install_environment = install_environment
-ScifRecipe._install_labels = install_labels
 ScifRecipe._install_commands = install_commands
+ScifRecipe._install_environment = install_environment
 ScifRecipe._install_files = install_files
+ScifRecipe._install_help = install_help
+ScifRecipe._install_labels = install_labels
 ScifRecipe._install_recipe = install_recipe
+ScifRecipe._install_runscript = install_runscript
+ScifRecipe._install_script = install_script
