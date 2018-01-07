@@ -209,7 +209,6 @@ def install_script(self, section, app, settings, config):
         content = '\n'.join(config[section])
         bot.info('+ ' + section + ' '.ljust(5) + app)
         write_file(settings[section], content)
-    return content
 
 
 def install_runscript(self, app, settings, config):
