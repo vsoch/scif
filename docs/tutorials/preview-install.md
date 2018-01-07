@@ -569,15 +569,24 @@ actions:
     exec                execute a command to a scientific filesystem
 ```
 
-Importantly, the container still can serve as a portable, reproducible product, and it isn't the case that it has complete dependency on SCIF for all of its needs. For example, we would run a scif app like this:
+Importantly, the container still can serve as a portable, reproducible product, and it isn't the case that it has complete dependency on SCIF for all of its needs. Here is how you would list the apps in the container using the SCIF entrypoint:
 
 ```
-./hello-world-scif.simg run hello-world-echo
+./hello-world-scif.simg apps
+SCIF [app]              [root]
+1  hello-world-echo	/scif/apps/hello-world-echo
+2  hello-world-script	/scif/apps/hello-world-script
+```
+
+We would run a scif app like this:
 
 ```
-The user (you!) can of course use all of the other features that a container solution like Singularity provides.
+./hello-world-scif.simg run hello-world-script
+[hello-world-script] executing /bin/bash /scif/apps/hello-world-script/scif/runscript
+Hello World!
+```
 
-
+And the user (you!) can of course use all of the other features that a container solution like Singularity provides.
 
 
 ## Reverse engineer Recipe from SCIF
