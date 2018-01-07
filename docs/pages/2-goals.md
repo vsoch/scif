@@ -33,12 +33,11 @@ SCIF is agnostic to where you are using it. For reproducible software modules, e
 
 ## Goals
 
-In the following sections, we hope to show that SCI-F is useful because it allows for:
+For the official description of goals, see [the specification](/scif/specification#goals). In the following sections, we hope to show that SCI-F is useful because it allows for:
 
  - [flexible, internal modularity](#modules) where the definition of modularity is entirely based on the needs of the creator and user, and the resulting container reflects that.
  - [reproducible practices](#reproducible-practices) by way of providing portable environments with modular internal contents that are easily discovered.
 
-##TODO: add list of goals and non-goals here from the spec
 
 While SCi-F is not a workflow manager, it follows naturally that the creator of a SCI-F app might use these internal variables to have modules internally talk to one another. The user and creator do not need to know the structural specifics of the standard, but only how to reference them.
 
@@ -54,7 +53,6 @@ Given the different needs briefly explained above, it is clear that there is no 
 
 >> The definition of modularity is entirely based on the needs of the creator and user. 
 
-
 If we discover a container after creation, it cannot be clear without suitable documentation what level is represented, or how to interact with the container. What is needed is an ability for the creator of a container to implicitly define this level of usage simply by way of creating the container. SCI-F allows us to do this. We can define modules on the levels of single files, or groups of software to perform a task. The metadata and organization of our preferences is automatically generated to create a complete, and programmatically understandable software package or scientific analysis.
 
 
@@ -69,6 +67,6 @@ Modular internal contents combined with reproducible portable environments via S
 
 <br>
 <div>
-    <a href="/scif/intro.html"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>
+    <a href="/scif/"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>
     <a href="/scif/tools.html"><button class="next-button btn btn-primary"><i class="fa fa-chevron-right"></i> </button></a>
 </div><br>
