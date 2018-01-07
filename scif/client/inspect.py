@@ -64,8 +64,8 @@ def main(args,parser,subparser):
     if write_recipe is True:
         for app, atts in result.items():
             for key,val in atts.items():
-                print('%' + key + '\n')
-                print('\n'.join(val))
+                print('%' + key)
+                print('\n'.join(val) + '\n')
     else:
         print(json.dumps(result,
                          indent=4,

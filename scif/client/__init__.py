@@ -51,14 +51,23 @@ def get_parser():
                                     help="show software version")
  
 
-    # Shell
+    # Shell and Interactive Terminal (it)
+
+    pyshell = subparsers.add_parser("pyshell",
+                                     help="Interactive python shell to scientific filesystem")
+
+    pyshell.add_argument("recipe", nargs='*',
+                          help="recipe file or scientific filesystem base", 
+                          type=str)
+
 
     shell = subparsers.add_parser("shell",
                                   help="shell to interact with scientific filesystem")
 
-    shell.add_argument("recipe", nargs='*',
-                       help="recipe file or scientific filesystem base", 
+    shell.add_argument("app", nargs='?',
+                       help="app shell to, defaults to SCIF base if not set.", 
                        type=str)
+
 
     preview = subparsers.add_parser("preview",
                                      help="preview changes to a filesytem")
@@ -103,10 +112,14 @@ def get_parser():
 
 
 
-    # List
+    # List and dump
 
-    ls = subparsers.add_parser("list",
+    ls = subparsers.add_parser("apps",
                                 help="list apps installed")
+
+
+    dump = subparsers.add_parser("dump",
+                                help="dump recipe")
 
 
 
@@ -188,10 +201,12 @@ def main():
         sys.exit(0)
 
     # Does the user want a shell?   
+    if args.command == "apps": from .list import main
+    if args.command == "dump": from .dump import main
     if args.command == "exec": from .exec import main
     if args.command == "install": from .install import main
-    if args.command == "list": from .list import main
     if args.command == "preview": from .preview import main
+    if args.command == "pyshell": from .pyshell import main
     if args.command == "shell": from .shell import main
     if args.command == "inspect": from .inspect import main
     if args.command == "run": from .run import main

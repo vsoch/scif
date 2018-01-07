@@ -146,10 +146,11 @@ def export_env(self):
     runtime_environ = os.environ.copy()
     runtime_environ['PS1'] = "scif> "
 
-    if hasattr(self,'envirnment'):
+    if hasattr(self,'environment'):
         runtime_environ.update(self.environment)
         for key,val in runtime_environ.items():
             os.environ[key] = val
+            os.putenv(key, val)
     return runtime_environ
 
 

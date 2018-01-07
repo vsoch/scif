@@ -76,8 +76,10 @@ def activate(self, app, cmd=None):
         # Update the environment for active app (updates ScifRecipe object)
         appenv = self.get_appenv(app, isolated=False, update=True)
 
-        # We also want to load the environment script for running, if it exists
+        # We also want to load the environment script for running, and then
+        # export the environment (if it exists)
         self.load_env(app)
+        self.export_env()
 
         # Only set entryfolder if user didn't set to something else
         if not SCIF_ENTRYFOLDER:
@@ -124,7 +126,7 @@ def reset(self):
         self._entry_folder = SCIF_ENTRYFOLDER        
 
 
-def inspect(self, app, attributes):
+def inspect(self, app, attributes=None):
     '''inspect an app based on a list of attributes to inspect.
 
     Parameters
@@ -135,6 +137,9 @@ def inspect(self, app, attributes):
     result = {}
     if app not in self.apps():
         return result
+
+    if attributes is None:
+        attributes = ['all']
 
     lookup = self.app(app)
 
@@ -151,4 +156,5 @@ def inspect(self, app, attributes):
         result['appenv'] = lookup['appenv']
     if 'i' in attributes or 'install' in attributes and 'appinstall' in lookup:
         result['appinstall'] = lookup['appinstall']
+
     return result

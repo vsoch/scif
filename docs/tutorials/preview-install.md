@@ -43,14 +43,15 @@ and once we have a SCIF, even if we don't have the knowledge of the creator that
 |                    +-->  Inspect    |
 |     Scientific     |  +-------------+
 |     Filesystem     |  +-------------+
-|                    +-->  Labels     |
+|                    +-->  Shell      |
 |                    |  +-------------+
 |                    |  +-------------+
-|                    +--> Environment |
+|                    +--> Exec        |
 +--------------------+  +-------------+
 ```
 
-These interactions will be better exemplified in the next tutorial to [run SCIF](tutorial-run.md). For now, let's take a look at writing, previewing, and installing a recipe to generate a SCIF.
+You will recognize many of these functions map to those you are familiar with for interacting with containers, and in some respect they will feel very similar. The difference is that we are interacting directly with the SCIF in the container. If you installed the SCIF in another container (perhaps with an different external interface for interaction) you could have confidence that given that the container has SCIF installed at the entrypoint, your interaction will not be very different. We will discuss this more later in the next tutorial to [run SCIF](tutorial-run.md). For now, let's take a look at writing, previewing, and installing a recipe to generate a SCIF.
+
 
 ## Writing a SCIF recipe
 Let's first write a recipe, a text file called [hello-world.scif](hello-world.scif), to produce different variations of hello world (with an echo, and with executing of a script).
@@ -158,23 +159,30 @@ If you choose an app that doesn't exist, it will tell you that.
 ERROR Cannot find app hello-world in config.
 ```
 
-We can also do this interactively! scif comes with a shell command that will either let you interact with a recipe, **or** a filesystem. The general command works as follows:
+We can also do this interactively! scif comes with a development shell command, `pyshell`, that will either let you interact with a recipe, **or** a filesystem. The general command works as follows:
 
 
-#### SCIF shell Options
+#### SCIF Python (pyshell) Options
 
 |  example            | use case                                | 
 |---------------------|-------------------------------------------|
-| scif shell [recipe] | interact with a recipe, no changes to the filesystem (akin to preview) |
-| scif shell          | interact with a SCIF (no SCIF app active) |
-| scif shell [app]    | interact with a SCIF with an app active.  |
-| scif shell [recipe] [app]    | interact with a recipe, still no changes, but load context of an app|
+| scif pyshell [recipe] | interact with a recipe, no changes to the filesystem (akin to preview) |
+| scif pyshell          | interact with a SCIF (no SCIF app active) |
+| scif pyshell [app]    | interact with a SCIF with an app active.  |
+| scif pyshell [recipe] [app]    | interact with a recipe, still no changes, but load context of an app|
 
 
-For our current need, we want to interactively explore a recipe, so we will start with the first row in the table above to explore a recipe file.
+There also is a `shell` command for the equivalent interaction, however we would need to install a SCIF first:
 
 ```
-$ scif shell hello-world.scif
+scif shell
+WARNING /scif is not detected as a recipe or base.
+```
+
+Well let's install it then! But first, let's interactively explore the recipe, `hello-world.scif` with the python shell (pyshell)
+
+```
+$ scif pyshell hello-world.scif
 [scif] /scif hello-world-echo | hello-world-script
 Python 3.6.3 |Anaconda, Inc.| (default, Oct 13 2017, 12:02:49) 
 Type 'copyright', 'credits' or 'license' for more information
@@ -199,19 +207,18 @@ and then produce the same output from the preview above (the recipe is already l
 client.preview()
 ```
 
-We can list all apps, or look at the specifics for an app.
+We can list all apps
 
 ```
 In [4]: client.apps()
 Out[4]: ['hello-world-echo', 'hello-world-script']
+```
 
-In [6]: client.app('hello-world-echo')
-Out[6]: 
-OrderedDict([('appenv', ['THEBESTAPP $SCIF_APPNAME']),
-             ('apprun', ['echo "The best app is $THEBESTAPP"'])])
+or look at the specifics for a particular app:
 
-In [7]: client.app('hello-world-script')
-Out[7]: 
+```
+In [5]: client.app('hello-world-script')
+Out[5]: 
 OrderedDict([('appinstall',
               ['echo "echo \'Hello World!\'" >> $SCIF_APPBIN/hello-world.sh',
                'chmod u+x $SCIF_APPBIN/hello-world.sh']),
@@ -249,11 +256,16 @@ client.environment
  'SCIF_DATA': '/scif/data'}
 ```
 
-You will notice of an absence of variables that don't end in an app name, and this is because we are running the shell that doesn't have the context of a particular SCIF app. How might we run shell in context of an app? Just give the name to shell.
-
+You will notice of an absence of variables that aren't relative to one of our apps (e.g., we don't see `SCIF_APPNAME` without `hello_world_echo` or `hello_world_script`), and this is because we are running the shell that doesn't have the context of a particular SCIF app. If you wanted to activate an app, which comes down to exporting its environment, just ask for it:
 
 ```
-$ scif shell hello-world.scif hello-world-echo
+client.activate('hello-world-script')
+```
+
+You can also do this directly from the terminal by giving pyshell the app name:
+
+```
+$ scif pyshell hello-world.scif hello-world-echo
 [scif] /scif hello-world-echo | hello-world-script
 Python 3.6.3 |Anaconda, Inc.| (default, Oct 13 2017, 12:02:49) 
 Type 'copyright', 'credits' or 'license' for more information
@@ -263,7 +275,7 @@ In [1]: client._active
 Out[1]: 'hello-world-echo'
 ```
 
-Now when we look at the environment we see what we saw before, but we also see another set of environment variables with general names (e.g. `SCIF_APPBIN`) that are pointing to the active app, which in this case, is `hello-world-echo`
+In both cases, when we look at the environment we see what we saw before, but we also see another set of environment variables with general names (e.g. `SCIF_APPBIN`) that are pointing to the active app, which in this case, is `hello-world-echo`
 
 ```
 $ client.environment
@@ -285,7 +297,29 @@ $ client.environment
 }
 ```
 
-The reason that we have both is, you can imagine a case where you want to run one SCIF app, and while it's running, have it interact in some way with another known app. Given the information about other apps is exposed in the environment, this is possible to do! Having these general environment variables for the active app also ensures that a tool created to work with SCIF applications knows how to find the active application.
+The reason that we have both is, you can imagine a case where you want to run one SCIF app, and while it's running, have it interact in some way with another known app. Given the information about other apps is exposed in the environment, this is possible to do! You can reference an app environment variable in another's runscript. Here are some fun examples:
+
+```
+# have running foo call bar's runscript
+%apprun foo
+/bin/bash $SCIF_APPRUN_bar
+
+# source bar's environment first, then run it
+%apprun foo
+source $SCIF_APPENV_bar
+/bin/bash $SCIF_APPRUN_bar
+```
+
+Having these general environment variables for the active app also ensures that a tool created to work with SCIF applications knows how to find the active application. For example, let's say I create an app that anyone can install into a container, and it only serves to loop through all the other apps and parse the text content of the runscript for some kind of machine learning algorithm? I'd be able to discovery them all without much work, and without knowing anything about the particular apps installed:
+
+```
+# This gives me the runscript locations
+env | grep SCIF_APPRUN
+SCIF_APPRUN_hello_world_script=/scif/apps/hello-world-script/scif/runscript
+SCIF_APPRUN_hello_world_echo=/scif/apps/hello-world-echo/scif/runscript
+```
+
+I could also blindly parse through help files, environments, labels, or any other content that is programatically accessible! You don't need to know anything in advance beyond these SCIF variables to interact with scientific filesystems. We will go into more command examples as we progress in these tutorials, let's continue now and talk about how to build a SCIF into a container, which is the recommended approach for reproducibility.
 
 
 ## Install SCIF in Docker using Recipe
@@ -345,7 +379,7 @@ $ tree /scif/
 Want to see the apps installed more quickly than using tree?
 
 ```
-scif list
+scif apps
 SCIF [app]              [root]
 1  hello-world-script	/scif/apps/hello-world-script
 2  hello-world-echo	/scif/apps/hello-world-echo
@@ -354,7 +388,7 @@ SCIF [app]              [root]
 If we had done this before install, we would get a *ruhroh* message.
 
 ```
-$ scif list
+$ scif apps
 WARNING /scif is not detected as a recipe or base.
 ```
 
@@ -507,44 +541,25 @@ scif inspect
 }
 ```
 
-You can also inspect just a particular app installed:
+And then dump the same content as a recipe:
+
 
 ```
-scif inspect hello-world-echo
-{
-    "hello-world-echo": {
-        "appenv": [
-            "THEBESTAPP $SCIF_APPNAME"
-        ],
-        "apprun": [
-            "echo \"The best app is $THEBESTAPP\""
-        ]
-    }
-}
-```
+scif dump
+%appinstall
+echo "echo 'Hello World!'" >> $SCIF_APPBIN/hello-world.sh
+chmod u+x $SCIF_APPBIN/hello-world.sh
 
-or limit it to a particular app and attribute. Your choices are `a` (all) `l` (labels) `e` (environment) `r` (runscript) `f` (files) or `i` (install). Here we ask to see the runscript (`r`)
-
-```
-scif inspect hello-world-echo r
-{
-    "hello-world-echo": {
-        "apprun": [
-            "echo \"The best app is $THEBESTAPP\""
-        ]
-    }
-}
-```
-
-Finally, to dump the originall recipe, just add `dump`
-
-```
-$ scif inspect hello-world-echo dump
 %appenv
-
 THEBESTAPP $SCIF_APPNAME
-%apprun
 
+%apprun
+/bin/bash hello-world.sh
+
+%appenv
+THEBESTAPP $SCIF_APPNAME
+
+%apprun
 echo "The best app is $THEBESTAPP"
 ```
 

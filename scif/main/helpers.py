@@ -24,6 +24,7 @@ from scif.logger import bot
 import shlex
 import sys
 import os
+import re
 
 def get_parts(pair, default=None):
     '''pair is expected to be a string with some key, value, and this function
@@ -86,8 +87,9 @@ def parse_entrypoint(entry_point=None):
     if not isinstance(entry_point, list):
         entry_point = [entry_point]
 
-    # The first item in the list has the executable (shouldn't be more than one line)
-    executable = entry_point[0]
+    # Any [e] in the command or entrypoint (command line) are environment vars
+    entry_point= ' '.join(entry_point)
+    entry_point = re.sub('\[e\]','$', entry_point)
 
     # Split into executable, arguments
-    return shlex.split(executable)
+    return shlex.split(entry_point)

@@ -19,75 +19,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-from scif.client.utils import parse_input_preferences
 from scif.logger import bot
+from scif.defaults import SCIF_SHELL, SCIF_BASE
 import sys
+import pwd
 import os
 
-
+    
 def main(args,parser,subparser):
 
-    from scif.defaults import SCIF_SHELL as shell
-
-    parsed = parse_input_preferences(args.recipe, args.quiet)
-    recipe = parsed['recipe']
-    quiet = parsed['quiet']
-    app = parsed['app']
-
-    # The client will either load the recipe or the base
-
-    lookup = { 'ipython': ipython,
-               'python': python,
-               'bpython': bpython }
-
-    shells = ['ipython', 'python', 'bpython']
-
-    # If the user asked for a specific shell via environment
-    if shell is not None:
-        shell = shell.lower()
-        if shell in lookup:
-            try:    
-                return lookup[shell](recipe=recipe, 
-                                     app=app, 
-                                     quiet=quiet)
-            except ImportError:
-                pass
-
-    # Otherwise present order of liklihood to have on system
-    for shell in shells:
-        try:
-            return lookup[shell](recipe=recipe, 
-                                 app=app, 
-                                 quiet=quiet)
-        except ImportError:
-            pass
-    
-
-def ipython(recipe, app=None, quiet=False):
-    '''embed the client with loaded recipe into an ipython session
-    '''
     from scif.main import ScifRecipe
-    from IPython import embed
-    client = ScifRecipe(recipe, quiet=quiet)
-    client.speak()
-    if app is not None:
-        client.activate(app)
-    embed()
+    app = args.app
+    client = ScifRecipe(quiet=True)
 
-def bpython(recipe, app=None, quiet=False):
-    from scif.main import ScifRecipe
-    import bpython
-    client = ScifRecipe(recipe, quiet=quiet)
-    client.speak()
-    if app is not None:
-        client.activate(app)
-    bpython.embed(locals_={'client': client})
-
-def python(recipe, app=None, quiet=False):
-    from scif.main import ScifRecipe
-    import code
-    client = ScifRecipe(recipe, quiet=quiet)
-    client.speak()
-    if app is not None:
-        client.activate(app)
-    code.interact(local={"client":client})
+    # Only allow interactive shell if the base exists
+    if os.path.exists(SCIF_BASE):
+        client.exec(app, cmd=[SCIF_SHELL])

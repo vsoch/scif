@@ -103,7 +103,8 @@ SCIF_APPS = getenv_namespace(namespace="SCIF_APP")
 SCIF_BASE = getenv('SCIF_BASE', '/scif')
 SCIF_DATA = getenv('SCIF_DATA', '%s/data' %SCIF_BASE)
 SCIF_APPS = getenv('SCIF_APPS', '%s/apps' %SCIF_BASE)
-SCIF_SHELL = getenv('SCIF_SHELL', 'ipython')
+SCIF_PYSHELL = getenv('SCIF_PYSHELL', 'ipython')
+SCIF_SHELL = getenv('SCIF_SHELL', '/bin/bash')
 SCIF_ENTRYPOINT = getenv('SCIF_ENTRYPOINT','/bin/bash')
 SCIF_ENTRYFOLDER = getenv('SCIF_ENTRYFOLDER') # default None, is set to /scif
                                               # in functions OR app roots

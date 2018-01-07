@@ -34,10 +34,12 @@ def exec(self, app=None):
        self.run or self.exec has been called first to prepare the environment
        and SCIF settings.
 
+       If a user wants to preserve an environment variable from the console
+       it can be referenced with [e], for example $SCIF_DATA --> [e]SCIF_DATA
     '''
 
     name = ''
-    if app is not None:
+    if app is not None and app in self.apps():
         name = '[%s] ' %app
 
     # If the entry folder still not set, we don't have an app
@@ -47,22 +49,28 @@ def exec(self, app=None):
     # Change directory to the relevant place
     os.chdir(self._entry_folder)
 
-    # Get export environment (do I need to do this?)
+    # export environment
     runtime_environ = self.export_env() 
-
-    # Change shell to show scif active
-    runtime_environ['PS1'] = "scif> "
 
     # Execv to the entrypoint
     executable = which(self._entry_point[0])
+    args = ''
 
-    args = self._entry_point
+    if len(self._entry_point) > 1:
+        args = ' '.join(self._entry_point[1:])
 
-    bot.info('%sexecuting %s' %(name, executable))
-    os.execve(executable, args , runtime_environ)
+    cmd = "%s %s" %(executable, args)
+    bot.info('%sexecuting %s' %(name, cmd))
+
+    # Return output to console
+    process = os.popen(cmd)
+    while 1:
+        line = process.readline().strip('\n')
+        if not line: break
+        print(line)
 
 
-def execute(self, cmd, app=None):
+def execute(self, app, cmd=None):
     '''execute a command in the context of an app. This means the following:
 
     1. Check that the app is valid for the client. Don't proceed otherwise
@@ -75,7 +83,7 @@ def execute(self, cmd, app=None):
     app: the name of the scif app to execute a command to
 
     '''
-    self.activate(app, cmd) 
+    self.activate(app, cmd)
                           # checks for existence
                           # sets _active to app's name
                           # updates environment
@@ -106,5 +114,3 @@ def run(self, app=None):
                           # sets entryfolder
 
     return self._exec(app)
-
-
