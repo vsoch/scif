@@ -578,6 +578,8 @@ Importantly, the container still can serve as a portable, reproducible product, 
 The user (you!) can of course use all of the other features that a container solution like Singularity provides.
 
 
+
+
 ## Reverse engineer Recipe from SCIF
 Finally, given that you have an existing scientific filesystem, you can easily produce its recipe file from the various metadata folders that are discovered, and given that the creator has not changed this content manually, although you can't have guarantee that it's reproducible, there is a good chance given all previous depdendencies are still available. Let's use the container that we generated above, specifically with the command `inspect` to take a look, and then `dump` to export the recipe. First, you can inspect an entire filesystem and get the results in json printed to the screen:
 

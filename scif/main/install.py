@@ -222,7 +222,7 @@ def install_runscript(self, app, settings, config):
        config: should be the config for the app obtained with self.app(app)
 
     '''
-    return self._install_script(self, 'apprun', app, settings, config)
+    return self._install_script('apprun', app, settings, config)
 
             
 def install_environment(self, app, settings, config):
@@ -234,7 +234,7 @@ def install_environment(self, app, settings, config):
        settings: the output of _init_app(), a dictionary of environment vars
 
     '''
-    return self._install_script(self, 'appenv', app, settings, config)
+    return self._install_script('appenv', app, settings, config)
 
 
 
@@ -247,4 +247,4 @@ def install_help(self, app, settings, config):
        settings: the output of _init_app(), a dictionary of environment vars
 
     '''
-    return self._install_script(self, 'apphelp', app, settings, config)
+    return self._install_script('apphelp', app, settings, config)
