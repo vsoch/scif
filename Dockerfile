@@ -12,7 +12,7 @@ FROM continuumio/anaconda3
 # SciF Install
 #######################################
 
-# Example for a local install, can be replaced with pip install scif
+# Can be replaced with pip install scif
 RUN mkdir /code
 ADD . /code
 RUN python /code/setup.py install
@@ -22,5 +22,5 @@ RUN python /code/setup.py install
 # SciF Entrypoint
 #######################################
 
-RUN scif install /code/hello-world.scif
+RUN scif install /code/docs/tutorials/hello-world.scif
 ENTRYPOINT ["scif"]
