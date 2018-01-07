@@ -263,6 +263,7 @@ During the parsing process, the following rules must be followed:
 
 - Finding the section `%appinstall`, `%apphelp`, `%apprun` is indication of an application command. Not shown but also relevant are `%applabels`, `%appfiles`. and `%apptest`.
 
+
 #### Creation
 The creation step coincides with generation of a SCIF.
 
@@ -270,6 +271,7 @@ The creation step coincides with generation of a SCIF.
  - the SCIF filesystem must be created from the recipe, with exit on any error and message to the user.
  - Given the parsing of the name of a software app (e.g.,`foo`) from a recipe, a folder must be created, in lowercase, under `/scif/apps` if it doesn't exist.  A `scif` metadata folder, `scif` is generated inside the application. The metadata folder itself could be thought of as another level of scif applications within the application, if interesting or relevant.
  - A "bin" folder is automatically genereated for `foo`, and will be automatically added to `$PATH` when `foo` is being used. A "lib" folder is also generated, and is added to `$LD_LIBRARY_PATH` when `foo` is used.
+
 
 #### Introspection
 Any integration or tool must reveal metadata, and SCIF content to its users. This means that:
