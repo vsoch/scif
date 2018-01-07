@@ -13,7 +13,7 @@ We provide several tutorials for getting started with the scientific filesystem.
 Here we will start with a scientific filesystem recipe, preview what it produces, and then install a scientific filesystem. This is likely the most common use case. [preview and install](/scif/tutorial-preview-install).
 
 ## Running Commands
-The scientific filesystem comes with the expected commands to run, exec, inspect, start a shell, an interactive python shell,  and a new syntax to easily distinguish an environment variable (introducing the beautiful `[e]` to say that `[e]MYVAR` = `$MYVAR`). Want to give it a spin? Read more about how to  [run commands](/scif/tutorial-run).
+The scientific filesystem comes with the expected commands to run, exec, inspect, start a shell, an interactive python shell,  and a new syntax to easily distinguish an environment variable (introducing the beautiful `[e]` to say that `[e]MYVAR` = `$MYVAR`). Want to give it a spin? Read more about how to  [run commands](/scif/tutorial-commands).
 
 
 <div>
