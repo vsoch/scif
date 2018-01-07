@@ -30,5 +30,5 @@ def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
     app = args.app
-    client = ScifRecipe(quiet=True)
+    client = ScifRecipe(quiet=True, writable=args.writable)
     client.run(app)

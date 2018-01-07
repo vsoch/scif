@@ -45,7 +45,7 @@ def main(args,parser,subparser):
     apps = [x for x in args.attributes if x not in attributes]
     
     # First instantiate the client
-    client = ScifRecipe(quiet=True)
+    client = ScifRecipe(quiet=True, writable=False)
 
     # Filter down to apps that we want
     if len(apps) == 0:

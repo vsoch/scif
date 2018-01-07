@@ -30,7 +30,7 @@ def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
     app = args.app
-    client = ScifRecipe(quiet=True)
+    client = ScifRecipe(quiet=True, writable=args.writable)
 
     # Only allow interactive shell if the base exists
     if os.path.exists(SCIF_BASE):

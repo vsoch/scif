@@ -30,7 +30,7 @@ def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
     apps = args.app
-    client = ScifRecipe(quiet=True)
+    client = ScifRecipe(quiet=True, writable=False)
 
     if len(apps) == 0:
         bot.info("Usage: scif help <hello-world>")

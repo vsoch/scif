@@ -41,6 +41,10 @@ def get_parser():
                         help="suppress print output", 
                         default=False, action='store_true')
 
+    parser.add_argument('--writable','-w', dest="writable", 
+                        help="for relevant commands, if writable SCIF is needed", 
+                        default=False, action='store_true')
+
     description = 'actions for Scientific Filesystem'
     subparsers = parser.add_subparsers(help='scif actions',
                                        title='actions',
@@ -144,17 +148,17 @@ def get_parser():
                          help="app and command to execute. Eg, exec appname echo $SCIF_APPNAME", 
                          type=str)
 
-    write = subparsers.add_parser("write",
-                                   help="write a Dockerfile (default) or Singularity Recipe.")
+    # Not sure if this is needed.
+    #write = subparsers.add_parser("write",
+    #                               help="write a Dockerfile (default) or Singularity Recipe.")
 
-    write.add_argument('--write',
-                       default='docker',
-                       const='docker',
-                       nargs='?',
-                       choices=['docker', 'singularity'],
-                       help='write a container build specification from the scif recipe (default: %(default)s)')
+    #write.add_argument('--write',
+    #                   default='docker',
+    #                   const='docker',
+    #                   nargs='?',
+    #                   choices=['docker', 'singularity'],
+    #                   help='write a container build specification from the scif recipe (default: %(default)s)')
         
-
     return parser
 
 

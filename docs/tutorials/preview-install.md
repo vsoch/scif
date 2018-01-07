@@ -534,7 +534,48 @@ Notice that although the sections are similar, they **aren't** SCIF app sections
 sudo singularity build hello-world-scif.simg Singularity.scif
 ```
 
-Importantly, since we have defined the entrypoint to be the scif executable, all of our commands and functions to interact with the SCIF, given the user runs the container, are exposed for us, and the filesystem is built based on the recipe provided. Importantly, the container still can serve as a portable, reproducible product, and it isn't the case that it has complete dependency on SCIF for all of its needs. The user (you!) can of course use all of the other features that a container solution like Singularity provides.
+Importantly, since we have defined the entrypoint to be the scif executable, all of our commands and functions to interact with the SCIF, given the user runs the container, are exposed for us, and the filesystem is built based on the recipe provided. Just try running the container, you find the scif entrypoint:
+
+
+```
+./hello-world-scif.simg 
+
+Scientific Filesystem [v0.0.3]
+usage: scif [-h] [--debug] [--quiet]
+            {version,pyshell,shell,preview,install,inspect,run,apps,dump,exec,write}
+            ...
+
+scientific filesystem tools
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --debug               use verbose logging to debug.
+  --quiet               suppress print output
+
+actions:
+  actions for Scientific Filesystem
+
+  {version,pyshell,shell,preview,install,inspect,run,apps,dump,exec,write}
+                        scif actions
+    version             show software version
+    pyshell             Interactive python shell to scientific filesystem
+    shell               shell to interact with scientific filesystem
+    preview             preview changes to a filesytem
+    install             install a recipe on the filesystem
+    inspect             inspect an attribute for a scif installation
+    run                 entrypoint to run a scientific filesystem
+    apps                list apps installed
+    dump                dump recipe
+    exec                execute a command to a scientific filesystem
+```
+
+Importantly, the container still can serve as a portable, reproducible product, and it isn't the case that it has complete dependency on SCIF for all of its needs. For example, we would run a scif app like this:
+
+```
+./hello-world-scif.simg run hello-world-echo
+
+```
+The user (you!) can of course use all of the other features that a container solution like Singularity provides.
 
 
 ## Reverse engineer Recipe from SCIF

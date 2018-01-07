@@ -30,7 +30,7 @@ def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
 
-    client = ScifRecipe(quiet=True)
+    client = ScifRecipe(quiet=True, writable=False)
     apps = client.apps()
 
     for app in apps:

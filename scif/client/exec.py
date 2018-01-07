@@ -37,5 +37,5 @@ def main(args,parser,subparser):
         sys.exit(1)
 
     app = cmd.pop(0)
-    client = ScifRecipe(quiet=True)
+    client = ScifRecipe(quiet=True, writable=args.writable)
     client.exec(app, cmd)

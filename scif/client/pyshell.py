@@ -29,7 +29,9 @@ def main(args,parser,subparser):
 
     from scif.defaults import SCIF_SHELL as shell
 
-    parsed = parse_input_preferences(args.recipe, args.quiet)
+    parsed = parse_input_preferences(args.recipe, 
+                                     quiet=args.quiet, 
+                                     writable=args.writable)
     recipe = parsed['recipe']
     quiet = parsed['quiet']
     app = parsed['app']
