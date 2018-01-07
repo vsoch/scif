@@ -31,8 +31,8 @@ def main(args,parser,subparser):
     from scif.main import ScifRecipe
 
     # Inspect choices, r, e, l, a
-    choices = ['r', 'e', 'l', 'a', 'f', 'i', 'dump',
-               'labels', 'all', 'files', "install",
+    choices = ['r', 'e', 'l', 'a', 'f', 'i', 'h', 'dump',
+               'labels', 'all', 'files', "help", "install",
                'environment', 'definition', 'runscript'] 
 
     attributes = [x for x in args.attributes if x in choices]
