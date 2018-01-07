@@ -8,11 +8,12 @@ toc: false
 
 At this point, you are comfortable with [preview or install](/scif/tutorial-preview-install) of a SCIF, and are ready for more advanced interaction. This means any of the following commands, and some of these have already been demonstrated in the previous tutorial, and will have detail added here:
 
- - **apps**
- - **inspect**
- - **shell**
- - **run**
- - **exec**
+ - **apps**: list apps installed in a SCIF or recipe (or dump)
+ - **inspect**: look at details for one or more apps
+ - **pyshell**: interactive python shell to explore a SCIF or recipe
+ - **shell**: interactive shell to explore a SCIF
+ - **run**: run an app runscript, or default to shell in app context
+ - **exec**: execute a command to an app with context active
 
 ## Apps
 Apps will give you a simple listing of apps installed.
