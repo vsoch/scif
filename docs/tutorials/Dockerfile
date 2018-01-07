@@ -1,0 +1,26 @@
+#######################################
+# SciF Base
+#
+# docker build -t vanessa/scif .
+# docker run vanessa/scif
+#
+#######################################
+
+FROM continuumio/anaconda3
+
+#######################################
+# SciF Install
+#######################################
+
+# Example for a local install, can be replaced with pip install scif
+RUN mkdir /code
+ADD . /code
+RUN python /code/setup.py install
+
+
+#######################################
+# SciF Entrypoint
+#######################################
+
+RUN scif install /code/hello-world.scif
+ENTRYPOINT ["scif"]
