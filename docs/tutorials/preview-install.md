@@ -323,7 +323,13 @@ I could also blindly parse through help files, environments, labels, or any othe
 
 
 ## Install SCIF in Docker using Recipe
-Once we have previewed, we likely want to install. I'm not a fan of making changes on my host, so I'm going to test doing this inside of a Docker image. First we will do it interactively, and then add a few lines to a recipe to do it properly. Here is the interactive version. We will use an anaconda image so we know that it comes with pip to install `scif`. Note that I'm mapping the present working directory to `/tmp` so I have my `hello-world.scif` recipe.
+Once we have previewed, we likely want to install. I'm not a fan of making changes on my host, so I'm going to test doing this inside of a Docker image. The image we will be building in the example below is provided on docker hub:
+
+```
+docker pull vanessa/scif:latest
+```
+
+First we will do it interactively, and then add a few lines to a recipe to do it properly. Here is the interactive version. We will use an anaconda image so we know that it comes with pip to install `scif`. Note that I'm mapping the present working directory to `/tmp` so I have my `hello-world.scif` recipe.
 
 ```
 $ docker run -v $PWD:/tmp -it continuumio/anaconda3 /bin/bash

@@ -13,3 +13,16 @@
     /bin/bash hello-world.sh
 %appenv hello-world-env
     OMG=TACOS
+%apphelp hello-world-env
+   This is the help section for hello-world-env! This app
+   does not have anything other than an environment installed. 
+   It just defines the environment variable `OMG=TACOS`. Try issuing
+   a command to the scif entrypoint to echo this variable:
+
+        # Local installation
+        scif exec hello-world-env echo [e]OMG
+        
+        # Docker image example
+        docker run vanessa/scif exec hello-world-env echo [e]OMG
+        [hello-world-env] executing /bin/echo $OMG
+        TACOS
