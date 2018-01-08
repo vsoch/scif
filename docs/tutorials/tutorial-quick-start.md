@@ -6,6 +6,8 @@ permalink: /tutorial-quick-start
 toc: false
 ---
 
+# Scientific Filesystem Quick Start
+
 ## What you start with
 We are starting with the Dockerized scientific filesystem container that is built in the [preview and install](/scif/tutorial-preview-install#install-scif-in-docker-using-recipe) tutorial. We will use the latest for this example, and you can also see the [tags available](https://hub.docker.com/r/vanessa/scif/tags/) for other versions. First, pull the image:
 
