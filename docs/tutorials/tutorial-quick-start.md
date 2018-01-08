@@ -2,15 +2,15 @@
 layout: default
 title: The Scientific Filesystem Quick Start
 pdf: true
-permalink: /quick-start
+permalink: /tutorial-quick-start
 toc: false
 ---
 
 ## What you start with
-We are starting with the Dockerized scientific filesystem container that is built in the [preview and install](/scif/tutorial-preview-install#install-scif-in-docker-using-recipe) tutorial. We will be using a specific version for this example, and you can also try using latest, or look  at the [tags available](https://hub.docker.com/r/vanessa/scif/tags/) for other versions. First, pull the image:
+We are starting with the Dockerized scientific filesystem container that is built in the [preview and install](/scif/tutorial-preview-install#install-scif-in-docker-using-recipe) tutorial. We will use the latest for this example, and you can also see the [tags available](https://hub.docker.com/r/vanessa/scif/tags/) for other versions. First, pull the image:
 
 ```
-docker pull vanessa/scif:0.0.3
+docker pull vanessa/scif
 ```
 
 What you should understand from the install tutorial is that we (as the *creator* of the container) wrote a recipe, a text file with instructions for interacting with different scientific filesystem software modules ("apps") and then exposed a single entrypoint that is the controller for the different apps. Then we build the container.
