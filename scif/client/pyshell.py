@@ -30,8 +30,8 @@ def main(args,parser,subparser):
     from scif.defaults import SCIF_SHELL as shell
 
     parsed = parse_input_preferences(args.recipe, 
-                                     quiet=args.quiet, 
-                                     writable=args.writable)
+                                     quiet=args.quiet)
+
     recipe = parsed['recipe']
     quiet = parsed['quiet']
     app = parsed['app']
@@ -51,7 +51,8 @@ def main(args,parser,subparser):
             try:    
                 return lookup[shell](recipe=recipe, 
                                      app=app, 
-                                     quiet=quiet)
+                                     quiet=quiet,
+                                     writable=args.writable)
             except ImportError:
                 pass
 
@@ -60,35 +61,36 @@ def main(args,parser,subparser):
         try:
             return lookup[shell](recipe=recipe, 
                                  app=app, 
-                                 quiet=quiet)
+                                 quiet=quiet,
+                                 writable=args.writable)
         except ImportError:
             pass
     
 
-def ipython(recipe, app=None, quiet=False):
+def ipython(recipe, app=None, quiet=False, writable=True):
     '''embed the client with loaded recipe into an ipython session
     '''
     from scif.main import ScifRecipe
     from IPython import embed
-    client = ScifRecipe(recipe, quiet=quiet)
+    client = ScifRecipe(recipe, quiet=quiet, writable=writable)
     client.speak()
     if app is not None:
         client.activate(app)
     embed()
 
-def bpython(recipe, app=None, quiet=False):
+def bpython(recipe, app=None, quiet=False, writable=True):
     from scif.main import ScifRecipe
     import bpython
-    client = ScifRecipe(recipe, quiet=quiet)
+    client = ScifRecipe(recipe, quiet=quiet, writable=writable)
     client.speak()
     if app is not None:
         client.activate(app)
     bpython.embed(locals_={'client': client})
 
-def python(recipe, app=None, quiet=False):
+def python(recipe, app=None, quiet=False, writable=True):
     from scif.main import ScifRecipe
     import code
-    client = ScifRecipe(recipe, quiet=quiet)
+    client = ScifRecipe(recipe, quiet=quiet, writable=writable)
     client.speak()
     if app is not None:
         client.activate(app)
