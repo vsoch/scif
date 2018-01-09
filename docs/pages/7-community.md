@@ -45,7 +45,7 @@ There are so many ways to contribute! Here are just a few:
  - [Ask a question](https://www.github.com/containers-ftw/SCI-F/issues), anything on your mind.
 
 ## Future Work
-SCI-F is exciting because it makes basic scientific application development (optimized in containers) and usage easier. The user can immediately inspect and see software, and how to use it. The user can install additional software, copy from one container to another, or view metadata and help documentation. The developer is provided guidance for how and where to install and configure software, but complete freedom with regard to the software itself. The minimum requirements for any package are a name for its folder, and then optionally a runscript and help document for the user. In addition to these basic examples, we provide other future use cases that would be possible with the Standard Container Integration Format.
+SCI-F is exciting because it makes basic scientific application development (optimized in containers) and usage easier. The user can immediately inspect and see software, and how to use it. The user can install additional software, copy from one container to another, or view metadata and help documentation. The developer is provided guidance for how and where to install and configure software, but complete freedom with regard to the software itself. The minimum requirements for any package are a name for its folder, and then optionally a runscript and help document for the user. In addition to these basic examples, we provide other future use cases that would be possible with the Scientific Filesystem.
 
 
 ### Mapping of container landscape
@@ -55,6 +55,6 @@ Given separation of the software from the host, we can more easily derive featur
 Given some functional goal, and given a set of containers with measurable features to achieving it, we can (either by brute force or more elegantly) programmatically generate and test containers toward some metric. The landscape of containers can easily be pruned in that the best containers for specific use cases can be easily determined automatically.
 
 <div>
-    <a href="/SCI-F/examples.html"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>
-    <a href="/SCI-F/appendix.html"><button class="next-button btn btn-primary"><i class="fa fa-chevron-right"></i> </button></a>
+    <a href="/scif/examples.html"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>
+    <a href="/scif/appendix.html"><button class="next-button btn btn-primary"><i class="fa fa-chevron-right"></i> </button></a>
 </div><br>
