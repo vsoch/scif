@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Community Development
+title: Appendix
 pdf: true
 permalink: /appendix
 toc: true
@@ -20,7 +20,7 @@ We do not enforce using SCI-F for Singularity images or any other container. It'
 
 
 ## Conclusion
-The Standard Container Integration Format is advantageous in that the container creator can embed his or her work with implied metadata about software and container contents. SCI-F also makes it easier to package different run scripts with the container, and expose them easily to the user. However, this does not mean that the standard approach of using a container as a general toolbox and distributing it with a series of external callers is bad or wrong. The choice to use (or not use) SCI-F apps is largely dependent on the goals of the creator, and the intended users.
+The Scientific Filesystem is advantageous in that the container creator can embed his or her work with implied metadata about software and container contents. SCI-F also makes it easier to package different run scripts with the container, and expose them easily to the user. However, this does not mean that the standard approach of using a container as a general toolbox and distributing it with a series of external callers is bad or wrong. The choice to use (or not use) SCI-F apps is largely dependent on the goals of the creator, and the intended users.
 
 
 ## List of (possibly) related standards,formats and initiatives
@@ -42,5 +42,5 @@ The Standard Container Integration Format is advantageous in that the container 
  - <a href="https://figshare.com/articles/Orchestration_and_Workflows_in_eScience_Problems_Standards_and_Solutions/4746931" target="_blank">https://figshare.com/articles/Orchestration_and_Workflows_in_eScience_Problems_Standards_and_Solutions/4746931</a>
 
 <div>
-    <a href="/SCI-F/community.html"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>
+    <a href="/scif/community"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>
 </div><br>

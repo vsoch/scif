@@ -23,6 +23,7 @@ Then the *user* that doesn't have knowledge to the creation is able to interact 
 We can first test the entrypoint. We have just pulled the container, and we know nothing. So we run it.
 
 ```
+docker run vanessa/scif
 Scientific Filesystem [v0.0.3]
 usage: scif [-h] [--debug] [--quiet] [--writable]
             {version,pyshell,shell,preview,help,install,inspect,run,apps,dump,exec}
@@ -70,20 +71,17 @@ We can then ask for help for a particular app. This section is important for the
 
 ```
 docker run vanessa/scif help hello-world-env
-
-   This is the help section for hello-world-env! This app
-   does not have anything other than an environment installed. 
-   It just defines the environment variable `OMG=TACOS`. Try issuing
-   a command to the scif entrypoint to echo this variable:
-
-        # Local installation
-        scif exec hello-world-env echo [e]OMG
-        
-        # Docker image example
-        docker run vanessa/scif exec hello-world-env echo [e]OMG
-        [hello-world-env] executing /bin/echo $OMG
-        TACOS
+This is the help section for hello-world-env! This app
+does not have anything other than an environment installed.
+It just defines the environment variable `OMG=TACOS`. Try issuing
+a command to the scif entrypoint to echo this variable:
+scif exec hello-world-env echo [e]OMG
+docker run vanessa/scif exec hello-world-env echo [e]OMG
+[hello-world-env] executing /bin/echo $OMG
+TACOS
 ```
+
+And you see a hasty help message that I wrote for the module `hello-world-env` telling you how to run it. We will do that soon.
 
 
 ### Inspect
@@ -91,27 +89,47 @@ We can also inspect an app of interest, which will spit out a metadata structure
 
 
 ```
- docker run vanessa/scif inspect hello-world-env
+docker run vanessa/scif inspect hello-world-env
 {
     "hello-world-env": {
         "appenv": [
             "OMG=TACOS"
+        ],
+        "apphelp": [
+            "This is the help section for hello-world-env! This app",
+            "does not have anything other than an environment installed.",
+            "It just defines the environment variable `OMG=TACOS`. Try issuing",
+            "a command to the scif entrypoint to echo this variable:",
+            "scif exec hello-world-env echo [e]OMG",
+            "docker run vanessa/scif exec hello-world-env echo [e]OMG",
+            "[hello-world-env] executing /bin/echo $OMG",
+            "TACOS"
         ]
     }
 }
 ```
 
-Yes, it really just is an environment!
-
+Yes, it really just is an environment, and a help message for it! Now that we've seen this instruction twice, let's give run a try with specification of an environment variable, `$OMG` in the container.
 
 ### Run
-Now that you have listed and inspected an app, let's run one! We can run the `hello-world-echo` app like this:
+We can run the `hello-world-echo` app like this:
 
 ```
 docker run vanessa/scif run hello-world-echo
 [hello-world-echo] executing /bin/bash /scif/apps/hello-world-echo/scif/runscript
 The best app is hello-world-echo
 ```
+
+What about our example above with `hello-world-env`? It can be weird trying to pass an environment variable into a container from the host, because it gets evaluated (and then winds up something unexpected or empty!) To help this, with scif we use a modified syntax to pass the variable into the container. We replace `$` with `[e]` so that `$VARIABLE` is `[e]VARIABLE`. Here is an example:
+
+```
+docker run vanessa/scif exec hello-world-env echo [e]OMG
+[hello-world-env] executing /bin/echo $OMG
+TACOS
+```
+
+If we had done that with `$` it would have evaluated the variable on our host shell, and passed nothing into the container (unless in fact `$OMG` was defined on the host)/
+
 
 ### Exec
 You can also execute a command:
@@ -121,13 +139,3 @@ docker run vanessa/scif exec hello-world-echo echo "Another hello!"
 [hello-world-echo] executing /bin/echo Another hello!
 Another hello!
 ```
-
-### Environment variables
-It can be weird trying to pass an environment variable into a container from the host, because it gets evaluated (and then winds up something unexpected or empty!) To help this, with scif we use a modified syntax to pass the variable into the container. We replace `$` with `[e]` so that `$VARIABLE` is `[e]VARIABLE`. Here is an example:
-
-```
-docker run vanessa/scif exec hello-world-env echo [e]OMG
-[hello-world-env] executing /bin/echo $OMG
-TACOS
-```
-If we had done that with `$` it would have evaluated the variable on our host shell, and passed nothing into the container (unless in fact `$OMG` was defined on the host)/

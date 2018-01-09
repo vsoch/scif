@@ -1,6 +1,6 @@
 ---
 layout: null
-title: SCI-F
+title: The Scientific Filesystem
 permalink: /pdf
 ---
 
