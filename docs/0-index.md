@@ -29,7 +29,6 @@ We will start by reviewing the background and rationale for a scientific organiz
 
 ### Resources
 
- - [tools](): reviews integrations and speculation about future tool development.
  - [community](/scif/community): community resources including APIs, version control and testing, and open source forums for tracking issues and discussion related to SCI-F and scientific filesystem apps.
 
 
