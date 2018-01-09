@@ -3,7 +3,6 @@ From: continuumio/miniconda3
 
 # sudo singularity build scif.simg Singularity
 
-
 %runscript
     exec /opt/conda/bin/scif "$@"
 

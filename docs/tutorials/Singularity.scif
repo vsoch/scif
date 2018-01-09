@@ -3,9 +3,6 @@ From: continuumio/anaconda3
 
 # sudo singularity build hello-world-scif.simg Singularity.scif
 
-%files
-    hello-world.scif
-
 %environment
     PATH=/opt/conda/bin:$PATH
     export PATH
@@ -13,7 +10,7 @@ From: continuumio/anaconda3
 %post
     cd /opt && git clone https://www.github.com/vsoch/scif.git
     cd scif && /opt/conda/bin/python setup.py install
-    /opt/conda/bin/scif install /hello-world.scif
+    /opt/conda/bin/scif install /docs/tutorials/hello-world.scif
 
 %runscript
     exec scif "$@"
