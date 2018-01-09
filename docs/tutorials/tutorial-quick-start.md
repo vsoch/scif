@@ -139,3 +139,144 @@ docker run vanessa/scif exec hello-world-echo echo "Another hello!"
 [hello-world-echo] executing /bin/echo Another hello!
 Another hello!
 ```
+
+## Bash Shell
+If you want to interact with your container in the context of an app, there is a command for that!  We can either shell into the container with the global scif environment (and no activated apps):
+
+```
+docker run -it vanessa/scif shell
+WARNING No app selected, will run default ['/bin/bash']
+executing /bin/bash 
+root@55e5a08dd10f:/scif# 
+```
+
+or we can do the same in the context of a specific app:
+
+```
+docker run -it vanessa/scif shell hello-world-env
+[hello-world-env] executing /bin/bash 
+root@1ab15ba4cc3b:/scif/apps/hello-world-env# echo $OMG
+TACOS
+root@1ab15ba4cc3b:/scif/apps/hello-world-env# 
+```
+
+This is a great example of how a single container can be used to serve different interactive environments.
+
+## Python Shell
+We can enter an interactive shell for exploring the container filesystem, if we want to do more than execute commands. For docker, we have to append an `-it` to mean we want an "interactive terminal" to the run command, using "pyshell" as the entrypoint:
+
+```
+docker run -it vanessa/scif pyshell
+Found configurations for 3 scif apps
+hello-world-env
+hello-world-script
+hello-world-echo
+[scif] /scif hello-world-env | hello-world-script | hello-world-echo
+Python 3.6.3 |Anaconda, Inc.| (default, Oct 13 2017, 12:02:49) 
+Type 'copyright', 'credits' or 'license' for more information
+IPython 6.1.0 -- An enhanced Interactive Python. Type '?' for help.
+```
+
+We can now look at details for the client:
+
+```
+In [1]: client
+Out[1]: [scif]
+
+In [2]: client.apps()
+Out[2]: ['hello-world-env', 'hello-world-script', 'hello-world-echo']
+```
+
+The "preview" command is most useful when you have a recipe (and haven't installed yet) and want to look at what will be created on the filesystem. But you can also run it for an already installed scif:
+
+```
+In [3]: client.preview()
+[base] /scif 
+[apps] /scif/apps 
+[data] /scif/data
+ 
+
+[root] /scif/apps/hello-world-env 
+[lib] /scif/apps/hello-world-env/lib 
+[bin] /scif/apps/hello-world-env/bin 
+[data] /scif/data/hello-world-env 
++ appenv hello-world-env
+/scif/apps/hello-world-env/scif/environment.sh
+OMG=TACOS
++ apprecipe hello-world-env
+/scif/apps/hello-world-env/scif/hello-world-env.scif
+
+...
+```
+
+You can also get the full set of environment variables:
+
+```
+client.get_env()
+Out[5]: 
+{'SCIF_APPBIN_hello_world_echo': '/scif/apps/hello-world-echo/bin',
+ 'SCIF_APPBIN_hello_world_env': '/scif/apps/hello-world-env/bin',
+ 'SCIF_APPBIN_hello_world_script': '/scif/apps/hello-world-script/bin',
+ 'SCIF_APPDATA_hello_world_echo': '/scif/data/hello-world-echo',
+ 'SCIF_APPDATA_hello_world_env': '/scif/data/hello-world-env',
+ 'SCIF_APPDATA_hello_world_script': '/scif/data/hello-world-script',
+ 'SCIF_APPENV_hello_world_echo': '/scif/apps/hello-world-echo/scif/environment.sh',
+ 'SCIF_APPENV_hello_world_env': '/scif/apps/hello-world-env/scif/environment.sh',
+ 'SCIF_APPENV_hello_world_script': '/scif/apps/hello-world-script/scif/environment.sh',
+ 'SCIF_APPHELP_hello_world_echo': '/scif/apps/hello-world-echo/scif/runscript.help',
+ 'SCIF_APPHELP_hello_world_env': '/scif/apps/hello-world-env/scif/runscript.help',
+ 'SCIF_APPHELP_hello_world_script': '/scif/apps/hello-world-script/scif/runscript.help',
+ 'SCIF_APPLABELS_hello_world_echo': '/scif/apps/hello-world-echo/scif/labels.json',
+ 'SCIF_APPLABELS_hello_world_env': '/scif/apps/hello-world-env/scif/labels.json',
+ 'SCIF_APPLABELS_hello_world_script': '/scif/apps/hello-world-script/scif/labels.json',
+ 'SCIF_APPLIB_hello_world_echo': '/scif/apps/hello-world-echo/lib',
+ 'SCIF_APPLIB_hello_world_env': '/scif/apps/hello-world-env/lib',
+ 'SCIF_APPLIB_hello_world_script': '/scif/apps/hello-world-script/lib',
+ 'SCIF_APPMETA_hello_world_echo': '/scif/apps/hello-world-echo/scif',
+ 'SCIF_APPMETA_hello_world_env': '/scif/apps/hello-world-env/scif',
+ 'SCIF_APPMETA_hello_world_script': '/scif/apps/hello-world-script/scif',
+ 'SCIF_APPNAME_hello_world_echo': 'hello-world-echo',
+ 'SCIF_APPNAME_hello_world_env': 'hello-world-env',
+ 'SCIF_APPNAME_hello_world_script': 'hello-world-script',
+ 'SCIF_APPRECIPE_hello_world_echo': '/scif/apps/hello-world-echo/scif/hello-world-echo.scif',
+ 'SCIF_APPRECIPE_hello_world_env': '/scif/apps/hello-world-env/scif/hello-world-env.scif',
+ 'SCIF_APPRECIPE_hello_world_script': '/scif/apps/hello-world-script/scif/hello-world-script.scif',
+ 'SCIF_APPROOT_hello_world_echo': '/scif/apps/hello-world-echo',
+ 'SCIF_APPROOT_hello_world_env': '/scif/apps/hello-world-env',
+ 'SCIF_APPROOT_hello_world_script': '/scif/apps/hello-world-script',
+ 'SCIF_APPRUN_hello_world_echo': '/scif/apps/hello-world-echo/scif/runscript',
+ 'SCIF_APPRUN_hello_world_env': '/scif/apps/hello-world-env/scif/runscript',
+ 'SCIF_APPRUN_hello_world_script': '/scif/apps/hello-world-script/scif/runscript',
+ 'SCIF_APPS': '/scif/apps',
+ 'SCIF_DATA': '/scif/data'}
+```
+
+or activate an app (and then see how the enviroment variables change, they will have added a few!
+
+```
+client.activate('hello-world-env')
+
+In [7]: client.get_env()
+Out[7]: 
+{'OMG': 'TACOS',
+ 'SCIF_APPBIN': '/scif/apps/hello-world-env/bin',
+ 'SCIF_APPDATA': '/scif/data/hello-world-env',
+ 'SCIF_APPENV': '/scif/apps/hello-world-env/scif/environment.sh',
+ 'SCIF_APPHELP': '/scif/apps/hello-world-env/scif/runscript.help',
+ 'SCIF_APPLABELS': '/scif/apps/hello-world-env/scif/labels.json',
+ 'SCIF_APPLIB': '/scif/apps/hello-world-env/lib',
+ 'SCIF_APPMETA': '/scif/apps/hello-world-env/scif',
+ 'SCIF_APPNAME': 'hello-world-env',
+  ...
+ 'SCIF_APPRECIPE': '/scif/apps/hello-world-env/scif/hello-world-env.scif',
+ 'SCIF_APPROOT': '/scif/apps/hello-world-env',
+ 'SCIF_APPRUN': '/scif/apps/hello-world-env/scif/runscript',
+ 'SCIF_APPS': '/scif/apps',
+ 'SCIF_DATA': '/scif/data'}
+```
+
+And then deactivate to undo that.
+
+```
+client.deactivate()
+```
