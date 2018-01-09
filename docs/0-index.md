@@ -18,7 +18,7 @@ Here we present the Scientific Filesystem (SCIF), an organizational format that 
 
  - [tutorials](/scif/tutorials): are a good place to start if you are a user or developer. These pages will show you how you generate and interact with a scientific filesystem.
  - [goals](/scif/goals): here we review how SCI-F allows for internal modularity and consistency, transparency, and reproducible practices.
- - [specification](/scif/specification): reviews the current specification for SCI-F.
+ - [specification](/scif/spec): reviews the current specification for SCI-F.
 
 ### Being Written
 
