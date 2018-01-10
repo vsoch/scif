@@ -10,7 +10,7 @@ From: continuumio/anaconda3
 %post
     cd /opt && git clone https://www.github.com/vsoch/scif.git
     cd scif && /opt/conda/bin/python setup.py install
-    /opt/conda/bin/scif install /docs/tutorials/hello-world.scif
+    /opt/conda/bin/scif install docs/tutorials/hello-world.scif
 
 %runscript
     exec scif "$@"
