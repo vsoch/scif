@@ -10,7 +10,9 @@ pdf: true
 We provide several tutorials for getting started with the scientific filesystem. If you haven't read about the [goals](/scif/goals) or [specification](/scif/specification) for the standard (and are interested) you might do that first.
 
 ## Quick Starts
-If you want to quickly familarize with a pre-built example scientific filesystem, check out our *[container quickstart](/scif/tutorial-quick-start)* or *[really quick start](/scif/tutorial-really-quick-start)* to pull a pre-bulit Docker and/or Singularity image and start using it!
+If you want to quickly familarize with a pre-built example scientific filesystem, check out our *[container quickstart](/scif/tutorial-quick-start)* or *[really quick start](/scif/tutorial-really-quick-start)* to pull a pre-bulit Docker and/or Singularity image and start using it! Or if you are more visual, just watch an asciinema:
+
+[![asciicast](https://asciinema.org/a/156490.png)](https://asciinema.org/a/156490?speed=2)
 
 ## Preview and Install
 Here we will start with a scientific filesystem recipe, preview what it produces, and then install a scientific filesystem. This is likely the most common use case. [preview and install](/scif/tutorial-preview-install).
