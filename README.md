@@ -1,5 +1,7 @@
 # Scientific Filesystem (SCI-F)
 
+![docs/img/logo/scif-logo.png](docs/img/logo/scif-logo.png)
+
 The The Scientific Filesystem is an organizational format for scientific software and metadata. Our goals are centered around  **consistency**, **transparency**, **programmatic accessibility**, and **modularity**. [Read about](http://containers-ftw.org/SCI-F/) the format and please [contribute](https://github.com/vsoch/scif/issues)!
 
 ## What is this?

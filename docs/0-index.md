@@ -10,7 +10,11 @@ Version: {{ site.version }}<br>
 Date: 2017-xx-xx
 </div>
 
-# Scientific Filesystem
+<div>
+    <img src="img/logo/scif-slash-green.png" width="300px" style="float:left">
+    <h1 style="margin-top:10px">Scientific Filesystem</h1>
+</div><br><br>
+
 Here we present the Scientific Filesystem (scif), an organizational format that supports exposure of executables and metadata for discoverability. The format includes a known *filesystem structure*, a definition for a set of *environment variables* describing it, and *functions* for generation of the variables and interaction with the libraries, metadata, and executables located within. 
 
 ## How does scif related to containers?
