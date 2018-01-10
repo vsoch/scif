@@ -27,13 +27,13 @@ We will start by reviewing the background and rationale for a scientific organiz
 
 ### Getting Started
 
- - [tutorials](/scif/tutorials): are a good place to start if you are a user or developer. These pages will show you how you generate and interact with a scientific filesystem.
- - [goals](/scif/goals): here we review how SCI-F allows for internal modularity and consistency, transparency, and reproducible practices.
- - [specification](/scif/spec): reviews the current specification for SCI-F.
+ - [Tutorils](/scif/tutorials): are a good place to start if you are a user or developer. These pages will show you how you generate and interact with a scientific filesystem. Or jump right in to a *[quick start](/scif/tutorial-quick-start)* or *[really quick start](/scif/tutorial-really-quick-start)*.
+ - [Goals](/scif/goals): here we review how SCI-F allows for internal modularity and consistency, transparency, and reproducible practices.
+ - [Specification](/scif/spec): reviews the current specification for SCI-F.
 
 ### Resources
 
- - [community](/scif/community): community resources including APIs, version control and testing, and open source forums for tracking issues and discussion related to SCI-F and scientific filesystem apps.
+ - [Community](/scif/community): community resources including APIs, version control and testing, and open source forums for tracking issues and discussion related to SCI-F and scientific filesystem apps.
 
 
 We have provided several <a href="http://containers-ftw.github.io/apps/category/#Example" target="_blank">examples and tutorials</a> for getting started with SCI-F. If you have a workflow or container that you'd like to see added, please <a href="https://www.github.com/containers-ftw/apps/issues" target="_blank">reach out</a>. If you would like to see other ways to contribute, <a href="/SCI-F/community.html#contribute-to-sci-f">here are some suggestions</a>. This work will remain open for contributions, and early contributions will be represented in an official submission.
