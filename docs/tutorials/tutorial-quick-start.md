@@ -94,9 +94,9 @@ docker run vanessa/scif apps
 ./scif-cli apps
 
 SCIF [app]              [root]
-1  hello-world-env	/scif/apps/hello-world-env
-2  hello-world-script	/scif/apps/hello-world-script
-3  hello-world-echo	/scif/apps/hello-world-echo
+1  hello-world-echo	/scif/apps/hello-world-echo
+2  hello-world-env	/scif/apps/hello-world-env
+3  hello-world-script	/scif/apps/hello-world-script
 ```
 
 ### Help
@@ -197,24 +197,49 @@ If you want to interact with your container in the context of an app, there is a
 
 ```
 ./scif-cli shell
+WARNING No app selected, will run default ['/bin/bash']
+executing /bin/bash 
+vanessa@thinkpad:/scif$ 
 ```
+Notice how the path (`$PS1`) in the terminal window changed to `/scif`? The same happens for Docker of course:
 
 ```
 docker run -it vanessa/scif shell
 WARNING No app selected, will run default ['/bin/bash']
 executing /bin/bash 
 root@1ab15ba4cc3b:/scif
+```
+
+And the main difference here is that inside of the Docker image, we are (usually always) root :) Let's see where we are:
+
+```
+$ echo $PWD
+/scif
+
 $ ls
 apps
 data
 ```
 
-or we can do the same in the context of a specific app:
-
+Since the scientific filesystem is not an entire environment like a container (it is rooted at `/scif` this is where we shell to. If we shelled in context of an app (next) we would be in the apps root. Before exit, try looking at the environment to see that we have activated the global SCIF environment variables.
 
 ```
-./scif-cli shell hello-world-env
+env | grep SCIF
+...
+SCIF_APPBIN_hello_world_echo=/scif/apps/hello-world-echo/bin
+SCIF_MESSAGELEVEL=INFO
+exit
+...
+
+After exiting, we can do the same in the context of a specific app:
+
 ```
+ ./scif-cli shell hello-world-env
+[hello-world-env] executing /bin/bash 
+vanessa@thinkpad:/scif/apps/hello-world-env$ 
+```
+
+Notice how we are in the root of `hello-world-env`. It works the same for Docker.
 
 ```
 docker run -it vanessa/scif shell hello-world-env
