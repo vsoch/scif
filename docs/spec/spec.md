@@ -12,6 +12,7 @@ Authors:
 
 * Vanessa Sochat <<vsochat@stanford.edu>> (@vsoch)
 * Satrajit Ghosh <<satra@mit.edu>> (@satra)
+* Christopher Madan <<christopher.madan@nottingham.ac.uk>> (@cMadan)
 * <singularity@lbl.gov> (Singularity Community)
 
 ## Terminology
