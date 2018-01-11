@@ -11,6 +11,7 @@ toc: true
 Authors:
 
 * Vanessa Sochat <<vsochat@stanford.edu>> (@vsoch)
+* Satrajit Ghosh <<satra@mit.edu>> (@satra)
 * <singularity@lbl.gov> (Singularity Community)
 
 ## Terminology
