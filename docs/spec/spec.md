@@ -146,7 +146,7 @@ SCI-F does not enforce or state how the container creator should use the data fo
 ### Environment Namespace
 
 | Variable     | Default    | Definition                          |
-|--------------|--------------------------------------------------|
+|--------------|------------|-------------------------------------|
 | SCIF_BASE    | /scif | the root location for SCIF               |
 | SCIF_DATA    | /scif/data | the root location for apps data     |
 | SCIF_APPS    | /scif/apps | the root location for installed apps|
@@ -161,7 +161,7 @@ SCI-F does not enforce or state how the container creator should use the data fo
 #### Active App Environment Namespace
 
 | Variable     | Default    | Definition                          |
-|--------------|--------------------------------------------------|
+|--------------|------------|-------------------------------------|
 | SCIF_APPNAME | example   | the active software app                     |
 | SCIF_APPDATA | /scif/data/example | the data root for the active software app |
 | SCIF_APPROOT | /scif/apps/example | the install root for the active software app |
@@ -180,7 +180,7 @@ With the convention above, any tool that interacts with SCIF could, for example,
 #### Sleeping App Environment Namespace
 
 | Variable     | Default    | Definition                          |
-|--------------|--------------------------------------------------|
+|--------------|------------|-------------------------------------|
 | SCIF_APPNAME_sleeper | sleeper   | the inactive software app                     |
 | SCIF_APPDATA_sleeper | /scif/data/sleeper | the data root for the inactive software app |
 | SCIF_APPROOT_sleeper | /scif/apps/sleeper | the install root for the active software app |
