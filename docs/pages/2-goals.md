@@ -12,7 +12,7 @@ The philosophy behind the scientific filesystem is that we are empowered to bett
  1. discoverability means that we have knowledge that software exists
  2. predictibility is a means to interact with software without having prior knowledge to its creation
 
-At it's core, the scientific filesystem is a simple [description](/scif/spec) of how to organize software and metadata on a filesystem for discoverability. This description encompasses a **filesystem structure** to ensure that scientific software is distinct from standard software on the host, and is interacted with by way of a set of **environment variables** and **functions** to expose the structure to the user. In that containers provide encapsulated, reproducible environments, SCI-F works optimally when installed and used within a container. With SCIF you can:
+At it's core, the scientific filesystem is a simple [description](/scif/spec) of how to organize software and metadata on a filesystem for discoverability. This description encompasses a **filesystem structure** to ensure that scientific software is distinct from standard software on the host, and is interacted with by way of a set of **environment variables** and **functions** to expose the structure to the user. In that containers provide encapsulated, reproducible environments, SCIF works optimally when installed and used within a container. With SCIF you can:
 
  1. write **recipes** that define environments, metadata, executables, and dependencies for a grouping of scientific software
  2. **install** the recipe into a container
@@ -33,13 +33,13 @@ SCIF is agnostic to where you are using it. For reproducible software modules, e
 
 ## Goals
 
-For the official description of goals, see [the specification](/scif/specification#goals). In the following sections, we hope to show that SCI-F is useful because it allows for:
+For the official description of goals, see [the specification](/scif/specification#goals). In the following sections, we hope to show that SCIF is useful because it allows for:
 
  - [flexible, internal modularity](#modules) where the definition of modularity is entirely based on the needs of the creator and user, and the resulting container reflects that.
  - [reproducible practices](#reproducible-practices) by way of providing portable environments with modular internal contents that are easily discovered.
 
 
-While SCi-F is not a workflow manager, it follows naturally that the creator of a SCI-F app might use these internal variables to have modules internally talk to one another. The user and creator do not need to know the structural specifics of the standard, but only how to reference them.
+While SCi-F is not a workflow manager, it follows naturally that the creator of a SCIF app might use these internal variables to have modules internally talk to one another. The user and creator do not need to know the structural specifics of the standard, but only how to reference them.
 
 # Modules
 
@@ -53,7 +53,7 @@ Given the different needs briefly explained above, it is clear that there is no 
 
 >> The definition of modularity is entirely based on the needs of the creator and user. 
 
-If we discover a container after creation, it cannot be clear without suitable documentation what level is represented, or how to interact with the container. What is needed is an ability for the creator of a container to implicitly define this level of usage simply by way of creating the container. SCI-F allows us to do this. We can define modules on the levels of single files, or groups of software to perform a task. The metadata and organization of our preferences is automatically generated to create a complete, and programmatically understandable software package or scientific analysis.
+If we discover a container after creation, it cannot be clear without suitable documentation what level is represented, or how to interact with the container. What is needed is an ability for the creator of a container to implicitly define this level of usage simply by way of creating the container. SCIF allows us to do this. We can define modules on the levels of single files, or groups of software to perform a task. The metadata and organization of our preferences is automatically generated to create a complete, and programmatically understandable software package or scientific analysis.
 
 
 # Reproducible Practices
