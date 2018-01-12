@@ -26,7 +26,7 @@ We will start with a review of traditional file organization on a linux machine,
 
 
 ## Traditional File Organization
-File organization is likely to vary a bit based on the host OS, but arguably most Linux flavor operating systems can said to be similar to the <a href="https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard" target="_blank">Filesystem Hierarchy Standard</a> (FHS). For this discussion, we will disregard the inclusion of package managers, symbolic links, and custom structures, and focus on the core of FHS. We will discuss these locations in the context of how they do (or should) relate to a scientific container. It was an assessment of this current internal standard that led to the original development of SCI-F.
+File organization is likely to vary a bit based on the host OS, but arguably most Linux flavor operating systems can said to be similar to the <a href="https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard" target="_blank">Filesystem Hierarchy Standard</a> (FHS). For this discussion, we will disregard the inclusion of package managers, symbolic links, and custom structures, and focus on the core of FHS. We will discuss these locations in the context of how they do (or should) relate to a scientific container. It was an assessment of this current internal standard that led to the original development of SCIF.
 
 ### Do Not Touch
 Arguably, the following folders should not be touched by scientific software:
@@ -59,7 +59,7 @@ Connections for containers are devices and mount points. A container will arguab
 - `/proc`: connections between processes and resources and hardware information
 
 
-## SCI-F File Organization
+## SCIF File Organization
 The Standard Container Integration Format defines a root base (`/scif`) that can be known and consistently mounted across research clusters. The location was chosen to be independent of any locations on traditional linux filesystems for the sole purpose of avoiding conflicts. Using this namespace, the SCIF has a [set of defaults](/scif/specification#environment-namespace) that are paired with an environment namespace to make it easy to find content. For example, if you were to discover an app named `hello-world` you would have confidence about it's location under `/scif/apps/hello-world` (`$SCIF_APPROOT`).
 Along with these locations and environment variables, SCIF is entirely a set of rules about how a container software installs, organizes, and exposes software modules. For the specifics of SCIF we again direct the reader to [the specification](/scif/specification). Here we will wontinue with discussion of its development and rationale, starting with a review of some basic background about Linux Filesystems.
 
