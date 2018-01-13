@@ -12,16 +12,27 @@ SCI-F is powerful in that it supports multiple general use cases for scientific 
 ## Quick Examples
 You might find SCIF useful if you:
 
- - want to package multiple environments or software modules in a single container to publish alongside a paper. A scif app might coincide with a particular step in your pipeline, and the entire analysis is run with a few calls to scientific filesystem entrypoints. Bonus points if you package this in a container for reproducibility.
- - you want to provide users with small apps that perform a function (for a host or container) or assess a metric. For example, a scif app installed in a container might serve only to assess different time metrics when the container is building.
+### A Research Scientist
+ - want to package multiple environments or software modules to publish alongside a paper. A scif app might coincide with a particular step in your pipeline, and the entire analysis is run with a few calls to scientific filesystem entrypoints. You can share the scientific filesystem recipe for others to create, or (better) share a reproducible container built with it (that you used to conduct your analyses).
+ - want to provide modular tools for your lab or other scientists. A scif recipe or container with a filesystem could serve different environments for tools for your domain of interest.
+ - want to easily expose different interactive environments. For example, scif could be used to expose the same python virtual environment, but exporting different variables to the environment to determine the machine learning backend to use.
+
+### An Administrator
+ - want to provide users with small apps that perform a function (for a host or container). We can provide this example in the context of tests. A scif app could be a test that perhaps has its own environment and executables, and is easily accessed by your users by interacting with the filesystem.
+ - want to to assess metrics. For example, if any scif app can discover all the other installed apps (that perhaps are domain specific functions or processing steps) we can assess each for a metric of interst. Since the environments, raw files, and runscripts are available, they can be discovered and used as desired. A machine learning "metric" app might parse the others for features, run them to produce an output, and then parse the output.
+ - want to easily add consistent applications to user (or provided) containers. In that a scif app can be added in a modular fashion to a container (or other) recipe, during a build time an administrator can easily add one or more helper modules to user recipes. An administrator can also offer apps for the user to select from to install.
+
+### Developers
  - akin to using a module system, you could use scif to provide different entrypoints for software (coinciding with version, or even the same software with a different environment variable exported to determine runtime behavior.) A good example of this is using common machine learning libraries with different backends (e.g., keras, tensorflow, torch). An entrypoint `keras-python2` would run python with an environment variable triggering using keras as a backend, `keras-python3` would do the same with python3, and then `keras-python` would target the most recent.
  - you want to implement (functionally) the "same thing" in different ways, and assess differences. The simplest example is to imagine recording runtime metrics for a console print of "Hello World" in multiple langauges. Each variation or implementation is a scif app, and the common base is the host or container.
 
+If you have more examples, please [add them!](https://www.github.com/vsoch/scif). We will next go into a few of these examples in greater detail.
 
-### Modular Software Evaluation
+
+## Modular Software Evaluation
 A common question pertains to evaluation of different solutions toward a common goal. An individual might ask "How does implementation **A** compare to implementation **B** as evaluated by one or more metrics?" For a systems admin, the metric might pertain to running times, resource usage, or efficiency. For a researcher, he or she might be interested in looking at variability (or consistency) of outputs. Importantly, it should be possible to give a container serving such a purpose to a third party that does not know locations of executables, or environment variables to load, and the container runs equivalently. SCI-F allows for this by way of providing modular software applications, each corresponding to custom environments, libraries, and potentially files.
 
-#### Method
+### Method
 
 To demonstrate this use case, we developed a container that implements the most basic function for a program, a print to the console, for each of 19 different languages (*R*, *awk*, *bash*, *c*, *cat*, *chapel*, *clisp*, *cpp*, *csh*, *go*, *julia*, *octave*, *perl*, *python*, *ruby*, *rust*, *tcsh*, *zsh*). The container is designed as a means to collect a series of metrics relative to timing and system resources for each language. The metrics pertain to system resources provided by the <a href="https://linux.die.net/man/1/time" target="_blank">time</a> and <a href="https://linux.die.net/man/1/strace" target="_blank">strace</a> utilities. We will refer to this container generally as "hello-world." A user that did not create the container could ask it for global help:
 
@@ -87,7 +98,7 @@ done
 
 In practice, for general metrics like timing and host resources, if the container does not provide an app to measure time internally (e.g., an internal app to perform the same call with the "time" executable inside the container), given that the time for Singularity to execute this internal command is trivial or accounted for, it is reasonable to perform tests externally. External tests are advantageous in that containers themselves can be agnostic to the tests - a container does not need to be developed with the internal dependencies to perform any specific test. For tests that look at system calls (e.g., strace as in the example above) calling externally would mean needing to properly account for the call to the singularity software itself in the results.
 
-#### Results
+### Results
 
 To demonstrate the value of using SCI-F containers, we ran a simple function to print to the command line in 19 languages, and were able to run the analysis in entirety without knowing the specific commands for each language. The resulting table of features pertaining to times (<a href="https://github.com/containers-ftw/hello-world-ftw/blob/master/logs/language-times.tsv" target="_blank"> Supplementary Table 1</a>) and features (<a href="https://github.com/containers-ftw/hello-world-ftw/blob/master/logs/language-features.tsv" target="_blank">Supplementary Table 2</a>) demonstrates a wide span of differences between the seemingly identical calls. For example, Figure 1 shows the differences in "read calls," or the number of read commands to the filesystem issued when the simple "Hello World" command was run: 
 
