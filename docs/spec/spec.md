@@ -3,7 +3,7 @@ layout: default
 title: Specification for the Scientific Filesystem (scif)
 pdf: true
 permalink: /specification
-toc: true
+toc: false
 ---
 
 # Scientific Filesystem (scif)
