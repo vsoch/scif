@@ -14,6 +14,10 @@
     url: "/scif/tutorials"
     slug: tutorials
 
+  - title: Examples
+    url: "/scif/examples"
+    slug: examples
+
   - title: Community
     url: "/scif/community"
     slug: community

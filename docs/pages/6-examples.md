@@ -7,7 +7,7 @@ toc: true
 ---
 
 ## Example Use Cases
-SCI-F is powerful in that it supports multiple general use cases for scientific and systems evaluation and high level introspection. These use cases broadly fall in the areas of providing modular software, systems and metric evaluation, and guided collaboration to answer a scientific question, and are done in context of a Singularity container for maximum reproducibility.
+SCIF is powerful in that it supports multiple general use cases for scientific and systems evaluation and high level introspection. These use cases broadly fall in the areas of providing modular software, systems and metric evaluation, and guided collaboration to answer a scientific question, and are done in context of a Singularity container for maximum reproducibility.
 
 ## Quick Examples
 You might find SCIF useful if you:
