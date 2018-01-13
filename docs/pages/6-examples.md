@@ -3,7 +3,7 @@ layout: default
 title: Example Use Cases
 pdf: true
 permalink: /examples
-toc: true
+toc: false
 ---
 
 ## Example Use Cases
