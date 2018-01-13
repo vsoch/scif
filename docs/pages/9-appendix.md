@@ -39,7 +39,9 @@ The Scientific Filesystem is advantageous in that the container creator can embe
  - <a href="https://indico.esrf.fr/indico/event/6/session/2/contribution/3/material/slides/" target="_blank">https://indico.esrf.fr/indico/event/6/session/2/contribution/3/material/slides/</a>
  - <a href="https://indico.cern.ch/event/567550/contributions/2656689/" target="_blank">https://indico.cern.ch/event/567550/contributions/2656689/</a>
  - <a href="https://github.com/TANGO-Project/alde#application-lifecycle-deployment-engine-alde" target="_blank">https://github.com/TANGO-Project/alde#application-lifecycle-deployment-engine-alde</a>
- - <a href="https://figshare.com/articles/Orchestration_and_Workflows_in_eScience_Problems_Standards_and_Solutions/4746931" target="_blank">https://figshare.com/articles/Orchestration_and_Workflows_in_eScience_Problems_Standards_and_Solutions/4746931</a>
+ - <a href="https://figshare.com/articles/Orchestration_and_Workflows_in_eScience_Problems_Standards_and_Solutions/4746931" target="_blank"> 
+https://figshare.com/articles/Orchestration_and_Workflows_in_eScience_Problems_Standards_and_Solutions/4746931</a>
+
 
 <div>
     <a href="/scif/community"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>

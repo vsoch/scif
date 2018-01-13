@@ -40,5 +40,5 @@ We will start by reviewing the background and rationale for a scientific organiz
 We have provided several <a href="http://containers-ftw.github.io/apps/category/#Example" target="_blank">examples and tutorials</a> for getting started with SCI-F. If you have a workflow or container that you'd like to see added, please <a href="https://www.github.com/containers-ftw/apps/issues" target="_blank">reach out</a>. If you would like to see other ways to contribute, <a href="/SCI-F/community.html#contribute-to-sci-f">here are some suggestions</a>. This work will remain open for contributions, and early contributions will be represented in an official submission.
 
 <div>
-    <a href="/scif/intro.html"><button class="next-button btn btn-primary"><i class="fa fa-chevron-right"></i> </button></a>
+    <a href="/scif/goals"><button class="next-button btn btn-primary"><i class="fa fa-chevron-right"></i> </button></a>
 </div><br>

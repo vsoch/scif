@@ -935,6 +935,6 @@ singularity shell --app tensorflow-gpu container.img
 Although we do not delve into this use case, it should be noted that SCI-F apps can provide logging and auditing for containers. A systems administration that builds and provides containers for his or her users might want to enforce running with a standard for logging and auditing. Instead of asking the researcher to write this into his or her custom runscript, the snippet to perform the logging could be added as a SCI-F app dynamically at build time, and then the container run with this context.
 
 <div>
-    <a href="/scif/spec"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>
+    <a href="/scif/tutorials"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>
     <a href="/scif/community"><button class="next-button btn btn-primary"><i class="fa fa-chevron-right"></i> </button></a>
 </div><br>
