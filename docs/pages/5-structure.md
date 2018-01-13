@@ -81,6 +81,6 @@ The base of `/scif/data` is structured akin to apps - each installed application
 To read more about data, [read the Specification Document](/scif/specification).
 
 <div>
-    <a href="/SCI-F/goals"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>
-    <a href="/SCI-F/tutorials"><button class="next-button btn btn-primary"><i class="fa fa-chevron-right"></i> </button></a>
+    <a href="/scif/goals"><button class="previous-button btn btn-primary"><i class="fa fa-chevron-left"></i> </button></a>
+    <a href="/scif/tutorials"><button class="next-button btn btn-primary"><i class="fa fa-chevron-right"></i> </button></a>
 </div><br>
