@@ -230,6 +230,7 @@ SCIF_APPBIN_hello_world_echo=/scif/apps/hello-world-echo/bin
 SCIF_MESSAGELEVEL=INFO
 exit
 ...
+```
 
 After exiting, we can do the same in the context of a specific app:
 
