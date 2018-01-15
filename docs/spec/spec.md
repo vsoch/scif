@@ -31,8 +31,8 @@ Authors:
 | Integration     | A third party software or tool that understands the SCIF structure and interacts with all or some portion of it |
 | Container          | A linux container technology that can be installed with a SCIF |
 | SC            | The scientific community, including academics, researchers, and associated engineering and development staff |
-| EV            | Environment variables in the namespace of SCIF (prefixed with `SCIF_` that drive interaction of a user agent (UA) |
-| UA            | A user agent (controller) that interacts with environment variables (EV) to act as an interface between the user with the scientific filesystem |
+| ENV            | Environment variables in the namespace of SCIF (prefixed with `SCIF_` that drive interaction of a user agent (UA) |
+| UA            | A user agent (controller) that interacts with environment variables (ENV) to act as an interface between the user with the scientific filesystem |
 
 ## Objective
 
