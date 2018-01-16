@@ -27,7 +27,7 @@ We will start by reviewing the background and rationale for a scientific organiz
 
 ### Getting Started
 
- - [Tutorils](/scif/tutorials): are a good place to start if you are a user or developer. These pages will show you how you generate and interact with a scientific filesystem. Or jump right in to a *[quick start](/scif/tutorial-quick-start)* or *[really quick start](/scif/tutorial-really-quick-start)*.
+ - [Tutorials](/scif/tutorials): are a good place to start if you are a user or developer. These pages will show you how you generate and interact with a scientific filesystem. Or jump right in to a *[quick start](/scif/tutorial-quick-start)* or *[really quick start](/scif/tutorial-really-quick-start)*.
  - [Goals](/scif/goals): here we review how SCI-F allows for internal modularity and consistency, transparency, and reproducible practices.
  - [Examples](/scif/examples): Whether you are a system admin, a developer, or a research scientist, why would you want to use SCI-F anyway?
  - [Specification](/scif/spec): reviews the current specification for SCI-F.
