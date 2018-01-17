@@ -6,7 +6,7 @@ permalink: /tutorial-really-quick-start
 toc: false
 ---
 
-Same commands, but [more detail here](/scif/tutorial-quick-start).
+Same commands, but [more detail here](/scif/tutorial-quick-start), or get quick start code on Github [here](https://github.com/vsoch/hello-world.scif).
 
 ## 1. Get containers with the same scientific filesystem
 

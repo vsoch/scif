@@ -7,7 +7,7 @@ toc: false
 ---
 
 # Scientific Filesystem Quick Start
-This is the quick start for using a Scientific Filesystem. We won't be designing or creating one, but using a pre-generated Docker or Singularity container. The awesome part is that despite two different container technologies, the guts inside, and interacting with them, will be the same! Thus, we will first show how to pull the different containers, and then show usage side by side. If you *do* want to learn these first steps, see the [preview and install tutorial](/scif/tutorial-preview-install). If you want a REALLY quick start, [skip the prose and go to it](/scif/tutorial-really-quick-start)!
+This is the quick start for using a Scientific Filesystem. We won't be designing or creating one, but using a pre-generated Docker or Singularity container. The awesome part is that despite two different container technologies, the guts inside, and interacting with them, will be the same! Thus, we will first show how to pull the different containers, and then show usage side by side. If you *do* want to learn these first steps, see the [preview and install tutorial](/scif/tutorial-preview-install). If you want a REALLY quick start, [skip the prose and go to it](/scif/tutorial-really-quick-start)! If you want code for a quick start, see our [hello-world.scif](https://github.com/vsoch/hello-world.scif) Github repository.
 
 What you should understand for this quick start is what we've done thus far. We (as the *creator* of a container with a scientific filesystem) wrote a recipe, a text file with instructions for interacting with different scientific filesystem software modules ("apps") and then exposed a single entrypoint that is the controller for the different apps. Then we build the container.
 
