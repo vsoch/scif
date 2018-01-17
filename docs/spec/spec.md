@@ -21,7 +21,7 @@ Authors:
 | Term              | Definition                                       |
 |-------------------|--------------------------------------------------|
 | SCIF            | The Scientific Filesystem |
-| Host            | The machine where the scientific filesystem is installed alongside but separate from the core operating system |
+| Host            | The machine or container where the scientific filesystem is installed alongside but separate from the core operating system |
 | App             | A scientific filesystem module that is installed onto the Host |
 | Data            | A root location in the scientific filesystem exclusively for data inputs and outputs that belong to Apps                                    |
 | Recipe          | A text file with extension `.scif` with sections that define a SCIF |

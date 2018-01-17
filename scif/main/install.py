@@ -108,7 +108,7 @@ def install_labels(self, app, settings, config):
     '''
     lookup = dict()
     if "applabels" in config:
-        labels = config['appfiles']
+        labels = config['applabels']
         bot.level
         bot.info('+ ' + 'applabels '.ljust(5) + app)
         for line in labels:
