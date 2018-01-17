@@ -114,7 +114,8 @@ def install_labels(self, app, settings, config):
         for line in labels:
             label, value = get_parts(line, default='')
             lookup[label] = value
- 
+        print(settings['applabels'])
+        print(lookup)
         write_json(settings['applabels'], lookup)
     return lookup
 
