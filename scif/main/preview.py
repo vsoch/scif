@@ -130,7 +130,7 @@ def preview_labels(self, app, settings, config):
     '''
     lookup = ''
     if "applabels" in config:
-        labels = config['appfiles']
+        labels = config['applabels']
         bot.info('+ ' + 'applabels '.ljust(5) + app)
         print(settings['applabels'])
         for line in labels:

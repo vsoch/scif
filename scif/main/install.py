@@ -113,10 +113,8 @@ def install_labels(self, app, settings, config):
         bot.info('+ ' + 'applabels '.ljust(5) + app)
         for line in labels:
             label, value = get_parts(line, default='')
-            lookup[label] = value
-        print(settings['applabels'])
-        print(lookup)
-        write_json(settings['applabels'], lookup)
+            lookup[label] = value 
+        write_json(lookup, settings['applabels'])
     return lookup
 
 
