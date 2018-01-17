@@ -6,7 +6,7 @@ permalink: /specification
 toc: false
 ---
 
-# Scientific Filesystem (scif)
+# Scientific Filesystem (SCIF)
 
 Authors:
 

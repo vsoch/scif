@@ -7,7 +7,7 @@ permalink: /
 
 <div style="float:right; margin-bottom:50px; color:#666">
 Version: {{ site.version }}<br>
-Date: 2017-xx-xx
+Date: 2018-xx-xx
 </div>
 
 <div>
@@ -15,14 +15,14 @@ Date: 2017-xx-xx
     <h1 style="margin-top:10px">Scientific Filesystem</h1>
 </div><br><br>
 
-Here we present the Scientific Filesystem (scif), an organizational format that supports exposure of executables and metadata for discoverability. The format includes a known *filesystem structure*, a definition for a set of *environment variables* describing it, and *functions* for generation of the variables and interaction with the libraries, metadata, and executables located within. [*[quick start](/scif/tutorial-quick-start)*] or [*[really quick start](/scif/tutorial-really-quick-start)*].
+Here we present the Scientific Filesystem (SCIF), an organizational format that supports exposure of executables and metadata for discoverability. The format includes a known *filesystem structure*, a definition for a set of *environment variables* describing it, and *functions* for generation of the variables and interaction with the libraries, metadata, and executables located within. [*[quick start](/scif/tutorial-quick-start)*] or [*[really quick start](/scif/tutorial-really-quick-start)*].
 
 ## How does scif related to containers?
 Although scif is not exclusively for containers, in that a container can provide an encapsulated, reproducible environment, the scientific filesystem works optimally when contained. Containers traditionally have one entrypoint, one environment context, and one set of labels to describe it. A container created with a Scientific Filesystem can expose *multiple* entry points, each that includes its own environment, metadata, installation steps, tests, files, and a primary executable script. SCIF thus brings internal modularity and programatic accessibility to encapsulated, reproducible environments.
 
 
 ## What will I learn reading this?
-We will start by reviewing the background and rationale for a scientific organizational format, and how SCI-F achieves the goals of **modularity**, **transparency**, and **consistency**. We then review the organizational structure of the standard, and the different levels of internal modules that it affords. For this work, we provide several tutorials to demonstrate using the scientific filesystem with Docker and Singularity, and additionally have implemented and released the organizational format as a native integration with the Singularity software. Finally, we discuss use cases for SCI-F in context of containers, including how scif can be used to evaluate software, provide metrics, serve scientific workflows, and execute a primary function under different contexts. To encourage collaboration and sharing of apps, we have developed an open source, version controlled, tested, and programmatically accessible web infrastructure at <a href="http://containers-ftw.org/apps" target="_blank">http://containers-ftw.org/apps</a>. For developers, we provide a getting started guide for integration of SCI-F into other container technologies or contexts. The ease of using SCI-F to develop scientific containers offers promise for scientists to easily generate self-documenting containers that are programmatically parseable, exposing software and associated metadata, environments, and files to be quickly found and used. 
+We will start by reviewing the background and rationale for a scientific organizational format, and how SCI-F achieves the goals of **modularity**, **transparency**, and **consistency**. We then review the organizational structure of the standard, and the different levels of internal modules that it affords. For this work, we provide several tutorials to demonstrate using the scientific filesystem with Docker and Singularity, and additionally have implemented and released the organizational format as a native integration with the Singularity software. Finally, we discuss use cases for SCI-F in context of containers, including how SCIF can be used to evaluate software, provide metrics, serve scientific workflows, and execute a primary function under different contexts. To encourage collaboration and sharing of apps, we have developed an open source, version controlled, tested, and programmatically accessible web infrastructure at <a href="http://containers-ftw.org/apps" target="_blank">http://containers-ftw.org/apps</a>. For developers, we provide a getting started guide for integration of SCI-F into other container technologies or contexts. The ease of using SCI-F to develop scientific containers offers promise for scientists to easily generate self-documenting containers that are programmatically parseable, exposing software and associated metadata, environments, and files to be quickly found and used. 
 
 
 ### Getting Started
