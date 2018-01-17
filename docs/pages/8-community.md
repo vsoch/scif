@@ -8,7 +8,7 @@ toc: true
 
 # Community
 
-To encourage sharing and distribution of useful apps, we have developed an online interface for easily exploring and sharing SCI-F apps, and generating recipes using the apps, available at <a href="https://containers-ftw.github.io/apps" target="_blank">https://containers-ftw.github.io/apps.</a>
+To encourage sharing and distribution of useful apps, we have developed an online interface for easily exploring and sharing SCIF apps, and generating recipes using the apps, available at <a href="https://containers-ftw.github.io/apps" target="_blank">https://containers-ftw.github.io/apps.</a>
 
 ## Infrastructure Overview
 The interface is served from a Github repository that renders static template files into a complete website that includes search across all content, exploration by tag (e.g., language or operating system), and instruction by way of reading examples and tutorials. Programmatic access to all apps is provided with a RESTful API <a href="https://containers-ftw.github.io/apps/api/index.json" target="_blank">for all apps</a> or for a <a href="https://containers-ftw.github.io/apps/scif/hello-world/hello-world-bash/?json=1" target="_blank">single one</a>, as is an <a href="https://containers-ftw.github.io/apps/feed.xml" target="_blank">feed</a> for interested users to be notified when new content is added. The interface also includes a <a href="https://containers-ftw.github.io/apps/generate" target="_blank">recipe generator</a> that allows a user to browse the site, save apps of interest in the browser’s local storage, and then combine them in a Singularity build file that can be downloaded in a compressed archive that includes instructions and any associated, required files for the app.
@@ -34,7 +34,7 @@ Github also allows for complete testing of all contributions, and the repository
 Any contribution that does not meet these requirements will get feedback during the PR, and the contributor can adjust the file to address any issues. As soon as the content is merged into the master branch, it is immediately live on the site.
 
 
-## Contribute to SCI-F
+## Contribute to SCIF
 There are so many ways to contribute! Here are just a few:
 
  - [Contribute to the Specification](https://www.github.com/vsoch/scif) meaning these pages!
@@ -42,10 +42,10 @@ There are so many ways to contribute! Here are just a few:
  - [Find useful examples](https://containers-ftw.github.io/apps) and apps for your Singularity containers.
  - Contribute to the implementation in the [Singularity](https://www.github.com/singularityware/singularity.git) software.
  - [Contribute an App](https://www.github.com/containers-ftw/apps) for others to use.
- - [Ask a question](https://www.github.com/containers-ftw/SCI-F/issues), anything on your mind.
+ - [Ask a question](https://www.github.com/vsoch/scif/issues), anything on your mind.
 
 ## Future Work
-SCI-F is exciting because it makes basic scientific application development (optimized in containers) and usage easier. The user can immediately inspect and see software, and how to use it. The user can install additional software, copy from one container to another, or view metadata and help documentation. The developer is provided guidance for how and where to install and configure software, but complete freedom with regard to the software itself. The minimum requirements for any package are a name for its folder, and then optionally a runscript and help document for the user. In addition to these basic examples, we provide other future use cases that would be possible with the Scientific Filesystem.
+SCIF is exciting because it makes basic scientific application development (optimized in containers) and usage easier. The user can immediately inspect and see software, and how to use it. The user can install additional software, copy from one container to another, or view metadata and help documentation. The developer is provided guidance for how and where to install and configure software, but complete freedom with regard to the software itself. The minimum requirements for any package are a name for its folder, and then optionally a runscript and help document for the user. In addition to these basic examples, we provide other future use cases that would be possible with the Scientific Filesystem.
 
 
 ### Mapping of container landscape
