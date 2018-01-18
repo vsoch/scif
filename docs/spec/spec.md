@@ -122,15 +122,26 @@ The recipe itself is a text file that must have extension `.scif`, and can serve
 #### Sections
  - `%appinstall` corresponds to executing commands within the folder to install the 
 application. The writer of the recipe should expect the commands to be executed in `$SCIF_APPROOT`, and thus write final outputs to `$SCIF_APPBIN` that is located at `$SCIF_APPROOT`/bin
- - `%apphelp` is written as a file called runscript.help in the application's metadata folder, where a client knows where to find it.
+ - `%apphelp` is written as a file called `runscript.help` in the application's metadata folder, where a client knows where to find it.
  - `%apprun` is also written as a file called runscript in the application's metadata 
 folder, and again looked for when the user asks to run the software.
- - `%applabels` will write a labels.json in the application's metadata 
+ - `%applabels` will write a `labels.json` in the application's metadata 
 folder, allowing for application specific labels. 
- - `%appenv` will write an environment file in the application's base folder, allowing for definition of application specific environment variables. These variables are sourced when the application is active.
+ - `%appenv` will write an environment file in the application's metadata folder (`environment.sh`), allowing for definition of application specific environment variables. These variables are sourced when the application is active.
  - `%appfiles` a list of files to add from the host (or other location known to the integration or client) to the application root.
  - `%apptest` will run tests specific to the application, with present working directory assumed to be the software module’s folder
 
+Specifically, this means that any software that implements the SCIF would do the following procedure to produce a SCIF from a recipe:
+
+ 1. Find any app section alongside a name (e.g., `%appinstall foo`) as indication of an application command.
+ 2. Parse the string following the section name (e.g. foo) as the name of the application. and create a folder for the app under the roots /scif/apps and /scif/data in lowercase given that each folder doesn't already exist. 
+ 3. If an installation procedure is present (`%appinstall foo`), perform it to install dependencies relative to the app's install folder.
+ 4. Create a metadata folder, scif, inside the application folder. 
+ 5. For those defined, save the environment (`%appenv foo`), help (`%apphelp foo`), runscript (`%apprun foo`), and labels (`%applabels foo`) to the metadata folder.
+ 6. Generate a "bin" folder for foo, and automatically add it to the `$PATH` when foo is being used. Generate a "lib" folder for libraries, to also be added to the `$LD_LIBRARY_PATH` when foo is used.
+ 7. If the (`%apptest foo`) section is defined, tests are run on the newly installed app to insure it works as expected.
+
+This general list is hashed out in more detail in the following sections.
 
 ### Data
 The base of `/scif/data` is structured akin to apps - each installed application has its own folder, and additionally (but not required) subfolders are created for inputs and outputs:
@@ -154,7 +165,7 @@ SCIF does not enforce or state how the container creator should use the data fol
 | SCIF_APPS    | /scif/apps | the root location for installed apps|
 | SCIF_SHELL    | /bin/bash | shell to use for "shell" command |
 | SCIF_PYSHELL    | ipython | interactive python shell for pyshell command|
-| SCIF_ENTRYPOINT    | /scif/apps | the command to run given no runscript or app defined |
+| SCIF_ENTRYPOINT    | /bin/bash | the command to run given no runscript or app defined |
 | SCIF_ENTRYFOLDER    | SCIF_BASE | the entry folder to run the entrypoint command |
 | SCIF_MESSAGELEVEL    | INFO | a client level of verbosity. Must be one of `CRITICAL`, `ABORT`, `ERROR`, `WARNING`, `LOG`, `INFO`, `QUIET`, `VERBOSE`, `DEBUG`|
 
@@ -172,6 +183,7 @@ SCIF does not enforce or state how the container creator should use the data fol
 | SCIF_APPMETA | /scif/apps/example/scif | the metadata folder |
 | SCIF_APPHELP | /scif/apps/example/scif/runscript.help | a text file with help to print for the user to the terminal | 
 | SCIF_APPRUN | /scif/apps/example/scif/runscript | the commands to run as the app entrypoint |
+| SCIF_APPTEST | /scif/apps/example/scif/test | the commands to run to test the app |
 | SCIF_APPLABELS | /scif/apps/example/scif/labels.json | a key:value json lookup dictionary of labels |
 | SCIF_APPENV | /scif/apps/example/scif/environment.sh | a shell script to source for the software app environment |
 
@@ -191,6 +203,7 @@ With the convention above, any tool that interacts with SCIF could, for example,
 | SCIF_APPMETA_sleeper | /scif/apps/sleeper/scif | the metadata folder |
 | SCIF_APPHELP_sleeper | /scif/apps/sleeper/scif/runscript.help | a text file with help to print for the user to the terminal | 
 | SCIF_APPRUN_sleeper | /scif/apps/sleeper/scif/runscript | the commands to run as the app entrypoint |
+| SCIF_APPTEST_sleeper | /scif/apps/sleeper/scif/test | the commands to run to test the app |
 | SCIF_APPLABELS_sleeper | /scif/apps/sleeper/scif/labels.json | a key:value json lookup dictionary of labels |
 | SCIF_APPENV_sleeper | /scif/apps/sleeper/scif/environment.sh | a shell script to source for the software app environment |
 
