@@ -85,7 +85,6 @@ def getenv_namespace(namespace="SCIF", func=None):
 sections = ('appenv',
             'applabels',
             'appinstall',
-            'appsetup',
             'appfiles',
             'apphelp',
             'apprun',

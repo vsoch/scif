@@ -45,7 +45,8 @@ from scif.main.preview import (
     preview_environment,
     preview_files,
     preview_commands,
-    preview_recipe
+    preview_recipe,
+    preview_test
 )
 from scif.main.setup import ( install_base, set_base, set_defaults )
 from scif.main.install import (
@@ -59,7 +60,8 @@ from scif.main.install import (
     install_labels,
     install_commands,
     install_files,
-    install_recipe
+    install_recipe,
+    install_test
 )
 
 
@@ -96,6 +98,7 @@ ScifRecipe._preview_environment = preview_environment
 ScifRecipe._preview_commands = preview_commands
 ScifRecipe._preview_files = preview_files
 ScifRecipe._preview_recipe = preview_recipe
+ScifRecipe._preview_test = preview_test
 
 # Setup
 ScifRecipe._install_base = install_base
@@ -124,3 +127,4 @@ ScifRecipe._install_labels = install_labels
 ScifRecipe._install_recipe = install_recipe
 ScifRecipe._install_runscript = install_runscript
 ScifRecipe._install_script = install_script
+ScifRecipe._install_test = install_test

@@ -85,6 +85,7 @@ def preview_apps(self, apps=None):
         self._preview_commands(app, settings, config)
         self._preview_files(app, settings, config)
         self._preview_recipe(app, settings, config)
+        self._preview_test(app, settings, config)
         bot.newline()
 
 def init_app_preview(self, app):
@@ -115,6 +116,23 @@ def preview_runscript(self, app, settings, config):
         bot.info('+ ' + 'apprun '.ljust(5) + app)
         print(settings['apprun'])
         print(settings['apphelp'])
+        print(content)
+
+
+def preview_test(self, app, settings, config):
+    '''preview the test for the app
+
+       Parameters
+       ==========
+       app should be the name of the app, for lookup in config['apps']
+       settings: the output of _init_app(), a dictionary of environment vars
+       config: should be the config for the app obtained with self.app(app)
+
+    '''
+    if "apptest" in config:
+        content = '\n'.join(config['apptest'])
+        bot.info('+ ' + 'apptest '.ljust(5) + app)
+        print(settings['apptest'])
         print(content)
 
 

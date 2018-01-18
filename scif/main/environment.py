@@ -239,6 +239,7 @@ def get_appenv_lookup(self, app):
                       'appdata': '/scif/data/registry',
                       'appenv': '/scif/apps/registry/scif/environment.sh',
                       'apphelp': '/scif/apps/registry/scif/runscript.help',
+                      'apptest': '/scif/apps/registry/scif/test.sh',
                       'applabels': '/scif/apps/registry/scif/labels.json',
                       'applib': '/scif/apps/registry/lib',
                       'appmeta': '/scif/apps/registry/scif',
@@ -258,6 +259,7 @@ def get_appenv_lookup(self, app):
         'SCIF_APPENV_registry': '/scif/apps/registry/scif/environment.sh',
         'SCIF_APPHELP_registry': '/scif/apps/registry/scif/runscript.help',
         'SCIF_APPLABELS_registry': '/scif/apps/registry/scif/labels.json',
+        'SCIF_APPTEST_registry': '/scif/apps/registry/scif/test.sh',
         'SCIF_APPLIB_registry': '/scif/apps/registry/lib',
         'SCIF_APPMETA_registry': '/scif/apps/registry/scif',
         'SCIF_APPRECIPE_registry': '/scif/apps/registry/scif/registry.scif',
@@ -284,8 +286,9 @@ def get_appenv_lookup(self, app):
         envars[app]['applib'] = "%s/lib"  %(approot)
         envars[app]['apprun'] = "%s/runscript"  %(appmeta)
         envars[app]['apphelp'] = "%s/runscript.help"  %(appmeta)
-        envars[app]['applabels'] = "%s/labels.json"  %(appmeta)
         envars[app]['appenv'] = "%s/environment.sh"  %(appmeta)
+        envars[app]['apptest'] = "%s/test.sh"  %(appmeta)
+        envars[app]['applabels'] = "%s/labels.json"  %(appmeta)
         envars[app]['apprecipe'] = "%s/%s.scif"  %(appmeta, app)
         envars[app]['appname'] = app
         return envars

@@ -91,6 +91,7 @@ def install_apps(self, apps=None):
         self._install_commands(app, settings, config)
         self._install_files(app, settings, config)
         self._install_recipe(app, settings, config)
+        self._install_test(app, settings, config)
 
         # After we install, in case interactive, deactivate last app
         self.deactivate(app)
@@ -212,37 +213,27 @@ def install_script(self, section, app, settings, config):
 
 def install_runscript(self, app, settings, config):
     '''install runscript will prepare the runscript for an app.
-       
-       Parameters
-       ==========
-       app should be the name of the app, for lookup in config['apps']
-       settings: the output of _init_app(), a dictionary of environment vars
-       config: should be the config for the app obtained with self.app(app)
-
+       the parameters are shared by _install_script
     '''
     return self._install_script('apprun', app, settings, config)
 
             
 def install_environment(self, app, settings, config):
     '''install will run the content to export environment variables, if defined
-
-       Parameters
-       ==========
-       app should be the name of the app, for lookup in config['apps']
-       settings: the output of _init_app(), a dictionary of environment vars
-
+       the parameters are shared by _install_script
     '''
     return self._install_script('appenv', app, settings, config)
 
 
-
 def install_help(self, app, settings, config):
     '''install will write the help section, if defined.
-
-       Parameters
-       ==========
-       app should be the name of the app, for lookup in config['apps']
-       settings: the output of _init_app(), a dictionary of environment vars
-
+       the parameters are shared by _install_script
     '''
     return self._install_script('apphelp', app, settings, config)
+
+
+def install_test(self, app, settings, config):
+    '''install test will prepare a test script for an app.
+       the parameters are shared by _install_script
+    '''
+    return self._install_script('apptest', app, settings, config)
