@@ -15,3 +15,4 @@ represented by the pull requests that fixed them.
 ## [xxx](https://github.com/vsoch/scif/tree/master) (development)
 
  - initial creation of just the scif client.
+ - fixed bug with appfiles copy command
