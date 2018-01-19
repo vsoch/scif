@@ -12,7 +12,10 @@ represented by the pull requests that fixed them.
  - migration guidance (how to convert images?)
  - changed behaviour (recipe sections work differently)
 
+Versions in parentheses coincide with what is available on [pypi](https://pypi.org/project/scif/).
+
 ## [xxx](https://github.com/vsoch/scif/tree/master) (development)
 
- - initial creation of just the scif client.
- - fixed bug with appfiles copy command
+ - fixed bug with appfiles copy command (0.0.51)
+ - initial creation of just the scif client. (0.0.5)
+
