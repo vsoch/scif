@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: continuumio/anaconda3
+From: continuumio/miniconda3
 
 # sudo singularity build hello-world-scif.simg Singularity.scif
 

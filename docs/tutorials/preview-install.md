@@ -184,7 +184,7 @@ Well let's install it then! But first, let's interactively explore the recipe, `
 ```
 $ scif pyshell hello-world.scif
 [scif] /scif hello-world-echo | hello-world-script
-Python 3.6.3 |Anaconda, Inc.| (default, Oct 13 2017, 12:02:49) 
+Python 3.6.3 |miniconda, Inc.| (default, Oct 13 2017, 12:02:49) 
 Type 'copyright', 'credits' or 'license' for more information
 IPython 6.1.0 -- An enhanced Interactive Python. Type '?' for help.
 
@@ -267,7 +267,7 @@ You can also do this directly from the terminal by giving pyshell the app name:
 ```
 $ scif pyshell hello-world.scif hello-world-echo
 [scif] /scif hello-world-echo | hello-world-script
-Python 3.6.3 |Anaconda, Inc.| (default, Oct 13 2017, 12:02:49) 
+Python 3.6.3 |miniconda, Inc.| (default, Oct 13 2017, 12:02:49) 
 Type 'copyright', 'credits' or 'license' for more information
 IPython 6.1.0 -- An enhanced Interactive Python. Type '?' for help.
 
@@ -329,10 +329,10 @@ Once we have previewed, we likely want to install. I'm not a fan of making chang
 docker pull vanessa/scif:latest
 ```
 
-First we will do it interactively, and then add a few lines to a recipe to do it properly. Here is the interactive version. We will use an anaconda image so we know that it comes with pip to install `scif`. Note that I'm mapping the present working directory to `/tmp` so I have my `hello-world.scif` recipe.
+First we will do it interactively, and then add a few lines to a recipe to do it properly. Here is the interactive version. We will use an miniconda image so we know that it comes with pip to install `scif`. Note that I'm mapping the present working directory to `/tmp` so I have my `hello-world.scif` recipe.
 
 ```
-$ docker run -v $PWD:/tmp -it continuumio/anaconda3 /bin/bash
+$ docker run -v $PWD:/tmp -it continuumio/miniconda3 /bin/bash
 $ pip install scif
 $ scif install hello-world.scif 
 Installing base at /scif
@@ -402,7 +402,7 @@ We have a scientific filesystem ready to go! At this point, if you want this gen
 
 
 ```
-FROM continuumio/anaconda3
+FROM continuumio/miniconda3
 RUN pip install scif
 ADD hello-world.scif
 RUN scif install /hello-world.scif
@@ -430,7 +430,7 @@ Singularity containers, in that they are optimized for scientific reproducibilit
 
 ```
 Bootstrap: docker
-From: continuumio/anaconda3
+From: continuumio/miniconda3
 
 # sudo singularity build hello-world.simg Singularity
 
@@ -460,7 +460,7 @@ From: continuumio/anaconda3
 
 Notice the following:
  
-  1. we have literally copied the recipe into the Singularity build file (middle section) and we are using the same image base (`continuumio/anaconda3`) as we did for Docker. I also like to use the `continuumio/miniconda3` container for a tinier conda snake :).
+  1. we have literally copied the recipe into the Singularity build file (middle section) and we are using the same image base (`continuumio/miniconda3`) as we did for Docker. I also like to use the `continuumio/miniconda3` container for a tinier conda snake :).
   2. We are not installing the scif software anywhere. Singularity has the integration natively.
 
 ```
@@ -491,7 +491,7 @@ You can install use SCIF within Singularity containers using the scif software (
 
 ```
 Bootstrap: docker
-From: continuumio/anaconda3
+From: continuumio/miniconda3
 
 # sudo singularity build hello-world-scif.simg Singularity.scif
 
@@ -514,7 +514,7 @@ if you wanted a development version of scif, you could instead install from Gith
 
 ```
 Bootstrap: docker
-From: continuumio/anaconda3
+From: continuumio/miniconda3
 
 # sudo singularity build hello-world-scif.simg Singularity.scif
 
