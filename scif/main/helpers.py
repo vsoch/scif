@@ -61,9 +61,7 @@ def run_command(self, cmd, spinner=True):
 
     if spinner is True:
         bot.spinner.stop()
-
     retval = result['return_code']
-    bot.info(result['message'])
     if retval != 0:
         bot.error('Return code %s' %retval)
         sys.exit(retval)
