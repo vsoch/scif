@@ -169,7 +169,7 @@ def preview_files(self, app, settings, config):
        config: should be the config for the app obtained with self.app(app)
 
     '''
-    files = ''
+
     if "appfiles" in config:
         files = config['appfiles']
         bot.info('+ ' + 'appfiles '.ljust(5) + app)
@@ -178,9 +178,8 @@ def preview_files(self, app, settings, config):
 
             # Step 1: determine source and destination
             src, dest = get_parts(pair, default=settings['approot'])
-            files += ('%s --> %s \n' %(src,dest)) 
-            
-    return files
+            print('%s --> %s \n' %(src,dest)) 
+
 
 def preview_commands(self, app, settings, config):
     '''install will finally, issue commands to install the app.

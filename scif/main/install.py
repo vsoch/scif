@@ -151,6 +151,7 @@ def install_files(self, app, settings, config):
 
     return files
 
+
 def install_commands(self, app, settings, config):
     '''install will finally, issue commands to install the app.
 
