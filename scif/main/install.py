@@ -146,9 +146,8 @@ def install_files(self, app, settings, config):
             if os.path.isdir(src):
                 cmd.append('-R')
 
-            cmd.append(dest)
+            cmd = cmd + [src, dest]
             result = self._run_command(cmd)
-            files.append(dest)
 
     return files
 
