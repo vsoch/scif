@@ -184,7 +184,7 @@ Well let's install it then! But first, let's interactively explore the recipe, `
 ```
 $ scif pyshell hello-world.scif
 [scif] /scif hello-world-echo | hello-world-script
-Python 3.6.3 |miniconda, Inc.| (default, Oct 13 2017, 12:02:49) 
+Python 3.6.3 |Anaconda, Inc.| (default, Oct 13 2017, 12:02:49) 
 Type 'copyright', 'credits' or 'license' for more information
 IPython 6.1.0 -- An enhanced Interactive Python. Type '?' for help.
 
@@ -267,7 +267,7 @@ You can also do this directly from the terminal by giving pyshell the app name:
 ```
 $ scif pyshell hello-world.scif hello-world-echo
 [scif] /scif hello-world-echo | hello-world-script
-Python 3.6.3 |miniconda, Inc.| (default, Oct 13 2017, 12:02:49) 
+Python 3.6.3 |Anaconda, Inc.| (default, Oct 13 2017, 12:02:49) 
 Type 'copyright', 'credits' or 'license' for more information
 IPython 6.1.0 -- An enhanced Interactive Python. Type '?' for help.
 
@@ -334,7 +334,7 @@ First we will do it interactively, and then add a few lines to a recipe to do it
 ```
 $ docker run -v $PWD:/tmp -it continuumio/miniconda3 /bin/bash
 $ pip install scif
-$ scif install hello-world.scif 
+$ scif install hello-world.scif
 Installing base at /scif
 + apprun hello-world-echo
 + appenv hello-world-echo
