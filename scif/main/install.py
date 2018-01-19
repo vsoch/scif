@@ -130,7 +130,6 @@ def install_files(self, app, settings, config):
        config: should be the config for the app obtained with self.app(app)
 
     '''
-    files = []
     if "appfiles" in config:
         files = config['appfiles']
         bot.info('+ ' + 'appfiles '.ljust(5) + app)
@@ -148,8 +147,6 @@ def install_files(self, app, settings, config):
 
             cmd = cmd + [src, dest]
             result = self._run_command(cmd)
-
-    return files
 
 
 def install_commands(self, app, settings, config):

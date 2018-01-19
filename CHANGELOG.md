@@ -16,6 +16,7 @@ Versions in parentheses coincide with what is available on [pypi](https://pypi.o
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (development)
 
+ - fixed bug in parsing filesystem that doesn't have SCIF (0.0.52)
  - fixed bug with appfiles copy command (0.0.51)
  - initial creation of just the scif client. (0.0.5)
 

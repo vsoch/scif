@@ -29,13 +29,23 @@ def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
     client = ScifRecipe(writable=False, quiet=True)
+    longlist = args.longlist
     
     result = []
     for app in client.apps():
         config = client.get_appenv(app)
-        result.append([app.rjust(10), config['SCIF_APPROOT']]) 
+
+        # Long listing includes a number with path to app
+        if longlist is True:
+            result.append([app.rjust(10), config['SCIF_APPROOT']]) 
+        else:
+            result.append(app.rjust(10))
 
     if len(result) > 0:
-        header = "[app]              [root]"
-        bot.custom(prefix="SCIF", message=header, color="CYAN")
-        bot.table(result)
+
+        if longlist is True:
+            header = "[app]              [root]"
+            bot.custom(prefix="SCIF", message=header, color="CYAN")
+            bot.table(result)
+        else:
+            bot.info('\n'.join(result))

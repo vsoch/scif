@@ -127,9 +127,12 @@ def get_parser():
 
 
     # List and dump
-
     ls = subparsers.add_parser("apps",
                                 help="list apps installed")
+
+    ls.add_argument('-l', dest="longlist", 
+                     help="show long listing, including paths", 
+                     default=False, action='store_true')
 
 
     dump = subparsers.add_parser("dump",
