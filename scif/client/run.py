@@ -32,7 +32,7 @@ def main(args,parser,subparser):
     # If command is set to an app (or more), otherwise we default to /bin/bash
     app = None
     if cmd is not None:
-        if not instance(cmd,list):
+        if not isinstance(cmd,list):
             cmd = [cmd]
 
         # The app is the first argument 
