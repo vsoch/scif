@@ -212,6 +212,9 @@ def main():
     if args.debug is False:
         os.environ['SCIF_MESSAGELEVEL'] = "INFO"
 
+    if args.quiet is True:
+        os.environ['SCIF_MESSAGELEVEL'] = "QUIET"
+
     # Show the version and exit
     if args.command == "version":
         print(scif.__version__)

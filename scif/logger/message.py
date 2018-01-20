@@ -42,7 +42,7 @@ RED = "\033[91m"
 DARKRED = "\033[31m"
 CYAN = "\033[36m"
 
-class SRegistryMessage:
+class SCIFMessage:
 
     def __init__(self, MESSAGELEVEL=None):
         self.level = get_logging_level()
@@ -345,5 +345,5 @@ def convert2boolean(arg):
     return arg
 
 
-SRegistryMessage.spinner = Spinner()
-bot = SRegistryMessage()
+SCIFMessage.spinner = Spinner()
+bot = SCIFMessage()
