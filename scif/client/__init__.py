@@ -120,10 +120,9 @@ def get_parser():
                                  help="entrypoint to run a scientific filesystem")
 
 
-    run.add_argument("app", nargs='?',
-                     help="app to target for the entry, defaults to shell if not set.", 
+    run.add_argument("cmd", nargs='*',
+                     help="app and optional arguments to target for the entry", 
                      type=str)
-
 
 
     # List and dump

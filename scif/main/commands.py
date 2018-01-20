@@ -94,7 +94,7 @@ def execute(self, app, cmd=None):
 
 
 
-def run(self, app=None):
+def run(self, app=None, args=None):
     '''run an app. This means the following:
 
     1. Check that the app is valid for the client. Don't proceed otherwise
@@ -105,12 +105,13 @@ def run(self, app=None):
     Parameters
     ==========
     app: the name of the scif app to run
+    args: a list of one or more additional arguments to pass to runscript
 
     '''
-    self.activate(app)    # checks for existence
-                          # sets _active to app's name
-                          # updates environment
-                          # sets entrypoint
-                          # sets entryfolder
+    self.activate(app, args=args)    # checks for existence
+                                     # sets _active to app's name
+                                     # updates environment
+                                     # sets entrypoint
+                                     # sets entryfolder
 
     return self._exec(app)

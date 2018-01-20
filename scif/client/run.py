@@ -26,6 +26,19 @@ import os
 def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
-    app = args.app
+    cmd = args.cmd
     client = ScifRecipe(quiet=True, writable=args.writable)
-    client.run(app)
+
+    if len(cmd) == 0:
+        bot.warning('You must supply an appname to run.')
+        bot.custom(prefix="Example: ", message="scif run <app>")
+        sys.exit(1)
+
+    app = cmd.pop(0)
+
+    # Remaining arguments indicate options/args to pass on
+    if len(cmd) == 0:
+        cmd = None
+
+    client = ScifRecipe(quiet=True, writable=args.writable)
+    client.run(app, args=cmd)
