@@ -45,7 +45,7 @@ CYAN = "\033[36m"
 class SCIFMessage:
 
     def __init__(self, MESSAGELEVEL=None):
-        self.level = get_logging_level()
+        self.level = update_level()
         self.history = []
         self.errorStream = sys.stderr
         self.outputStream = sys.stdout
@@ -128,6 +128,8 @@ class SCIFMessage:
         :param message: the message to print
         :param prefix: a prefix for the message
         '''
+        self.level = update_level()
+
         if color is None:
             color = level
 
@@ -189,6 +191,8 @@ class SCIFMessage:
         :param total: total iterations (Int)
         :param length: character length of bar (Int)
         '''
+        self.level = update_level()
+
         percent = 100 * (iteration / float(total))
         progress = int(length * iteration // total)
 
@@ -294,8 +298,8 @@ class SCIFMessage:
         
 
 
-def get_logging_level():
-    '''get_logging_level will configure a logging to standard out based on the user's
+def update_level():
+    '''update_level will configure a logging to standard out based on the user's
     selected level, which should be in an environment variable called
     MESSAGELEVEL. if MESSAGELEVEL is not set, the maximum level
     (5) is assumed (all messages).
@@ -304,8 +308,7 @@ def get_logging_level():
         level = int(os.environ.get("SCIF_MESSAGELEVEL", INFO))
 
     except ValueError:
-
-        level = os.environ.get("SCIF_MESSAGELEVEL", INFO)
+        level = str(os.environ.get("SCIF_MESSAGELEVEL", INFO))
         if level == "CRITICAL":
             return CRITICAL
         elif level == "ABORT":

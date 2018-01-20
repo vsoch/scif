@@ -19,12 +19,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-from scif.logger import bot
 import sys
 import pwd
 import os
-
-    
 
 def main(args,parser,subparser):
 

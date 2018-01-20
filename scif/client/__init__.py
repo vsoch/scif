@@ -210,10 +210,12 @@ def main():
 
     # if environment logging variable not set, make silent
     if args.debug is False:
-        os.environ['SCIF_MESSAGELEVEL'] = "INFO"
+        os.environ['SCIF_MESSAGELEVEL'] = 'INFO'
+        os.putenv('SCIF_MESSAGELEVEL', 'INFO')
 
     if args.quiet is True:
-        os.environ['SCIF_MESSAGELEVEL'] = "QUIET"
+        os.environ['SCIF_MESSAGELEVEL'] = 'QUIET'
+        os.putenv('SCIF_MESSAGELEVEL', 'QUIET')
 
     # Show the version and exit
     if args.command == "version":
