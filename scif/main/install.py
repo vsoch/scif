@@ -88,8 +88,8 @@ def install_apps(self, apps=None):
         self._install_environment(app, settings, config)
         self._install_help(app, settings, config)
         self._install_labels(app, settings, config)
-        self._install_commands(app, settings, config)
         self._install_files(app, settings, config)
+        self._install_commands(app, settings, config)
         self._install_recipe(app, settings, config)
         self._install_test(app, settings, config)
 
