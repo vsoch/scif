@@ -47,7 +47,7 @@ def apps(self):
     return apps
 
 
-def activate(self, app, cmd=None):
+def activate(self, app, cmd=None, args=None):
     '''if an app is valid, get it's environment to make it active.
        Update the entrypoint to be relevant to the app runscript.
     
@@ -55,6 +55,8 @@ def activate(self, app, cmd=None):
     ==========
     app: the name of the app to activate
     cmd: if defined, the entry point (command) to run. Otherwise uses apprun
+    args: additional commands for the apprun
+
     '''
     if app is None:
         bot.warning('No app selected, will run default %s' %self._entry_point)    
@@ -77,7 +79,10 @@ def activate(self, app, cmd=None):
         elif 'SCIF_APPRUN' in config:
             if os.path.exists(config['SCIF_APPRUN']):
                 self._entry_point = [SCIF_SHELL, config['SCIF_APPRUN']]
- 
+                if args is not None:
+                    args = parse_entrypoint(args)
+                    self._entry_point += args
+
         # Update the environment for active app (updates ScifRecipe object)
         appenv = self.get_appenv(app, isolated=False, update=True)
 
