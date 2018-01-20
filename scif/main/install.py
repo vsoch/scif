@@ -160,9 +160,18 @@ def install_commands(self, app, settings, config):
 
     '''
     if "appinstall" in config:
+
+        # Change directory so the APP is $PWD
+        pwd = os.getcwd()
+        os.chdir(settings['approot'])
+        
+        # issue install commands
         cmd = '\n'.join(config['appinstall'])
         bot.info('+ ' + 'appinstall '.ljust(5) + app)
         os.system(cmd)
+
+        # Go back to previous location
+        os.chdir(pwd)
 
 
 def install_recipe(self, app, settings, config):
