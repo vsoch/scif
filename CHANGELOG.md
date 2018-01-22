@@ -16,6 +16,7 @@ Versions in parentheses coincide with what is available on [pypi](https://pypi.o
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (development)
 
+ - fixing bug that arguments (--) don't get passed through to exec/run (0.0.65)
  - copying of files should be relative to app folder (0.0.58)
  - fixed bug that install with python2 cannot use "exec" (0.0.55)
  - fixed bug in parsing filesystem that doesn't have SCIF (0.0.52)
