@@ -138,6 +138,11 @@ def read_section(config, spec, section, name):
         else:
             new_member = spec.pop(0)
             if not new_member.strip().startswith('#'):
+
+                # Strip whitespace for labels, files, environment
+                if section in ['applabels', 'appfiles', 'appenv']:
+                    new_member = new_member.strip()
+
                 members.append(new_member)
 
     # Add the list to the config
