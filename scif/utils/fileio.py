@@ -94,7 +94,7 @@ def write_json(json_obj, filename, mode="w", print_pretty=True):
     :param filename: the output file to write to
     :param pretty_print: if True, will use nicer formatting
     '''
-    with open(filename, mode) as filey:
+    with codecs.open(filename, mode, encoding='utf-8') as filey:
         if print_pretty:
             filey.writelines(
                 json.dumps(
@@ -125,18 +125,6 @@ def read_json(filename, mode='r'):
     '''read_json reads in a json file and returns
     the data structure as dict.
     '''
-    with open(filename, mode) as filey:
+    with codecs.open(filename, mode, encoding='utf-8') as filey:
         data = json.load(filey)
     return data
-
-
-def clean_up(files):
-    '''clean up will delete a list of files, only if they exist
-    '''
-    if not isinstance(files, list):
-        files = [files]
-
-    for f in files:
-        if os.path.exists(f):
-            bot.verbose3("Cleaning up %s" % f)
-            os.remove(f)
