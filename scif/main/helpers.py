@@ -87,7 +87,7 @@ def parse_entrypoint(entry_point=None):
 
     # Any [e] in the command or entrypoint (command line) are environment vars
     entry_point= ' '.join(entry_point)
-    entry_point = re.sub('\[e\]','$', entry_point)
+    entry_point = re.sub('\[e\]','$', entry_point, flags=re.MULTILINE)
 
     # Split into executable, arguments
     return shlex.split(entry_point)
