@@ -16,6 +16,7 @@ Versions in parentheses coincide with what is available on [pypi](https://pypi.o
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (development)
 
+ - fixed bug that install with python2 cannot use "exec" (0.0.55)
  - fixed bug in parsing filesystem that doesn't have SCIF (0.0.52)
  - added fix that install routine happens in context of approot
  - files need to be added before running commands

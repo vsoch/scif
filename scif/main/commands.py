@@ -26,7 +26,7 @@ import sys
 import os
 
 
-def exec(self, app=None):
+def _exec(self, app=None):
     '''exec is the underlying driver of both run and exec, taking a final
        SCIF and executing the command for the user.
 

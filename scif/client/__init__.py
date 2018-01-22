@@ -224,7 +224,7 @@ def main():
     # Does the user want a shell?   
     if args.command == "apps": from .list import main
     if args.command == "dump": from .dump import main
-    if args.command == "exec": from .exec import main
+    if args.command == "exec": from .execute import main
     if args.command == "help": from .help import main
     if args.command == "install": from .install import main
     if args.command == "preview": from .preview import main
