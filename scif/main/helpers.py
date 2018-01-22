@@ -85,9 +85,16 @@ def parse_entrypoint(entry_point=None):
     if not isinstance(entry_point, list):
         entry_point = [entry_point]
 
-    # Any [e] in the command or entrypoint (command line) are environment vars
+    # Special characters in the entrypoint should be replaced
+    #        [e] in the command or entrypoint: environment vars --> $
+    #        [>] in the command or entrypoint: environment vars --> >
+    #        [<] in the command or entrypoint: environment vars --> <
+    #        [pipe] in the command or entrypoint: environment vars --> |
+
     entry_point= ' '.join(entry_point)
-    entry_point = re.sub('\[e\]','$', entry_point, flags=re.MULTILINE)
+    entry_point = re.sub('\[e\]','$', entry_point)
+    entry_point = re.sub('\[>\]','>', entry_point)
+    entry_point = re.sub('\[pipe\]','|', entry_point)
 
     # Split into executable, arguments
     return shlex.split(entry_point)
