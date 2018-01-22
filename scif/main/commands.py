@@ -22,6 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from scif.logger import bot
 from scif.defaults import SCIF_BASE
 from scif.utils import which
+import locale
 import sys
 import os
 
@@ -63,12 +64,13 @@ def _exec(self, app=None):
     bot.info('%sexecuting %s' %(name, cmd))
 
     # Return output to console
-    process = os.popen(cmd)
-    while 1:
-        line = process.readline().strip('\n')
-        if not line: break
-        print(line)
+    loc = locale.getdefaultlocale()[1]
 
+    for line in os.popen(cmd):
+        try:
+            print(line.rstrip())
+        except:
+            print(line.rstrip().encode(loc))
 
 def execute(self, app, cmd=None):
     '''execute a command in the context of an app. This means the following:
