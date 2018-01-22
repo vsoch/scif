@@ -85,7 +85,7 @@ def load_recipe(path):
 
             # Clean up white trailing/leading space
             line = spec.pop(0)
-            stripped=line.strip()
+            stripped = line.strip()
 
             # Comment
             if stripped.startswith("#"):
