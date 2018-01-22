@@ -210,7 +210,6 @@ def main():
     # If unknown arguments were provided, pass on to cmd to run
     if args.command in ['run', 'exec'] and len(unknown) > 0:
         args.cmd += unknown
-        print(args.cmd)
 
     # if environment logging variable not set, make silent
     if args.debug is False:
