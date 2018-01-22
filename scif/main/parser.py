@@ -27,7 +27,6 @@ import os
 import re
 import sys
 
-
 def load_filesystem(base, quiet=False):
     '''load a filesystem based on a root path, which is usually /scif
 

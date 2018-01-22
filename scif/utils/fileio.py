@@ -25,6 +25,7 @@ import re
 import shutil
 import requests
 
+import codecs
 import json
 from scif.logger import bot
 import sys
@@ -82,7 +83,7 @@ def write_file(filename, content, mode="w"):
     '''write_file will open a file, "filename" and write content, "content"
     and properly close the file
     '''
-    with open(filename, mode) as filey:
+    with codecs.open(filename, mode, encoding='utf-8') as filey:
         filey.writelines(content)
     return filename
 
@@ -112,7 +113,7 @@ def read_file(filename, mode="r", readlines=True):
     '''write_file will open a file, "filename" and write content, "content"
     and properly close the file
     '''
-    with open(filename, mode) as filey:
+    with codecs.open(filename, mode, encoding='utf-8') as filey:
         if readlines is True:
             content = filey.readlines()
         else:

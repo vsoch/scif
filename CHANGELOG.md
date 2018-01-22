@@ -16,10 +16,10 @@ Versions in parentheses coincide with what is available on [pypi](https://pypi.o
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (development)
 
+ - copying of files should be relative to app folder (0.0.58)
  - fixed bug that install with python2 cannot use "exec" (0.0.55)
  - fixed bug in parsing filesystem that doesn't have SCIF (0.0.52)
  - added fix that install routine happens in context of approot
  - files need to be added before running commands
  - fixed bug with appfiles copy command (0.0.51)
  - initial creation of just the scif client. (0.0.5)
-
