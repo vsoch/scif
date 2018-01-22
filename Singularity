@@ -11,7 +11,6 @@ From: continuumio/miniconda3
 
 %post
     apt-get update && apt-get install -y git build-essential
-    /opt/conda/bin/pip install dateutils
 
     # Install SCIF
     cd /opt && git clone https://www.github.com/vsoch/scif.git

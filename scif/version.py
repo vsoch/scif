@@ -29,10 +29,6 @@ DESCRIPTION = "a filesystem organization for scientific software and metadata"
 LICENSE = "LICENSE"
 
 INSTALL_REQUIRES = (
-    ('python-dateutil', {'exact_version': "2.5.3"}),
-    ('requests', {'exact_version': '2.18.4'}),
-    ('requests-toolbelt', {'exact_version': '0.8.0'}),
-    ('retrying', {'exact_version': '1.3.3'}),
     ('six', {'min_version': '1.7.0'}),
     ('pygments', {'min_version': '2.1.3'})
 )

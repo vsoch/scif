@@ -23,8 +23,6 @@ import errno
 import os
 import re
 import shutil
-import requests
-
 import codecs
 import json
 from scif.logger import bot
