@@ -204,8 +204,6 @@ def main():
         help()
     try:
         args, unknown = parser.parse_known_args()
-        print(args)
-        print(unknown)
     except:
         sys.exit(0)
 
