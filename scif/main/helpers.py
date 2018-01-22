@@ -87,13 +87,14 @@ def parse_entrypoint(entry_point=None):
 
     # Special characters in the entrypoint should be replaced
     #        [e] in the command or entrypoint: environment vars --> $
-    #        [>] in the command or entrypoint: environment vars --> >
-    #        [<] in the command or entrypoint: environment vars --> <
+    #        [out] in the command or entrypoint: environment vars --> >
+    #        [in] in the command or entrypoint: environment vars --> <
     #        [pipe] in the command or entrypoint: environment vars --> |
 
     entry_point= ' '.join(entry_point)
     entry_point = re.sub('\[e\]','$', entry_point)
-    entry_point = re.sub('\[>\]','>', entry_point)
+    entry_point = re.sub('\[out\]','>', entry_point)
+    entry_point = re.sub('\[in\]','<', entry_point)
     entry_point = re.sub('\[pipe\]','|', entry_point)
 
     # Split into executable, arguments
