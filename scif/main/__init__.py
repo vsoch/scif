@@ -70,7 +70,7 @@ from scif.main.install import (
 
 # Commands
 ScifRecipe.run = run
-ScifRecipe.exec = execute
+ScifRecipe.execute = execute
 ScifRecipe._exec = _exec
 
 # Helpers

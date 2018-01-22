@@ -49,6 +49,22 @@ def mkdir_p(path):
             sys.exit(1)
 
 
+def which(software):
+    '''which is a substitute for shutil.which, which is only supported in
+       python 3
+    
+       Parameters
+       ==========
+       software: the name of the executable to find
+
+    '''
+    path = os.getenv('PATH')
+    for p in path.split(os.path.pathsep):
+        p = os.path.join(p, software)
+        if os.path.exists(p) and os.access(p,os.X_OK):
+            return p
+
+
 ############################################################################
 ## FILE OPERATIONS #########################################################
 ############################################################################

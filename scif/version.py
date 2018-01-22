@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-__version__ = "0.0.55"
+__version__ = "0.0.57"
 AUTHOR = 'Vanessa Sochat'
 AUTHOR_EMAIL = 'vsochat@stanford.edu'
 NAME = 'scif'
@@ -30,7 +30,6 @@ LICENSE = "LICENSE"
 
 INSTALL_REQUIRES = (
 
-    ('demjson', {'exact_version': "2.2.4"}),
     ('python-dateutil', {'exact_verison': "2.5.3"}),
     ('requests', {'exact_version': '2.18.4'}),
     ('requests-toolbelt', {'exact_version': '0.8.0'}),

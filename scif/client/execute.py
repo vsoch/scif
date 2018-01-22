@@ -38,4 +38,4 @@ def main(args,parser,subparser):
 
     app = cmd.pop(0)
     client = ScifRecipe(quiet=True, writable=args.writable)
-    client.exec(app, cmd)
+    client.execute(app, cmd)

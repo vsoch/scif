@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from scif.logger import bot
 from scif.defaults import SCIF_BASE
-from shutil import which
+from scif.utils import which
 import sys
 import os
 
