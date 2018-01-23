@@ -61,7 +61,7 @@ def load_recipe(path):
 
     Parameters
     ==========
-    path: a path to a deid file
+    path: a path to a scif recipe file
 
     Returns
     =======
@@ -115,24 +115,66 @@ def load_recipe(path):
                                       name=name)
 
 
+        # Make sure app environments are sourced as first line of recipe
+        config = finish_recipe(config)   
+        
     else:
         bot.debug("Cannot find recipe file %s" %path)
     return config
 
 
-def read_section(config, spec, section, name):
+def finish_recipe(config, global_section='apps'):
+    '''
+       finish recipe includes final steps to add to the runtime for an app.
+       Currently, this just means adding a command to source an environment
+       before running, if appenv is defined. The Python should handle putting
+       variables in the environment, however in some cases (if the variable
+       includes an environment variable:
+
+          VARIABLE1=$VARIABLE2
+
+       It would not be properly sourced! So we add a source as the first
+       line of the runscript
+
+       Parameters
+       ==========
+       config: the configuation file produced by load_recipe. Assumed to have
+               a highest key of "apps" and then lookup by individual apps,
+               and then sections. Eg: config['apps']['myapp']['apprun'] 
+
+    '''
+    # The apps are the keys under global section "apps"
+    apps = list(config[global_section].keys())
+
+    for app in apps:
+
+        # If an apprun is present and the system supports source, do it.
+        if "appenv" in config[global_section][app]:
+            appenv = config[global_section][app]['appenv']
+
+            # If runscript is defined, add source to first line
+            if "apprun" in config[global_section][app]:
+                apprun = config[global_section][app]['apprun']
+                config[global_section][app]['apprun'] =  appenv + apprun
+            else:    
+                # An app can just be an environment
+                config[global_section][app]['apprun'] = appenv
+
+
+    return config
+
+
+def read_section(config, spec, section, name, global_section='apps'):
     '''read in a section to a list, and stop when we hit the next section
     '''
     members = []
-
-    # If we need to add other sections, for now all are "apps"
-    global_section = 'apps'
 
     while True:
 
         if len(spec) == 0:
             break
         next_line = spec[0]                
+
         if next_line.upper().strip().startswith("%"):
             break
         else:
@@ -155,7 +197,7 @@ def read_section(config, spec, section, name):
     return config
 
 
-def add_section(config, section, name=None):
+def add_section(config, section, name=None, global_section="apps"):
     '''add section will add a section (and optionally)
     section name to a config
 
@@ -179,8 +221,6 @@ def add_section(config, section, name=None):
     if section not in sections:
         bot.error("%s is not a valid section." %section)
         sys.exit(1)
-
-    global_section = 'apps'
 
     # Add the global section, if doesn't exist
     if global_section not in config:
