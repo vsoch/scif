@@ -96,6 +96,7 @@ def parse_entrypoint(entry_point=None):
     entry_point = re.sub('\[out\]','>', entry_point)
     entry_point = re.sub('\[in\]','<', entry_point)
     entry_point = re.sub('\[pipe\]','|', entry_point)
+    entry_point = re.sub('\[append\]','|', entry_point)
 
     # Split into executable, arguments
     return shlex.split(entry_point)
