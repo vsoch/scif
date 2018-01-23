@@ -147,12 +147,44 @@ def load_env(self, app):
             if os.path.exists(envfile):
                 with open(envfile, 'r') as filey:
                     lines = filey.readlines()
-                    for line in lines:
-                        (key, _, val) = line.strip().partition("=")
-                        if val not in ['', None]: # skips export lines
-                            updates[key] = val   
-                            self.environment[key] = val
+                for line in lines:
+                    (key, _, val) = line.strip().partition("=")
+                    if val not in ['', None]: # skips export lines
+                        updates[key] = self.expand_env(val)
+                        self.environment[key] = self.expand_env(val)
     return updates
+
+
+def expand_env(self, val):
+    '''expand environment will take a value, determine if there is another
+       environment variable defined, and attempt to expand it. The variable
+       can be of the format ${VAR} or $VAR.
+
+       Parameters
+       ==========
+       val: should be the value of the environment variable where other 
+            variables might be found.
+    '''
+
+    # If there is a variable defined, we want to export the actual
+    regexp = re.compile('|'.join(list(self.environment.keys())))
+    match = regexp.search(val)
+
+    while match is not None:
+
+        # Environment name
+        varname = match.group(0)
+
+        # Value it's referencing
+        referenced = self.environment[varname]
+        
+        # Handle both versions of the variable
+        val = val.replace('${%s}' %varname, referenced)
+        val = val.replace('$%s' %varname, referenced)
+
+        match = regexp.search(val)
+
+    return val
 
 
 def export_env(self, ps1=True):
