@@ -71,10 +71,10 @@ def load_recipe(path):
     path = os.path.abspath(path)
     if os.path.exists(path):
 
-        # Read in spec, clean up extra spaces and newlines
-        spec = [x.strip('\n').strip(' ') 
+        # Read in spec, skip empty lines, don't strip remaining
+        spec = [x.strip('\n') 
                for x in read_file(path) 
-               if x.strip('\n').strip(' ') not in ['']]
+               if not re.match('^\s+$', x.strip('\n'))]
 
         spec = [x for x in spec if x not in ['', None]]
         config = OrderedDict()
@@ -84,14 +84,15 @@ def load_recipe(path):
         while len(spec) > 0:
 
             # Clean up white trailing/leading space
-            line = spec.pop(0).strip()
+            line = spec.pop(0)
+            stripped = line.strip()
 
             # Comment
-            if line.startswith("#"):
+            if stripped.startswith("#"):
                 continue
 
             # A new section?
-            elif line.startswith('%'):
+            elif stripped.startswith('%'):
 
                 # Remove any comments
                 line = line.split('#',1)[0].strip()
@@ -136,7 +137,12 @@ def read_section(config, spec, section, name):
             break
         else:
             new_member = spec.pop(0)
-            if not new_member.startswith('#'):
+            if not new_member.strip().startswith('#'):
+
+                # Strip whitespace for labels, files, environment
+                if section in ['applabels', 'appfiles', 'appenv']:
+                    new_member = new_member.strip()
+
                 members.append(new_member)
 
     # Add the list to the config

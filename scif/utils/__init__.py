@@ -11,6 +11,5 @@ from .fileio import (
     write_json,
     which,
     read_file,
-    read_json,
-    clean_up
+    read_json
 )

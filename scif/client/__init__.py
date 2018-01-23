@@ -203,9 +203,13 @@ def main():
     if len(sys.argv) == 1:
         help()
     try:
-        args = parser.parse_args()
+        args, unknown = parser.parse_known_args()
     except:
         sys.exit(0)
+
+    # If unknown arguments were provided, pass on to cmd to run
+    if args.command in ['run', 'exec'] and len(unknown) > 0:
+        args.cmd += unknown
 
     # if environment logging variable not set, make silent
     if args.debug is False:

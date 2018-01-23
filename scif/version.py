@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-__version__ = "0.0.64"
+__version__ = "0.0.67"
 AUTHOR = 'Vanessa Sochat'
 AUTHOR_EMAIL = 'vsochat@stanford.edu'
 NAME = 'scif'
@@ -29,10 +29,6 @@ DESCRIPTION = "a filesystem organization for scientific software and metadata"
 LICENSE = "LICENSE"
 
 INSTALL_REQUIRES = (
-    ('python-dateutil', {'exact_version': "2.5.3"}),
-    ('requests', {'exact_version': '2.18.4'}),
-    ('requests-toolbelt', {'exact_version': '0.8.0'}),
-    ('retrying', {'exact_version': '1.3.3'}),
     ('six', {'min_version': '1.7.0'}),
     ('pygments', {'min_version': '2.1.3'})
 )
