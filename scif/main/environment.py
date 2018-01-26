@@ -114,16 +114,18 @@ def mk_env(key, val, app=None):
     '''a helper function to return a dictionary with a SCIF prefixed app name,
        the key slashes replaced with underscores, and the value set.
 
-    Parameters
-    ==========
-    app: the app name to define the variable for (not used if not defined)
-    key: the key (not including the SCIF_ prefix
-    val: the value to set
+       Parameters
+       ==========
+       app: the app name to define the variable for (not used if not defined)
+       key: the key (not including the SCIF_ prefix
+       val: the value to set
+
     '''
     key = "SCIF_%s" % key.upper()
     if app is not None:
         key = "%s_%s" %(key,app)
-    key = key.replace('-','_')
+
+    key = re.sub('-|[.]', '_', key)
     return { key:val }
 
 
