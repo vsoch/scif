@@ -134,10 +134,6 @@ def install_files(self, app, settings, config):
         files = config['appfiles']
         bot.info('+ ' + 'appfiles '.ljust(5) + app)
 
-        # Change directory so the APP is $PWD
-        pwd = os.getcwd()
-        os.chdir(settings['approot'])
-
         for pair in files:
         
             # Step 1: determine source and destination
@@ -148,12 +144,12 @@ def install_files(self, app, settings, config):
 
             if os.path.isdir(src):
                 cmd.append('-R')
+            elif os.path.exists(src):
+                cmd = cmd + [src, dest]
+                result = self._run_command(cmd)
+            else:    
+                bot.warning('%s does not exist, skipping.' %src)
 
-            cmd = cmd + [src, dest]
-            result = self._run_command(cmd)
-
-        # Go back to previous location
-        os.chdir(pwd)
 
 
 def install_commands(self, app, settings, config):
