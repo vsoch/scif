@@ -16,6 +16,7 @@ Versions in parentheses coincide with what is available on [pypi](https://pypi.o
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (development)
 
+ - fixing bug with adding files to appbase, shouldn't change directory (0.0.7)
  - updates to source environment correctly (0.0.69)
  - added append sticker (`[append]` for `>>`) (0.0.68)
  - adding scif stamps for pipes [pipe], and in/output direction [out]/[in] (0.0.67)
