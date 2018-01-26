@@ -38,6 +38,7 @@ def get_parts(pair, default=None):
        ==========
        pair should be a single string, likely with a key and value split by 
             a space or equals sign.
+
     '''
     pair = pair.replace('=',' ')
     parts = pair.split(' ')
