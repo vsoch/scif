@@ -1,8 +1,8 @@
 '''
 
-Copyright (C) 2017 The Board of Trustees of the Leland Stanford Junior
+Copyright (C) 2017-2018 The Board of Trustees of the Leland Stanford Junior
 University.
-Copyright (C) 2017 Vanessa Sochat.
+Copyright (C) 2017-2018 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -23,7 +23,7 @@ __version__ = "0.0.71"
 AUTHOR = 'Vanessa Sochat'
 AUTHOR_EMAIL = 'vsochat@stanford.edu'
 NAME = 'scif'
-PACKAGE_URL = "http://www.github.com/containers-ftw/scif-cli"
+PACKAGE_URL = "http://www.github.com/vsoch/scif"
 KEYWORDS = 'the scientific filesystem'
 DESCRIPTION = "a filesystem organization for scientific software and metadata"
 LICENSE = "LICENSE"
