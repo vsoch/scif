@@ -22,5 +22,5 @@ RUN python /code/setup.py install
 # SciF Entrypoint
 #######################################
 
-RUN scif install /code/docs/tutorials/hello-world.scif
+RUN scif install /code/docs/hello-world.scif
 ENTRYPOINT ["scif"]
