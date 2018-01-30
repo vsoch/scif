@@ -22,4 +22,5 @@ ENV PATH=/opt/conda/bin:$PATH
 # SciF Entrypoint
 #######################################
 
+RUN scif install /code/docs/hello-world.scif
 ENTRYPOINT ["scif"]
