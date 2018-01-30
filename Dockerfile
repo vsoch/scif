@@ -16,7 +16,7 @@ FROM continuumio/miniconda3
 RUN mkdir /code
 ADD . /code
 RUN python /code/setup.py install
-
+ENV PATH=/opt/conda/bin:$PATH
 
 #######################################
 # SciF Entrypoint
