@@ -108,3 +108,10 @@ SCIF_SHELL = getenv('SCIF_SHELL', '/bin/bash')
 SCIF_ENTRYPOINT = getenv('SCIF_ENTRYPOINT','/bin/bash')
 SCIF_ENTRYFOLDER = getenv('SCIF_ENTRYFOLDER') # default None, is set to /scif
                                               # in functions OR app roots
+
+#########################
+# Permissions
+#########################
+
+SCIF_APPEND_PATHS = ['PYTHONPATH', 'PATH', 'LD_LIBRARY_PATH']
+SCIF_ALLOW_APPEND = convert2boolean(getenv('SCIF_ALLOW_APPEND', True))

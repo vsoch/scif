@@ -27,7 +27,7 @@ import sys
 import os
 
 
-def _exec(self, app=None):
+def _exec(self, app=None, interactive=False):
     '''exec is the underlying driver of both run and exec, taking a final
        SCIF and executing the command for the user.
 
@@ -66,11 +66,16 @@ def _exec(self, app=None):
     # Return output to console
     loc = locale.getdefaultlocale()[1]
 
-    for line in os.popen(cmd):
-        try:
-            print(line.rstrip())
-        except:
-            print(line.rstrip().encode(loc))
+    # A shell will run the command
+    if interactive is True:
+        os.system(''.join(cmd))
+    else:
+        for line in os.popen(cmd):
+            try:
+                print(line.rstrip())
+            except:
+                print(line.rstrip().encode(loc))
+
 
 def execute(self, app, cmd=None):
     '''execute a command in the context of an app. This means the following:
@@ -93,6 +98,35 @@ def execute(self, app, cmd=None):
                           # sets entryfolder
 
     return self._exec(app)
+
+
+def shell(self, app, cmd=None):
+    '''akin to execute, but specific for shell. In this case, we pass the
+       calling process to the shell. We do the same steps as in run/exec:
+
+    1. Check that the app is valid for the client. Don't proceed otherwise
+    2. Set the client app to be active
+    3. update the environment to indicate the app is active
+    4. set the entry point for exec to be relative to the app
+
+    Parameters
+    ==========
+    app: the name of the scif app to execute a command to
+
+    '''
+    from scif.defaults import SCIF_SHELL
+
+    if cmd is None:
+        cmd = SCIF_SHELL
+
+    self.activate(app, cmd)
+                            # checks for existence
+                            # sets _active to app's name
+                            # updates environment
+                            # sets shell entrypoint
+
+                           # interactive
+    return self._exec(app, True)
 
 
 

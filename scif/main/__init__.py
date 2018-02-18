@@ -22,13 +22,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from scif.main.apps import ( app, apps, activate, deactivate, help, 
                              inspect, reset )
 from scif.main.base import ScifRecipe
-from scif.main.commands import ( run, _exec, execute )
+from scif.main.commands import ( _exec, execute, run, shell )
 from scif.main.environment import ( 
     add_env, 
     append_path,
     export_env,
     get_env, 
-    get_appenv, 
+    get_append_path,
+    get_appenv,
     get_appenv_lookup, 
     init_env, 
     load_env,
@@ -69,9 +70,10 @@ from scif.main.install import (
 
 
 # Commands
-ScifRecipe.run = run
 ScifRecipe.execute = execute
 ScifRecipe._exec = _exec
+ScifRecipe.run = run
+ScifRecipe.shell = shell
 
 # Helpers
 ScifRecipe._run_command = run_command
@@ -79,6 +81,7 @@ ScifRecipe.help = help
 
 # Environment
 ScifRecipe.append_path = append_path
+ScifRecipe._append_path = get_append_path
 ScifRecipe._init_env = init_env
 ScifRecipe.add_env = add_env
 ScifRecipe.export_env = export_env

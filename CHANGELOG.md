@@ -15,6 +15,7 @@ represented by the pull requests that fixed them.
 Versions in parentheses coincide with what is available on [pypi](https://pypi.org/project/scif/).
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (development)
+ - adding custom shell command to client, and ensuring paths get appended (0.0.72)
  - allowing support for periods in app names (0.0.71)
  - fixing bug with adding files to appbase, shouldn't change directory (0.0.70)
  - updates to source environment correctly (0.0.69)
