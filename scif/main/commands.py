@@ -27,7 +27,7 @@ import sys
 import os
 
 
-def _exec(self, app=None):
+def _exec(self, app=None, interactive=False):
     '''exec is the underlying driver of both run and exec, taking a final
        SCIF and executing the command for the user.
 
@@ -66,67 +66,16 @@ def _exec(self, app=None):
     # Return output to console
     loc = locale.getdefaultlocale()[1]
 
-    for line in os.popen(cmd):
-        print(line)
-        try:
-            print(line.rstrip())
-        except:
-            print(line.rstrip().encode(loc))
-
-
-import subprocess
-import re
-
-def run_command(cmd, sudo=False, capture=True, no_newline_regexp="Progess"):
-    '''run_command uses subprocess to send a command to the terminal. If
-       capture is True, we use the parent stdout, so the progress bar (and
-       other commands of interest) are piped to the user. This means we 
-       don't return the output to parse.
-
-       Parameters
-       ==========
-       cmd: the command to send, should be a list for subprocess
-       sudo: if needed, add to start of command
-       no_newline_regexp: the regular expression to determine skipping a
-                          newline. Defaults to finding Progress
-       capture: if True, don't set stdout and have it go to console. This
-                option can print a progress bar, but won't return the lines
-                as output.
-    '''
-
-    if sudo is True:
-        cmd = ['sudo'] + cmd
-
-    stdout = None
-    if capture is True:
-        stdout = subprocess.PIPE
-
-    # Use the parent stdout and stderr
-    process = subprocess.Popen(cmd, 
-                               stderr = subprocess.PIPE, 
-                               stdout = stdout)
-    lines = ()
-    found_match = False
-
-    for line in process.communicate():
-        if line:
-            if isinstance(line, bytes):
-                line = line.decode('utf-8')
-            lines = lines + (line,)
-            if re.search(no_newline_regexp, line) and found_match is True:
-                sys.stdout.write(line)
-                found_match = True
-            else:
+    # A shell will run the command
+    if interactive is True:
+        os.system(''.join(cmd))
+    else:
+        for line in os.popen(cmd):
+            print(line)
+            try:
                 print(line.rstrip())
-                found_match = False
-
-    output = {'message': lines,
-              'return_code': process.returncode }
-
-    return output
-
-
-
+            except:
+                print(line.rstrip().encode(loc))
 
 
 def execute(self, app, cmd=None):
@@ -150,6 +99,34 @@ def execute(self, app, cmd=None):
                           # sets entryfolder
 
     return self._exec(app)
+
+
+def shell(self, app, cmd=None):
+    '''akin to execute, but specific for shell. In this case, we pass the
+       calling process to the shell.
+
+    1. Check that the app is valid for the client. Don't proceed otherwise
+    2. Set the client app to be active
+    3. update the environment to indicate the app is active
+    4. set the entry point for exec to be relative to the app
+
+    Parameters
+    ==========
+    app: the name of the scif app to execute a command to
+
+    '''
+    from scif.defaults import SCIF_SHELL
+
+    if cmd is None:
+        cmd = SCIF_SHELL
+
+    self.activate(app, cmd)
+                            # checks for existence
+                            # sets _active to app's name
+                            # updates environment
+                            # sets shell entrypoint
+
+    return self._exec(app, cmd, True)
 
 
 

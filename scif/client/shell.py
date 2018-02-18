@@ -34,4 +34,4 @@ def main(args,parser,subparser):
 
     # Only allow interactive shell if the base exists
     if os.path.exists(SCIF_BASE):
-        client.execute(app, cmd=[SCIF_SHELL])
+        client.shell(app, cmd=[SCIF_SHELL])
