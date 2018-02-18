@@ -20,9 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 from scif.main.apps import ( app, apps, activate, deactivate, help, 
-                             inspect, reset, shell )
+                             inspect, reset )
 from scif.main.base import ScifRecipe
-from scif.main.commands import ( run, _exec, execute )
+from scif.main.commands import ( _exec, execute, run, shell )
 from scif.main.environment import ( 
     add_env, 
     append_path,
@@ -70,9 +70,10 @@ from scif.main.install import (
 
 
 # Commands
-ScifRecipe.run = run
 ScifRecipe.execute = execute
 ScifRecipe._exec = _exec
+ScifRecipe.run = run
+ScifRecipe.shell = shell
 
 # Helpers
 ScifRecipe._run_command = run_command
@@ -116,7 +117,6 @@ ScifRecipe.activate = activate
 ScifRecipe.deactivate = deactivate
 ScifRecipe.inspect = inspect
 ScifRecipe.reset = reset
-ScifRecipe.shell = shell
 
 # Installation
 ScifRecipe.install = install

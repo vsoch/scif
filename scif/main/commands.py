@@ -103,7 +103,7 @@ def execute(self, app, cmd=None):
 
 def shell(self, app, cmd=None):
     '''akin to execute, but specific for shell. In this case, we pass the
-       calling process to the shell.
+       calling process to the shell. We do the same steps as in run/exec:
 
     1. Check that the app is valid for the client. Don't proceed otherwise
     2. Set the client app to be active
