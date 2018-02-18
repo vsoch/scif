@@ -71,7 +71,6 @@ def _exec(self, app=None, interactive=False):
         os.system(''.join(cmd))
     else:
         for line in os.popen(cmd):
-            print(line)
             try:
                 print(line.rstrip())
             except:
@@ -126,6 +125,7 @@ def shell(self, app, cmd=None):
                             # updates environment
                             # sets shell entrypoint
 
+                           # interactive
     return self._exec(app, True)
 
 
