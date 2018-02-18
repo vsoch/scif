@@ -30,16 +30,42 @@ import sys
 
 def append_path(self, varname, value):
     '''append another directory to a path indexed by "varname" in the os.environ
+       these variables are typically not represented by the user in the appenv,
+       but are added dynamically by SCIF. Thus, they will appear in os.environ
+       groups that are added to self.environment at runtime.
 
-    Parameters
-    ==========
-    varname: the variable in the environment to append to (e.g., PATH)
-    value: the path to append (no :)
+       Parameters
+       ==========
+       varname: the variable in the environment to append to (e.g., PATH)
+       value: the path to append (no :)
+
     '''
-    if varname in os.environ:
-        os.environ[varname] = "%s:%s" %(value, os.environ[varname])
-    else:
-        os.environ[varname] = value
+    value = self._append_path(varname, value)
+    os.environ[varname] = value
+    os.putenv(varname, value)
+
+
+def get_append_path(self, varname, value, environment=None):
+    '''the driver function of append_path, with intention to return the correct
+       value and variable name for an environment of interest, this function
+       maps to _append_path e.g.:
+  
+       1. if the variable is already defined, we append
+       2. if the variable isn't defined, we set
+
+       Parameters
+       ==========
+       varname: the variable in the environment to append to (e.g., PATH)
+       value: the path to append (no :)
+       environment: the environment to look in.
+
+    '''
+    if environment is None:
+        environment = os.environ
+
+    if varname in environment:
+        return "%s:%s" %(value, os.environ[varname])
+    return value 
 
 
 def init_env(self, config, base='/scif', active=None):
@@ -161,17 +187,34 @@ def export_env(self, ps1=True):
     '''export the current environment, and add the PS1 variable to indicate
        the active shell display. This will start with values from the currently
        active environment, and then add those from scif.
+
+       Parameters
+       =========
+       ps1: if True, change the shell prompt to scif>
+
     '''  
     runtime_environ = os.environ.copy()
+    allow_append = ['PYTHONPATH', 'PATH', 'LD_LIBRARY_PATH']
 
     if ps1 is True:
         runtime_environ['PS1'] = "scif> "
 
     if hasattr(self,'environment'):
         runtime_environ.update(self.environment)
+
+        # Step 1. Do an update, allowing extension for PATHs
+        for key,val in self.environment.items():
+            if key in allow_append:
+                runtime_environ[key] = self._append_path(key, val,
+                                                         self.environment)  
+            else:
+                runtime_environ[key] = val
+
+        # Step 2; export
         for key,val in runtime_environ.items():
             os.environ[key] = val
             os.putenv(key, val)
+
     return runtime_environ
 
 

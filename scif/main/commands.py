@@ -67,10 +67,67 @@ def _exec(self, app=None):
     loc = locale.getdefaultlocale()[1]
 
     for line in os.popen(cmd):
+        print(line)
         try:
             print(line.rstrip())
         except:
             print(line.rstrip().encode(loc))
+
+
+import subprocess
+import re
+
+def run_command(cmd, sudo=False, capture=True, no_newline_regexp="Progess"):
+    '''run_command uses subprocess to send a command to the terminal. If
+       capture is True, we use the parent stdout, so the progress bar (and
+       other commands of interest) are piped to the user. This means we 
+       don't return the output to parse.
+
+       Parameters
+       ==========
+       cmd: the command to send, should be a list for subprocess
+       sudo: if needed, add to start of command
+       no_newline_regexp: the regular expression to determine skipping a
+                          newline. Defaults to finding Progress
+       capture: if True, don't set stdout and have it go to console. This
+                option can print a progress bar, but won't return the lines
+                as output.
+    '''
+
+    if sudo is True:
+        cmd = ['sudo'] + cmd
+
+    stdout = None
+    if capture is True:
+        stdout = subprocess.PIPE
+
+    # Use the parent stdout and stderr
+    process = subprocess.Popen(cmd, 
+                               stderr = subprocess.PIPE, 
+                               stdout = stdout)
+    lines = ()
+    found_match = False
+
+    for line in process.communicate():
+        if line:
+            if isinstance(line, bytes):
+                line = line.decode('utf-8')
+            lines = lines + (line,)
+            if re.search(no_newline_regexp, line) and found_match is True:
+                sys.stdout.write(line)
+                found_match = True
+            else:
+                print(line.rstrip())
+                found_match = False
+
+    output = {'message': lines,
+              'return_code': process.returncode }
+
+    return output
+
+
+
+
 
 def execute(self, app, cmd=None):
     '''execute a command in the context of an app. This means the following:

@@ -28,7 +28,8 @@ from scif.main.environment import (
     append_path,
     export_env,
     get_env, 
-    get_appenv, 
+    get_append_path,
+    get_appenv,
     get_appenv_lookup, 
     init_env, 
     load_env,
@@ -79,6 +80,7 @@ ScifRecipe.help = help
 
 # Environment
 ScifRecipe.append_path = append_path
+ScifRecipe._append_path = get_append_path
 ScifRecipe._init_env = init_env
 ScifRecipe.add_env = add_env
 ScifRecipe.export_env = export_env
