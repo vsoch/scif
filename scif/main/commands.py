@@ -126,7 +126,7 @@ def shell(self, app, cmd=None):
                             # updates environment
                             # sets shell entrypoint
 
-    return self._exec(app, cmd, True)
+    return self._exec(app, True)
 
 
 
