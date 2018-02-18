@@ -66,7 +66,7 @@ def get_append_path(self, key, value, environ=None):
         environ = os.environ
 
     if key in environ and SCIF_ALLOW_APPEND and key in SCIF_APPEND_PATHS:
-        return "%s:%s" %(value, os.environ[varname])
+        return "%s:%s" %(value, os.environ[key])
     return value
 
 
