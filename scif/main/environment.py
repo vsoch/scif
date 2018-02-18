@@ -45,7 +45,7 @@ def append_path(self, varname, value):
     os.putenv(varname, value)
 
 
-def get_append_path(self, varname, value, environment=None):
+def get_append_path(self, key, value, environ=None):
     '''the driver function of append_path, with intention to return the correct
        value and variable name for an environment of interest, this function
        maps to _append_path e.g.:
@@ -55,17 +55,19 @@ def get_append_path(self, varname, value, environment=None):
 
        Parameters
        ==========
-       varname: the variable in the environment to append to (e.g., PATH)
+       key: the variable in the environment to append to (e.g., PATH)
        value: the path to append (no :)
        environment: the environment to look in.
 
     '''
-    if environment is None:
-        environment = os.environ
+    from scif.defaults import ( SCIF_APPEND_PATHS, SCIF_ALLOW_APPEND )
 
-    if varname in environment:
+    if environ is None:
+        environ = os.environ
+
+    if key in environ and SCIF_ALLOW_APPEND and key in SCIF_APPEND_PATHS:
         return "%s:%s" %(value, os.environ[varname])
-    return value 
+    return value
 
 
 def init_env(self, config, base='/scif', active=None):
@@ -178,6 +180,7 @@ def load_env(self, app):
                 for line in lines:
                     (key, _, val) = line.strip().partition("=")
                     if val not in ['', None]: # skips export lines
+
                         updates[key] = val
                         self.environment[key] = val
     return updates
@@ -193,29 +196,24 @@ def export_env(self, ps1=True):
        ps1: if True, change the shell prompt to scif>
 
     '''  
-    runtime_environ = os.environ.copy()
-    allow_append = ['PYTHONPATH', 'PATH', 'LD_LIBRARY_PATH']
+
+    runtime = os.environ.copy()
 
     if ps1 is True:
-        runtime_environ['PS1'] = "scif> "
+        runtime['PS1'] = "scif> "
 
     if hasattr(self,'environment'):
-        runtime_environ.update(self.environment)
 
         # Step 1. Do an update, allowing extension for PATHs
         for key,val in self.environment.items():
-            if key in allow_append:
-                runtime_environ[key] = self._append_path(key, val,
-                                                         self.environment)  
-            else:
-                runtime_environ[key] = val
+            runtime[key] = self._append_path(key, val, self.environment)  
 
         # Step 2; export
-        for key,val in runtime_environ.items():
+        for key,val in runtime.items():
             os.environ[key] = val
             os.putenv(key, val)
 
-    return runtime_environ
+    return runtime
 
 
 def get_appenv(self, app, isolated=True, update=False):
