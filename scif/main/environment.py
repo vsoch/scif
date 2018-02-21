@@ -101,8 +101,8 @@ def init_env(self, config, base='/scif', active=None):
     if "apps" in config:
 
         # Gloal SCIF variables for data and apps
-        envars['SCIF_APPS'] = '%s/apps' %self.base
-        envars['SCIF_DATA'] = '%s/data' %self.base
+        envars['SCIF_APPS'] = '%s/apps' %self._base
+        envars['SCIF_DATA'] = '%s/data' %self._base
  
         for name, app in config['apps'].items(): 
 
