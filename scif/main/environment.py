@@ -99,6 +99,11 @@ def init_env(self, config, base='/scif', active=None):
     '''
     envars = dict()
     if "apps" in config:
+
+        # Gloal SCIF variables for data and apps
+        envars['SCIF_APPS'] = '%s/apps' self.base
+        envars['SCIF_DATA'] = '%s/data' self.base
+ 
         for name, app in config['apps'].items(): 
 
             # Here we are adding variables for all apps.
@@ -242,6 +247,7 @@ def get_appenv(self, app, isolated=True, update=False):
            'SCIF_APPROOT': '/scif/apps/hello-world-echo',
            'SCIF_APPRUN': '/scif/apps/hello-world-echo/scif/runscript'
        }
+
     '''
     final = dict()
     if app in self.apps():

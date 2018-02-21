@@ -31,7 +31,7 @@ def install(self, app=None):
     '''install recipes to a base. We assume this is the root of a system
        or container, and will write the /scif directory on top of it.
        If an app name is provided, install that app if it is found 
-       in the config. This function goes through all step to:
+       in the config. This function goes through all steps to:
 
        1. Install base folders to base, creating a folder for each app
        2. Install one or more apps to it, the config is already loaded
