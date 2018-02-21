@@ -80,7 +80,7 @@ def install_apps(self, apps=None):
         config = self.app(app)
 
         # Get the app environment and export for install
-        self.get_appenv(app, isolated=True, update=True)
+        self.get_appenv(app, isolated=False, update=True)
         self.export_env(ps1=False)
 
         # Handle environment, runscript, labels
