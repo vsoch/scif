@@ -4,10 +4,10 @@
 
 [![asciicast](https://asciinema.org/a/156490.png)](https://asciinema.org/a/156490?speed=2)
 
-The The Scientific Filesystem is an organizational format for scientific software and metadata. Our goals are centered around  **consistency**, **transparency**, **programmatic accessibility**, and **modularity**. [Read about](http://containers-ftw.org/SCI-F/) the format and please [contribute](https://github.com/vsoch/scif/issues)!
+The The Scientific Filesystem is an organizational format for scientific software and metadata. Our goals are centered around  **consistency**, **transparency**, **programmatic accessibility**, and **modularity**. [Read about](https://sci-f.github.io) the format and please [contribute](https://github.com/vsoch/scif/issues)!
 
 ## What is this?
-This module will provide tools for generating and interacting with scientific filesystems, optimized for use on a host or inside a container.  The library is currently under heavy development, and it will be announced when the beta is ready. Stay tuned! 
+This module will provide tools for generating and interacting with scientific filesystems, optimized for use on a host or inside a container.
 
 ## License
 
