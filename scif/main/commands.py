@@ -65,19 +65,35 @@ def _exec(self, app=None, interactive=False, exit=False):
     args = ''
 
     if len(self._entry_point) > 1:
-        args = ' '.join(self._entry_point[1:])
+        if exit is False:
+            args = ' '.join(self._entry_point[1:])
+        else:
+            args = self._entry_point[1:]
 
-    cmd = "%s %s" %(executable, args)
-    bot.info('%sexecuting %s' %(name, cmd))
+    # Are we executing a command as a string?
+    if not isinstance(args, list):
+        cmd = "%s %s" %(executable, args)
+        bot.info('%sexecuting %s' %(name, cmd))
+
+    # or a list with execv?
+    else:
+        bot.info('%sexecuting %s %s' %(name, executable, ' '.join(args)))
 
     # Return output to console
     loc = locale.getdefaultlocale()[1]
 
     # A shell will run the command
     if interactive is True:
-        ret_code = os.system(''.join(cmd))
+
+        # Will exit with error, if happens, otherwise exit with 0
         if exit is True:
-            sys.exit(ret_code)
+            result = self._run_command(cmd=[executable] + args, 
+                                       spinner=False, 
+                                       quiet=False)
+            sys.exit(result['return_code'])
+        else:
+            os.system(''.join(cmd))
+
     else:
         for line in os.popen(cmd):
             try:
@@ -178,13 +194,12 @@ def test(self, app=None, args=None):
 
     '''
 
-    config = self.get_appenv(app)
-
     # Does the application have a test script?
 
-    if not self._set_entrypoint('SCIF_APPTEST', args):
+    self.activate(app, args=args)
+
+    if not self._set_entrypoint(app, 'SCIF_APPTEST', args):
         bot.info("No tests defined for this app.")
         sys.exit(1)
 
-    self.activate(app, args=args)
-    return self._exec(app, exit=True)
+    return self._exec(app, interactive=True, exit=True)

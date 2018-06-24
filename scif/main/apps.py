@@ -77,7 +77,7 @@ def activate(self, app, cmd=None, args=None):
             self._entry_point = parse_entrypoint(cmd)
         
         # Set the default entrypoint
-        self._set_entrypoint('SCIF_APPRUN', args)
+        self._set_entrypoint(app, 'SCIF_APPRUN', args)
 
         # Update the environment for active app (updates ScifRecipe object)
         appenv = self.get_appenv(app, isolated=False, update=True)
@@ -180,6 +180,8 @@ def inspect(self, app, attributes=None):
         result['appfiles'] = lookup['appfiles']
     if 'r' in attributes or 'runscript' in attributes and 'apprun' in lookup:
         result['apprun'] = lookup['apprun']
+    if 't' in attributes or 'test' in attributes and 'apptest' in lookup:
+        result['apptest'] = lookup['apptest']
     if 'l' in attributes or 'labels' in attributes and 'applabels' in lookup:
         result['applabels'] = lookup['applabels']
     if 'e' in attributes or 'environment' in attributes and 'appenv' in lookup:

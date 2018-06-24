@@ -246,6 +246,7 @@ def get_appenv(self, app, isolated=True, update=False):
            'SCIF_APPRECIPE': '/scif/apps/hello-world-echo/scif/hello-world-echo.scif',
            'SCIF_APPROOT': '/scif/apps/hello-world-echo',
            'SCIF_APPRUN': '/scif/apps/hello-world-echo/scif/runscript'
+           'SCIF_APPTEST': '/scif/apps/hello-world-echo/scif/test.sh'
        }
 
     '''

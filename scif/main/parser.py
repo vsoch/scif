@@ -152,7 +152,11 @@ def finish_recipe(config, global_section='apps'):
         if "appenv" in config[global_section][app]:
             appenv = config[global_section][app]['appenv']
 
-            # If runscript is defined, add source to first line
+            # If runscript or test is defined, add source to first line      
+            if "apptest" in config[global_section][app]:
+                apptest = config[global_section][app]['apptest']
+                config[global_section][app]['apptest'] =  appenv + apptest
+
             if "apprun" in config[global_section][app]:
                 apprun = config[global_section][app]['apprun']
                 config[global_section][app]['apprun'] =  appenv + apprun

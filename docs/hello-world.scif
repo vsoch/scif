@@ -26,3 +26,12 @@
         docker run vanessa/scif exec hello-world-env echo [e]OMG
         [hello-world-env] executing /bin/echo $OMG
         TACOS
+%apptest hello-world-script
+    echo "Running tests!"
+    if [ $# -eq 0 ]
+        then
+            echo "No arguments supplied, tests pass!"
+            exit 0
+        fi
+    echo "Argument supplied, exiting with ${1}"
+    exit ${1}
