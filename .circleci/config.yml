@@ -118,7 +118,7 @@ jobs:
           no_output_timeout: 2h
           command: |
             echo "Testing SCIF Client Test:"
-            source ~/scif/tests/functions.sh
+            source ~/scif/scif/tests/functions.sh
             stest 0 docker run -it vanessa/scif:hw test hello-world-script
             echo "Tests pass should return 0, returned $?"
             stest 255 docker run -it vanessa/scif:hw test hello-world-script 255
