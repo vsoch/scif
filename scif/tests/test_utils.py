@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from spython.utils import get_installdir
+from scif.utils import get_installdir
 import unittest
 import tempfile
 import shutil
@@ -40,19 +40,18 @@ class TestUtils(unittest.TestCase):
         '''test_write_read_files will test the functions write_file and read_file
         '''
         print("Testing utils.write_file...")
-        from spython.utils import write_file
-        import json
+        from scif.utils import write_file
         tmpfile = tempfile.mkstemp()[1]
         os.remove(tmpfile)
         write_file(tmpfile,"hello!")
         self.assertTrue(os.path.exists(tmpfile))        
 
         print("Testing utils.read_file...")
-        from spython.utils import read_file
+        from scif.utils import read_file
         content = read_file(tmpfile)[0]
         self.assertEqual("hello!",content)
 
-        from spython.utils import write_json
+        from scif.utils import write_json
         print("Testing utils.write_json...")
         print("...Case 1: Providing bad json")
         bad_json = {"Wakkawakkawakka'}":[{True},"2",3]}
@@ -71,16 +70,13 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(isinstance(content,dict))
         self.assertTrue("Wakkawakkawakka" in content)
 
-
-    def test_check_install(self):
-        '''check install is used to check if a particular software is installed.
-        If no command is provided, singularity is assumed to be the test case'''
-        print("Testing utils.check_install")
-        from spython.utils import check_install
-        is_installed = check_install()
-        self.assertTrue(is_installed)
-        is_not_installed = check_install('fakesoftwarename')
-        self.assertTrue(not is_not_installed)
+    def test_run_command(self):
+        '''test running a command
+        '''
+        print("Testing utils.run_command")
+        from scif.utils import run_command
+        result = run_command(['echo hello world')
+        self.assertTrue('scif' in whereami)
 
 
     def test_get_installdir(self):
@@ -88,17 +84,16 @@ class TestUtils(unittest.TestCase):
         is installed
         '''
         print("Testing utils.get_installdir")
-        from spython.utils import get_installdir
+        from scif.utils import get_installdir
         whereami = get_installdir()
         print(whereami)
-        self.assertTrue('spython' in whereami)
+        self.assertTrue('scif' in whereami)
 
 
-    def test_remove_uri(self):
-        print("Testing utils.remove_uri")
-        from spython.utils import remove_uri
-        self.assertEqual(remove_uri('docker://ubuntu'),'ubuntu')
-        self.assertEqual(remove_uri('shub://vanessa/singularity-images'),'vanessa/singularity-images')
+    def test_get_thumbnail(self):
+        print("Testing utils.get_thumbnail")
+        from scif.utils import get_thumbnail
+        self.assertTrue('database/robot.png' in get_thumbnail())
 
 
 
