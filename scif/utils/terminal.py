@@ -40,17 +40,6 @@ def get_installdir():
     return os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
-def get_thumbnail():
-    '''return the robot.png thumbnail from the database folder.
-       if the user has exported a different image, use that instead.
-    '''
-    from sregistry.defaults import SREGISTRY_THUMBNAIL
-    if SREGISTRY_THUMBNAIL is not None:
-        if os.path.exists(SREGISTRY_THUMBNAIL):
-            return SREGISTRY_THUMBNAIL
-    return "%s/database/robot.png" %get_installdir()
-
-
 def run_command(cmd, sudo=False):
     '''run_command uses subprocess to send a command to the terminal.
     :param cmd: the command to send, should be a list for subprocess

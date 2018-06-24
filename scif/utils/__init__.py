@@ -1,7 +1,6 @@
 from .terminal import (
     run_command,
     get_installdir,
-    get_thumbnail
 )
 from .fileio import (
     copyfile,

@@ -76,7 +76,8 @@ class TestUtils(unittest.TestCase):
         print("Testing utils.run_command")
         from scif.utils import run_command
         result = run_command('echo hello world')
-        self.assertTrue('scif' in whereami)
+        self.assertTrue('hello world' in result['message'].decode('utf-8'))
+        self.assertEqual(0, result['return_code'])
 
 
     def test_get_installdir(self):
@@ -88,13 +89,6 @@ class TestUtils(unittest.TestCase):
         whereami = get_installdir()
         print(whereami)
         self.assertTrue('scif' in whereami)
-
-
-    def test_get_thumbnail(self):
-        print("Testing utils.get_thumbnail")
-        from scif.utils import get_thumbnail
-        self.assertTrue('database/robot.png' in get_thumbnail())
-
 
 
 if __name__ == '__main__':
