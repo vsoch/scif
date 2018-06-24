@@ -43,7 +43,7 @@ jobs:
               docker build \
                 --cache-from=${CONTAINER_NAME}:hw \
                 --rm=false \
-                -f /tmp/src/scif/Dockerfile.hello-world
+                -f /tmp/src/scif/Dockerfile.hello-world \
                 -t ${CONTAINER_NAME}:latest \
                 --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
                 --build-arg VCS_REF=`git rev-parse --short HEAD` \
