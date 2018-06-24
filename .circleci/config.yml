@@ -44,7 +44,7 @@ jobs:
                 --cache-from=${CONTAINER_NAME}:hw \
                 --rm=false \
                 -f /tmp/src/scif/Dockerfile.hello-world \
-                -t ${CONTAINER_NAME}:latest \
+                -t ${CONTAINER_NAME} \
                 --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
                 --build-arg VCS_REF=`git rev-parse --short HEAD` \
                 --build-arg VERSION="${CIRCLE_TAG:-$THISVERSION}" . \
@@ -54,9 +54,9 @@ jobs:
           name: Docker save
           no_output_timeout: 40m
           command: |
-            echo "Saving ${CONTAINER_NAME}:hw to container.tar.gz"
+            echo "Saving ${CONTAINER_NAME} to container.tar.gz"
             mkdir -p /tmp/cache
-            docker save ${CONTAINER_NAME}:hw \
+            docker save ${CONTAINER_NAME} \
               | pigz -2 -p 3 > /tmp/cache/container.tar.gz
       - persist_to_workspace:
           root: /tmp
@@ -103,15 +103,15 @@ jobs:
           command: |
             echo "The applications installed in this container are:"
             docker run -it --rm=false \
-              ${CONTAINER_NAME}:hw apps
+              ${CONTAINER_NAME} apps
       - run:
           name: Show SCIF Help
           no_output_timeout: 2h
           command: |
             echo "The help for each app is the following:"
-            for app in $(docker run -it --rm=false ${CONTAINER_NAME}:latest apps); 
+            for app in $(docker run -it --rm=false ${CONTAINER_NAME} apps); 
                 do
-                    docker run -it --rm=false ${CONTAINER_NAME}:hw help ${app}
+                    docker run -it --rm=false ${CONTAINER_NAME} help ${app}
                 done
       - store_test_results:
           path: /home/circleci/out/tests
