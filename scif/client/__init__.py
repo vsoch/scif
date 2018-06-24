@@ -125,7 +125,19 @@ def get_parser():
                      type=str)
 
 
+    # Test
+
+    test = subparsers.add_parser("test",
+                                  help="entrypoint to test an app in a scientific filesystem")
+
+
+    test.add_argument("cmd", nargs='*',
+                       help="app and optional arguments to target for the entry", 
+                       type=str)
+
+
     # List and dump
+
     ls = subparsers.add_parser("apps",
                                 help="list apps installed")
 
@@ -150,16 +162,6 @@ def get_parser():
                          help="app and command to execute. Eg, exec appname echo $SCIF_APPNAME", 
                          type=str)
 
-    # Not sure if this is needed.
-    #write = subparsers.add_parser("write",
-    #                               help="write a Dockerfile (default) or Singularity Recipe.")
-
-    #write.add_argument('--write',
-    #                   default='docker',
-    #                   const='docker',
-    #                   nargs='?',
-    #                   choices=['docker', 'singularity'],
-    #                   help='write a container build specification from the scif recipe (default: %(default)s)')
         
     return parser
 
@@ -230,12 +232,13 @@ def main():
     if args.command == "dump": from .dump import main
     if args.command == "exec": from .execute import main
     if args.command == "help": from .help import main
+    if args.command == "inspect": from .inspect import main
     if args.command == "install": from .install import main
     if args.command == "preview": from .preview import main
     if args.command == "pyshell": from .pyshell import main
-    if args.command == "shell": from .shell import main
-    if args.command == "inspect": from .inspect import main
     if args.command == "run": from .run import main
+    if args.command == "shell": from .shell import main
+    if args.command == "test": from .test import main
 
     # Pass on to the correct parser
     return_code = 0

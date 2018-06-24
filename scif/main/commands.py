@@ -27,7 +27,7 @@ import sys
 import os
 
 
-def _exec(self, app=None, interactive=False):
+def _exec(self, app=None, interactive=False, exit=False):
     '''exec is the underlying driver of both run and exec, taking a final
        SCIF and executing the command for the user.
 
@@ -37,6 +37,13 @@ def _exec(self, app=None, interactive=False):
 
        If a user wants to preserve an environment variable from the console
        it can be referenced with [e], for example $SCIF_DATA --> [e]SCIF_DATA
+
+       Parameters
+       ==========
+       app: the name of the application to execute a command to
+       interactive: if True, us os.system directly
+       exit: exit with return code from command (for test)
+
     '''
 
     name = ''
@@ -68,7 +75,9 @@ def _exec(self, app=None, interactive=False):
 
     # A shell will run the command
     if interactive is True:
-        os.system(''.join(cmd))
+        ret_code = os.system(''.join(cmd))
+        if exit is True:
+            sys.exit(ret_code)
     else:
         for line in os.popen(cmd):
             try:
@@ -125,7 +134,7 @@ def shell(self, app, cmd=None):
                             # updates environment
                             # sets shell entrypoint
 
-                           # interactive
+                            # interactive
     return self._exec(app, True)
 
 
@@ -151,3 +160,31 @@ def run(self, app=None, args=None):
                                      # sets entryfolder
 
     return self._exec(app)
+
+
+def test(self, app=None, args=None):
+    '''test an app. This means the following:
+
+    1. Check that the app is valid for the client. Don't proceed otherwise
+    2. Set the client app to be active
+    3. update the environment to indicate the app is active
+    4. set the entry point and entry folder relevant to the app
+    5. Run interactively, and return the entry code to the client
+
+    Parameters
+    ==========
+    app: the name of the scif app to run. If none provided, all apps are tested.
+    args: a list of one or more additional arguments to pass to runscript
+
+    '''
+
+    config = self.get_appenv(app)
+
+    # Does the application have a test script?
+
+    if not self._set_entrypoint('SCIF_APPTEST', args=args):
+        bot.info("No tests defined for this app.")
+        sys.exit(1)
+
+    self.activate(app, args=args)
+    return self._exec(app, exit=True)
