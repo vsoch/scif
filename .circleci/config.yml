@@ -113,6 +113,14 @@ jobs:
                 do
                     docker run -it --rm=false ${CONTAINER_NAME} help ${app}
                 done
+      - run:
+          name: Test SCIF Client Test
+          no_output_timeout: 2h
+          command: |
+            echo "Testing SCIF Client Help:"
+            docker run -it --rm=false ${CONTAINER_NAME} test hello-world-script
+            echo "Return value $? should be 0"
+
       - store_test_results:
           path: /home/circleci/out/tests
 
@@ -155,7 +163,7 @@ jobs:
 
 workflows:
   version: 2
-  build_test_deploy:
+  build_and_test:
     jobs:
       - build:
           filters:
