@@ -27,39 +27,12 @@ from subprocess import (
     STDOUT
 )
 import os
+import shlex
 
 
 ################################################################################
 # Software Versions
 ################################################################################
-
-def check_install(software, quiet=True):
-    '''attempt to run the command for some software, and
-       return True if installed. The command line utils will not run 
-       without this check.
-
-       Parameters
-       ==========
-       software: the software to run.
-       command: the command to run. If not provided, will use --version
-       quiet: if True, don't print verbose output
-
-    '''
-    if command is None:
-        command = '--version'
-    cmd = [software, command]
-    try:
-        version = run_command(cmd,software)
-
-    except: # FileNotFoundError
-        return False
-    if version is not None:
-        if quiet is False and version['return_code'] == 0:
-            version = version['message']
-            bot.info("Found %s version %s" % (software.upper(), version))
-        return True 
-    return False
-
 
 def get_installdir():
     '''get_installdir returns the installation directory of the application
@@ -85,6 +58,9 @@ def run_command(cmd, sudo=False):
     if none specified, will alert that command failed.
     :param sudopw: if specified (not None) command will be run asking for sudo
     '''
+    if not isinstance(cmd, list):
+        cmd = shlex.split(cmd)
+
     if sudo is True:
         cmd = ['sudo'] + cmd
 

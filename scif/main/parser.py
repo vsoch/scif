@@ -74,7 +74,7 @@ def load_recipe(path):
         # Read in spec, skip empty lines, don't strip remaining
         spec = [x.strip('\n') 
                for x in read_file(path) 
-               if not re.match('^\s+$', x.strip('\n'))]
+               if not re.match(r'^\s+$', x.strip('\n'))]
 
         spec = [x for x in spec if x not in ['', None]]
         config = OrderedDict()
@@ -101,7 +101,7 @@ def load_recipe(path):
                 parts = line.split(' ')
                 if len(parts) > 1:
                     name = ' '.join(parts[1:])          
-                section = re.sub('[%]|(\s+)','',parts[0]).lower()
+                section = re.sub(r'[%]|(\s+)','',parts[0]).lower()
                 config = add_section(config=config,
                                      section=section,
                                      name=name)
