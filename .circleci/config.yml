@@ -117,10 +117,14 @@ jobs:
           name: Test SCIF Client Test
           no_output_timeout: 2h
           command: |
-            echo "Testing SCIF Client Help:"
-            docker run -it --rm=false ${CONTAINER_NAME} test hello-world-script
-            echo "Return value $? should be 0"
-
+            echo "Testing SCIF Client Test:"
+            source ~/scif/tests/functions.sh
+            stest 0 docker run -it vanessa/scif:hw test hello-world-script
+            echo "Tests pass should return 0, returned $?"
+            stest 255 docker run -it vanessa/scif:hw test hello-world-script 255
+            echo "Failed test should return 255, returned $?"
+            stest 1 docker run -it vanessa/scif:hw test hello-world-echo
+            echo "Missing tests should return 1, returned $?"
       - store_test_results:
           path: /home/circleci/out/tests
 

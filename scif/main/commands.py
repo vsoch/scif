@@ -89,7 +89,7 @@ def _exec(self, app=None, interactive=False, exit=False):
         if exit is True:
             result = self._run_command(cmd=[executable] + args, 
                                        spinner=False, 
-                                       quiet=False)
+                                       quiet=self.quiet)
             sys.exit(result['return_code'])
         else:
             os.system(''.join(cmd))
