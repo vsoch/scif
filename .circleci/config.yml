@@ -92,7 +92,6 @@ jobs:
           command: |
             echo $PWD
             ls /tmp
-            ls ~/scif
       - run:
           name: Load Docker image layer cache
           no_output_timeout: 30m
