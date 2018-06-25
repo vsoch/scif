@@ -109,35 +109,32 @@ jobs:
           name: Show SCIF Help
           no_output_timeout: 2h
           command: |
-            ls /tmp
-            ls ~/scif
+            ls $PWD
             echo "Testing SCIF Client Help"
-            chmod u+x ~/scif/scif/tests/test_help.sh
-            /bin/bash ~/scif/scif/tests/test_help.sh ${CONTAINER_NAME}
+            chmod u+x src/scif/scif/tests/test_help.sh
+            /bin/bash src/scif/scif/tests/test_help.sh ${CONTAINER_NAME}
       - run:
           name: Test SCIF Client Run
           no_output_timeout: 2h
           command: |
             ls /tmp
             echo "Testing SCIF Client Run:"
-            chmod u+x ~/scif/scif/tests/test_run.sh
-            /bin/bash ~/scif/scif/tests/test_run.sh ${CONTAINER_NAME}
+            chmod u+x src/scif/scif/tests/test_run.sh
+            /bin/bash src/scif/scif/tests/test_run.sh ${CONTAINER_NAME}
       - run:
           name: Test SCIF Client Exec
           no_output_timeout: 2h
           command: |
-            ls /tmp
             echo "Testing SCIF Client Exec:"
-            chmod u+x ~/scif/scif/tests/test_exec.sh
-            /bin/bash ~/scif/scif/tests/test_exec.sh ${CONTAINER_NAME}
+            chmod u+x src/scif/scif/tests/test_exec.sh
+            /bin/bash src/scif/scif/tests/test_exec.sh ${CONTAINER_NAME}
       - run:
           name: Test SCIF Client Test
           no_output_timeout: 2h
           command: |
-            ls /tmp
             echo "Testing SCIF Client Test:"
-            chmod u+x ~/scif/scif/tests/test_tests.sh
-            /bin/bash ~/scif/scif/tests/test_tests.sh ${CONTAINER_NAME}
+            chmod u+x src/scif/scif/tests/test_tests.sh
+            /bin/bash src/scif/scif/tests/test_tests.sh ${CONTAINER_NAME}
       - store_test_results:
           path: /home/circleci/out/tests
 
