@@ -90,6 +90,13 @@ jobs:
           name: Load Docker image layer cache
           no_output_timeout: 30m
           command: |
+            echo $PWD
+            ls /tmp
+            ls ~/scif
+      - run:
+          name: Load Docker image layer cache
+          no_output_timeout: 30m
+          command: |
             docker info
             set +o pipefail
             if [ -f /tmp/cache/container.tar.gz ]; then
@@ -194,8 +201,6 @@ workflows:
               only: /.*/
 
       - test_apps:
-          requires:
-            - build
           filters:
             branches:
               ignore: /docs?\/.*/
