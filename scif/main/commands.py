@@ -196,10 +196,12 @@ def test(self, app=None, args=None):
 
     # Does the application have a test script?
 
-    self.activate(app, args=args)
+    if app in self.apps():
 
-    if not self._set_entrypoint(app, 'SCIF_APPTEST', args):
-        bot.info("No tests defined for this app.")
-        sys.exit(1)
+        self.activate(app, args=args)
 
-    return self._exec(app, interactive=True, exit=True)
+        if not self._set_entrypoint(app, 'SCIF_APPTEST', args):
+            bot.info("No tests defined for this app.")
+            sys.exit(1)
+
+        return self._exec(app, interactive=True, exit=True)

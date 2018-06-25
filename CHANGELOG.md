@@ -15,6 +15,7 @@ represented by the pull requests that fixed them.
 Versions in parentheses coincide with what is available on [pypi](https://pypi.org/project/scif/).
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (master)
+ - fixing bug that None can go into function to test app (0.0.75)
  - adding test to client, along with tests for functions (and on CircleCI) (0.0.74)
  - ensuring that other application environment variables available at install (0.0.73)
  - adding custom shell command to client, and ensuring paths get appended (0.0.72)

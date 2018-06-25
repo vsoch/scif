@@ -91,15 +91,17 @@ def set_entrypoint(self, app, config_key='SCIF_APPRUN', args=None):
 
        returns True if the config entry and file are found, False otherwise
     '''
-    config = self.get_appenv(app)
 
-    if config_key in config:
-        if os.path.exists(config[config_key]):
-            self._entry_point = [SCIF_SHELL, config[config_key]]
-            if args is not None:
-                args = parse_entrypoint(args)
-                self._entry_point += args
-            return True
+    if app in self.apps():
+        config = self.get_appenv(app)
+
+        if config_key in config:
+            if os.path.exists(config[config_key]):
+                self._entry_point = [SCIF_SHELL, config[config_key]]
+                if args is not None:
+                    args = parse_entrypoint(args)
+                    self._entry_point += args
+                return True
     return False
 
 
