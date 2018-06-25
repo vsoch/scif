@@ -1,6 +1,7 @@
 # Scientific Filesystem (SCI-F)
 
-![docs/img/logo/scif-logo.png](docs/img/logo/scif-logo.png)
+[![CircleCI](https://circleci.com/gh/vsoch/scif.svg?style=svg)](https://circleci.com/gh/vsoch/scif)
+![https://sci-f.github.io/img/logo/scif-slash-green.png](https://sci-f.github.io/img/logo/scif-slash-green.png)
 
 [![asciicast](https://asciinema.org/a/156490.png)](https://asciinema.org/a/156490?speed=2)
 

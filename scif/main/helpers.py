@@ -20,6 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 from scif.utils import run_command as run_cmd
+from scif.defaults import SCIF_SHELL
 from scif.logger import bot
 import shlex
 import sys
@@ -50,8 +51,8 @@ def get_parts(pair, default=None):
     return src,dest
 
 
-def run_command(self, cmd, spinner=True):
-    '''run_install will run a command (a list) and wrap in a spinner. A 
+def run_command(self, cmd, spinner=True, quiet=True):
+    '''run_command will run a command (a list) and wrap in a spinner. A 
        result (dict) with message and return code is returned. If the
        return value is not 0, an error is issed and we exit
     '''
@@ -62,12 +63,44 @@ def run_command(self, cmd, spinner=True):
 
     if spinner is True:
         bot.spinner.stop()
+
     retval = result['return_code']
+
+    if quiet is False:
+        if isinstance(result['message'], bytes):
+            result['message'] = result['message'].decode('utf-8') 
+        print(result['message'])
+
+    # Beep boop, error!
     if retval != 0:
         bot.error('Return code %s' %retval)
         sys.exit(retval)
+
     return result
 
+
+def set_entrypoint(self, app, config_key='SCIF_APPRUN', args=None):
+    '''if the value is defined in the config and the file exists, set
+       the entrypoint for the app to execute the script.
+
+       Parameters
+       ==========
+       key: the entry in the config (a filename) to check for existence. If 
+            it exists, then set it's execution using the default shell to
+            be the entrypoint.
+
+       returns True if the config entry and file are found, False otherwise
+    '''
+    config = self.get_appenv(app)
+
+    if config_key in config:
+        if os.path.exists(config[config_key]):
+            self._entry_point = [SCIF_SHELL, config[config_key]]
+            if args is not None:
+                args = parse_entrypoint(args)
+                self._entry_point += args
+            return True
+    return False
 
 
 def parse_entrypoint(entry_point=None):
@@ -92,7 +125,7 @@ def parse_entrypoint(entry_point=None):
     #        [in] in the command or entrypoint: environment vars --> <
     #        [pipe] in the command or entrypoint: environment vars --> |
 
-    entry_point= ' '.join(entry_point)
+    entry_point = ' '.join(entry_point)
     entry_point = re.sub('\[e\]','$', entry_point)
     entry_point = re.sub('\[out\]','>', entry_point)
     entry_point = re.sub('\[in\]','<', entry_point)

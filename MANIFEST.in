@@ -1,6 +1,6 @@
 include README.md LICENSE
 recursive-include scif *
-recursive-include scif *.png
+recursive-include scif/tests *.sh
 global-exclude *.py[co]
 global-exclude *.img
 global-exclude OLD-scif/*

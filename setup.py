@@ -84,6 +84,8 @@ if __name__ == "__main__":
           long_description=LONG_DESCRIPTION,
           keywords=KEYWORDS,
           install_requires = INSTALL_REQUIRES,
+          test_suite='nose.collector',
+          tests_require=['nose'],
           extras_require={
               'all': [INSTALL_REQUIRES_ALL]
           },

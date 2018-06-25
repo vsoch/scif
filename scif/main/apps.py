@@ -51,11 +51,11 @@ def activate(self, app, cmd=None, args=None):
     '''if an app is valid, get it's environment to make it active.
        Update the entrypoint to be relevant to the app runscript.
     
-    Parameters
-    ==========
-    app: the name of the app to activate
-    cmd: if defined, the entry point (command) to run. Otherwise uses apprun
-    args: additional commands for the apprun
+        Parameters
+        ==========
+        app: the name of the app to activate
+        cmd: if defined, the entry point (command) to run. Otherwise uses apprun
+        args: additional commands for the apprun
 
     '''
     if app is None:
@@ -76,12 +76,8 @@ def activate(self, app, cmd=None, args=None):
         if cmd is not None:
             self._entry_point = parse_entrypoint(cmd)
         
-        elif 'SCIF_APPRUN' in config:
-            if os.path.exists(config['SCIF_APPRUN']):
-                self._entry_point = [SCIF_SHELL, config['SCIF_APPRUN']]
-                if args is not None:
-                    args = parse_entrypoint(args)
-                    self._entry_point += args
+        # Set the default entrypoint
+        self._set_entrypoint(app, 'SCIF_APPRUN', args)
 
         # Update the environment for active app (updates ScifRecipe object)
         appenv = self.get_appenv(app, isolated=False, update=True)
@@ -184,6 +180,8 @@ def inspect(self, app, attributes=None):
         result['appfiles'] = lookup['appfiles']
     if 'r' in attributes or 'runscript' in attributes and 'apprun' in lookup:
         result['apprun'] = lookup['apprun']
+    if 't' in attributes or 'test' in attributes and 'apptest' in lookup:
+        result['apptest'] = lookup['apptest']
     if 'l' in attributes or 'labels' in attributes and 'applabels' in lookup:
         result['applabels'] = lookup['applabels']
     if 'e' in attributes or 'environment' in attributes and 'appenv' in lookup:
