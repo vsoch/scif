@@ -108,23 +108,30 @@ jobs:
           name: Show SCIF Help
           no_output_timeout: 2h
           command: |
-            echo "The help for each app is the following:"
-            for app in $(docker run -it --rm=false ${CONTAINER_NAME} apps); 
-                do
-                    docker run -it --rm=false ${CONTAINER_NAME} help ${app}
-                done
+            echo "Testing SCIF Client Help"
+            chmod u+x ~/scif/scif/tests/test_help.sh
+            /bin/bash ~/scif/scif/tests/test_help.sh ${CONTAINER_NAME}
+      - run:
+          name: Test SCIF Client Run
+          no_output_timeout: 2h
+          command: |
+            echo "Testing SCIF Client Run:"
+            chmod u+x ~/scif/scif/tests/test_run.sh
+            /bin/bash ~/scif/scif/tests/test_run.sh ${CONTAINER_NAME}
+      - run:
+          name: Test SCIF Client Exec
+          no_output_timeout: 2h
+          command: |
+            echo "Testing SCIF Client Exec:"
+            chmod u+x ~/scif/scif/tests/test_exec.sh
+            /bin/bash ~/scif/scif/tests/test_exec.sh ${CONTAINER_NAME}
       - run:
           name: Test SCIF Client Test
           no_output_timeout: 2h
           command: |
             echo "Testing SCIF Client Test:"
-            source ~/scif/scif/tests/functions.sh
-            stest 0 docker run -it vanessa/scif:hw test hello-world-script
-            echo "Tests pass should return 0, returned $?"
-            stest 255 docker run -it vanessa/scif:hw test hello-world-script 255
-            echo "Failed test should return 255, returned $?"
-            stest 1 docker run -it vanessa/scif:hw test hello-world-echo
-            echo "Missing tests should return 1, returned $?"
+            chmod u+x ~/scif/scif/tests/test_tests.sh
+            /bin/bash ~/scif/scif/tests/test_tests.sh ${CONTAINER_NAME}
       - store_test_results:
           path: /home/circleci/out/tests
 

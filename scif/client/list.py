@@ -48,4 +48,4 @@ def main(args,parser,subparser):
             bot.custom(prefix="SCIF", message=header, color="CYAN")
             bot.table(result)
         else:
-            bot.info('\n'.join(result))
+            print('\n'.join(result))

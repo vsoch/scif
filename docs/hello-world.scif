@@ -13,6 +13,8 @@
     /bin/bash hello-world.sh
 %appenv hello-world-env
     OMG=TACOS
+%apphelp hello-world-script
+   This version of hello world runs a script to print hello world
 %apphelp hello-world-env
    This is the help section for hello-world-env! This app
    does not have anything other than an environment installed. 

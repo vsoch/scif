@@ -52,6 +52,7 @@ class ScifRecipe:
         # 0. base determined from environment
         from scif.defaults import SCIF_BASE
         self.set_defaults()
+        self.quiet = quiet
 
         # If recipe path not provided, try default base
         if path is None:
