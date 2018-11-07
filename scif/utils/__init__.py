@@ -4,6 +4,7 @@ from .terminal import (
 )
 from .fileio import (
     copyfile,
+    make_executable,
     mkdir_p,
     write_file,
     write_json,

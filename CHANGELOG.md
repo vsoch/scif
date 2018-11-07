@@ -15,6 +15,7 @@ represented by the pull requests that fixed them.
 Versions in parentheses coincide with what is available on [pypi](https://pypi.org/project/scif/).
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (master)
+ - test and runscript need to be executable after write (0.0.76)
  - fixing bug that None can go into function to test app (0.0.75)
  - adding test to client, along with tests for functions (and on CircleCI) (0.0.74)
  - ensuring that other application environment variables available at install (0.0.73)
