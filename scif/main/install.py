@@ -224,8 +224,8 @@ def install_script(self, section, app, settings, config, executable=False):
         bot.info('+ ' + section + ' '.ljust(5) + app)
         write_file(settings[section], content)
 
-        # Should we make the script executable?
-        if os.path.exists(settings[section]) and executable is True:
+        # Should we make the script executable (checks for exists)
+        if executable is True:
             make_executable(settings[section])
 
 
