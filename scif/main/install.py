@@ -1,8 +1,6 @@
 '''
 
-Copyright (C) 2017 The Board of Trustees of the Leland Stanford Junior
-University.
-Copyright (C) 2017 Vanessa Sochat.
+Copyright (C) 2017-2018 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -21,7 +19,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 from scif.logger import bot
-from scif.utils import ( mkdir_p, run_command, write_file, write_json )
+from scif.utils import ( 
+    make_executable, 
+    mkdir_p, 
+    run_command, 
+    write_file, 
+    write_json
+)
 from scif.main.helpers import get_parts
 import sys
 import os
@@ -201,7 +205,7 @@ def install_recipe(self, app, settings, config):
 
 # Scripts
 
-def install_script(self, section, app, settings, config):
+def install_script(self, section, app, settings, config, executable=False):
     '''a general function used by install_runscript, install_help, and
        install_environment to write a script to a file from a config setting
        section
@@ -212,6 +216,7 @@ def install_script(self, section, app, settings, config):
        app should be the name of the app, for lookup in config['apps']
        settings: the output of _init_app(), a dictionary of environment vars
        config: should be the config for the app obtained with self.app(app)
+       executable: if the file is written, make it executable (defaults False)
 
     '''
     if section in config:
@@ -219,12 +224,16 @@ def install_script(self, section, app, settings, config):
         bot.info('+ ' + section + ' '.ljust(5) + app)
         write_file(settings[section], content)
 
+        # Should we make the script executable (checks for exists)
+        if executable is True:
+            make_executable(settings[section])
 
-def install_runscript(self, app, settings, config):
+
+def install_runscript(self, app, settings, config, executable=True):
     '''install runscript will prepare the runscript for an app.
        the parameters are shared by _install_script
     '''
-    return self._install_script('apprun', app, settings, config)
+    return self._install_script('apprun', app, settings, config, executable)
 
             
 def install_environment(self, app, settings, config):
@@ -241,8 +250,8 @@ def install_help(self, app, settings, config):
     return self._install_script('apphelp', app, settings, config)
 
 
-def install_test(self, app, settings, config):
+def install_test(self, app, settings, config, executable=True):
     '''install test will prepare a test script for an app.
        the parameters are shared by _install_script
     '''
-    return self._install_script('apptest', app, settings, config)
+    return self._install_script('apptest', app, settings, config, executable)

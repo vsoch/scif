@@ -1,7 +1,5 @@
 '''
 
-Copyright (C) 2017-2018 The Board of Trustees of the Leland Stanford Junior
-University.
 Copyright (C) 2017-2018 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
@@ -23,15 +21,16 @@ import errno
 import os
 import re
 import shutil
+import stat
 import codecs
 import json
 from scif.logger import bot
 import sys
 
 
-############################################################################
-## FOLDER OPERATIONS #######################################################
-############################################################################
+################################################################################
+## FOLDER OPERATIONS ###########################################################
+################################################################################
 
 
 def mkdir_p(path):
@@ -64,9 +63,23 @@ def which(software):
             return p
 
 
-############################################################################
-## FILE OPERATIONS #########################################################
-############################################################################
+################################################################################
+## FILE OPERATIONS #############################################################
+################################################################################
+
+
+def make_executable(filename):
+    '''make a file executable by doing the equivalent of chmod+x
+
+       Parameters
+       ==========
+       filename: the name of the file to make executable
+    '''
+    if os.path.exists(filename):
+        st = os.stat(filename)
+        mode = st.st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
+        os.chmod(filename, mode)
+
 
 def copyfile(source, destination, force=True):
     '''copy a file from a source to its destination.
