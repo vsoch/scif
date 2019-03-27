@@ -27,17 +27,17 @@ import os
 def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
-    args = args.cmd
+    cmd = args.cmd
 
-    if len(args) < 2:
+    if len(cmd) < 2:
         bot.warning('You must supply an appname and command to execute.')
         bot.custom(prefix="Example: ", message="scif exec app echo $SCIF_APPNAME")
         sys.exit(1)
 
-    app = args.pop(0)
+    app = cmd.pop(0)
 
     # The next must be the program to execute
-    command = args.pop(0)
+    command = cmd.pop(0)
 
     client = ScifRecipe(quiet=True, writable=args.writable)
-    client.execute(app=app, cmd=command, args=args)
+    client.execute(app=app, cmd=command, args=cmd)
