@@ -158,10 +158,6 @@ def finish_recipe(config, global_section='apps'):
             if "apprun" in config[global_section][app]:
                 apprun = config[global_section][app]['apprun']
                 config[global_section][app]['apprun'] =  appenv + apprun
-            else:    
-                # An app can just be an environment
-                config[global_section][app]['apprun'] = appenv
-
 
     return config
 

@@ -26,7 +26,6 @@ def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
     cmd = args.cmd
-    client = ScifRecipe(quiet=True, writable=args.writable)
 
     if len(cmd) == 0:
         bot.warning('You must supply an appname to run.')

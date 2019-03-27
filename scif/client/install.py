@@ -41,7 +41,7 @@ def main(args,parser,subparser):
     if len(apps) == 0:
         apps = None
 
-    client = ScifRecipe(recipe) # writable is True
+    client = ScifRecipe(path=recipe) # writable is True
 
     # Preview the entire recipe, or the apps chosen
     client.install(apps)

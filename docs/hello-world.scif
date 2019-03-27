@@ -11,6 +11,8 @@
     export THEBESTAPP
 %apprun hello-world-script
     /bin/bash hello-world.sh
+%apprun hello-world-custom
+    echo "Hello $@"
 %appenv hello-world-env
     OMG=TACOS
 %apphelp hello-world-script
