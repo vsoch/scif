@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -27,13 +27,17 @@ import os
 def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
-    cmd = args.cmd
+    args = args.cmd
 
-    if len(cmd) < 2:
+    if len(args) < 2:
         bot.warning('You must supply an appname and command to execute.')
         bot.custom(prefix="Example: ", message="scif exec app echo $SCIF_APPNAME")
         sys.exit(1)
 
-    app = cmd.pop(0)
+    app = args.pop(0)
+
+    # The next must be the program to execute
+    command = args.pop(0)
+
     client = ScifRecipe(quiet=True, writable=args.writable)
-    client.execute(app, cmd)
+    client.execute(app=app, cmd=command, args=args)

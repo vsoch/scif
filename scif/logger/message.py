@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -235,6 +235,10 @@ class SCIFMessage:
 
     def error(self, message):
         self.emit(ERROR, message, 'ERROR')
+
+    def exit(self, message, error_code=255):
+        self.emit(ERROR, message, 'ERROR')
+        sys.exit(error_code)
 
     def warning(self, message):
         self.emit(WARNING, message, 'WARNING')

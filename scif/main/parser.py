@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -28,13 +28,13 @@ import sys
 def load_filesystem(base, quiet=False):
     '''load a filesystem based on a root path, which is usually /scif
 
-    Parameters
-    ==========
-    base: base to load.
+        Parameters
+        ==========
+        base: base to load.
 
-    Returns
-    =======
-    config: a parsed recipe configuration for SCIF
+        Returns
+        =======
+        config: a parsed recipe configuration for SCIF
     '''
     from scif.defaults import SCIF_APPS
 
@@ -57,13 +57,13 @@ def load_filesystem(base, quiet=False):
 def load_recipe(path):
     '''load will return a loaded in (user) scif configuration file
 
-    Parameters
-    ==========
-    path: a path to a scif recipe file
+        Parameters
+        ==========
+        path: a path to a scif recipe file
 
-    Returns
-    =======
-    config: a parsed recipe configuration for SCIF
+        Returns
+        =======
+        config: a parsed recipe configuration for SCIF
     '''
 
     path = os.path.abspath(path)
@@ -200,16 +200,16 @@ def read_section(config, spec, section, name, global_section='apps'):
 
 
 def add_section(config, section, name=None, global_section="apps"):
-    '''add section will add a section (and optionally)
-    section name to a config
+    ''' add section will add a section (and optionally)
+        section name to a config
 
-    Parameters
-    ==========
-    config: the config (dict) parsed thus far
-    section: the section type (e.g., appinstall)
-    name: an optional name, added as a level (e.g., google-drive)
+        Parameters
+        ==========
+        config: the config (dict) parsed thus far
+        section: the section type (e.g., appinstall)
+        name: an optional name, added as a level (e.g., google-drive)
 
-    Resulting data structure is:
+        Resulting data structure is:
 
             config['registry']['apprun']
             config[name][section]

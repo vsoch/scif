@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -71,11 +71,12 @@ def activate(self, app, cmd=None, args=None):
         self.append_path('LD_LIBRARY_PATH', config['SCIF_APPLIB'])
 
         # Set the runscript, first to cmd provided (exec) then runscript
-        if cmd is not None:
+        if cmd != None:
             self._entry_point = parse_entrypoint(cmd)
-        
-        # Set the default entrypoint
-        self._set_entrypoint(app, 'SCIF_APPRUN', args)
+            self._entry_point += parse_entrypoint(args)
+        else:
+            # Set the default entrypoint
+            self._set_entrypoint(app, 'SCIF_APPRUN', args)
 
         # Update the environment for active app (updates ScifRecipe object)
         appenv = self.get_appenv(app, isolated=False, update=True)

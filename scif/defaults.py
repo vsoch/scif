@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -38,13 +38,14 @@ def convert2boolean(arg):
 
 
 def getenv(variable_key, default=None, required=False, silent=True):
-    '''
-    getenv will attempt to get an environment variable. If the variable
-    is not found, None is returned.
+    ''' getenv will attempt to get an environment variable. If the variable
+        is not found, None is returned.
 
-    :param variable_key: the variable name
-    :param required: exit with error if not found
-    :param silent: Do not print debugging information for variable
+        Paramters
+        =========
+        variable_key: the variable name
+        required: exit with error if not found
+        silent: Do not print debugging information for variable
     '''
     variable = os.environ.get(variable_key, default)
     if variable is None and required:

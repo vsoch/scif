@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2018 Vanessa Sochat.
+Copyright (C) 2018-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -105,7 +105,8 @@ def set_entrypoint(self, app, config_key='SCIF_APPRUN', args=None):
 
 def parse_entrypoint(entry_point=None):
     '''parse entrypoint will return a list, where the first argument is the
-       executable, followed by arguments
+       executable, followed by arguments. This function also works to
+       parse arguments into a list.
  
        Parameters
        ==========
