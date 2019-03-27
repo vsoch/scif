@@ -167,6 +167,11 @@ def run(self, app=None, args=None):
     args: a list of one or more additional arguments to pass to runscript
 
     '''
+    # Cut out early if the app doesn't have a runscript
+    config = self.app(app)
+    if 'apprun' not in config:
+        bot.exit('%s does not have a runscript.' % app)
+
     self.activate(app, args=args)    # checks for existence
                                      # sets _active to app's name
                                      # updates environment
