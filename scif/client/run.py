@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2016-2017 Vanessa Sochat.
+Copyright (C) 2016-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -26,7 +26,6 @@ def main(args,parser,subparser):
 
     from scif.main import ScifRecipe
     cmd = args.cmd
-    client = ScifRecipe(quiet=True, writable=args.writable)
 
     if len(cmd) == 0:
         bot.warning('You must supply an appname to run.')

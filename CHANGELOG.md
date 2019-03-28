@@ -8,13 +8,13 @@ represented by the pull requests that fixed them.
  - renamed commands
  - deprecated / removed commands
  - changed defaults
- - backward incompatible changes (recipe file format? image file format?)
- - migration guidance (how to convert images?)
- - changed behaviour (recipe sections work differently)
+ - backward incompatible changes
+ - changed behaviour
 
 Versions in parentheses coincide with what is available on [pypi](https://pypi.org/project/scif/).
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (master)
+ - args not passed correctly for run and exec (0.0.77)
  - test and runscript need to be executable after write (0.0.76)
  - fixing bug that None can go into function to test app (0.0.75)
  - adding test to client, along with tests for functions (and on CircleCI) (0.0.74)

@@ -1,10 +1,8 @@
-#######################################
-# SciF Base
+# SciF Example
 #
-# docker build -t vanessa/scif .
-# docker run vanessa/scif
-#
-#######################################
+# docker build -f Dockerfile.hello-world -t vanessa/scif:hw .
+# docker run vanessa/scif:hw
+# docker push vanessa/scif:hw
 
 FROM continuumio/miniconda3
 

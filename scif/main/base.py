@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -91,13 +91,13 @@ class ScifRecipe:
     def load(self, path, app=None, quiet=False):
         '''load a scif recipe into the object
 
-        Parameters
-        ==========
-        path: the complete path to the config (recipe file) to load, or 
-              root path of filesystem (that from calling function defaults to
-              /scif)
-        app:  if running with context of an active app, this will load the
-              active app environment for it as well.
+            Parameters
+            ==========
+            path: the complete path to the config (recipe file) to load, or 
+                  root path of filesystem (that from calling function defaults to
+                  /scif)
+            app:  if running with context of an active app, this will load the
+                  active app environment for it as well.
         '''
         # 1. path is a recipe
         if os.path.isfile(path):

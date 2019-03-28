@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -69,18 +69,18 @@ def get_append_path(self, key, value, environ=None):
 
 
 def init_env(self, config, base='/scif', active=None):
-    '''env will parse the complete SCIF namespace environment from a config.
-    this will be defined for all apps to allow for easy interaction between
-    them, regardless of which individual app is active.
+    ''' env will parse the complete SCIF namespace environment from a config.
+        this will be defined for all apps to allow for easy interaction between
+        them, regardless of which individual app is active.
     
-    Parameters
-    ==========
-    config: the config loaded in with "load" in this file.
-    active: the name of the active app, if relevant.
+        Parameters
+        ==========
+        config: the config loaded in with "load" in this file.
+        active: the name of the active app, if relevant.
 
-    Example: the following environment variables would be defined for an app
-             called "google-drive" Note that for the variable, the slash is
-             replaced with an underscore
+        Example: the following environment variables would be defined for an app
+                 called "google-drive" Note that for the variable, the slash is
+                 replaced with an underscore
 
              SCIF_APPDATA_google_drive=/scif/data/google-drive
              SCIF_APPRUN_google_drive=/scif/apps/google-drive/scif/runscript
@@ -121,11 +121,11 @@ def init_env(self, config, base='/scif', active=None):
 
 
 def update_env(self, reset=False):
-    '''If the SCIF is loaded, upload the object's environment.
+    ''' If the SCIF is loaded, upload the object's environment.
 
-    Parameters
-    ==========
-    reset: if True, empty the environment before parsing from config
+        Parameters
+        ==========
+        reset: if True, empty the environment before parsing from config
 
     '''
 
@@ -349,14 +349,14 @@ def get_appenv_lookup(self, app):
 # ScifRecipe Environment Helpers
 
 def add_env(self, key, value):
-    '''add a key/value pair to the environment. Should begin with SCIF
-       to maintain proper namespace
+    ''' add a key/value pair to the environment. Should begin with SCIF
+        to maintain proper namespace
 
-    Parameters
-    ==========
-    key: the environment variable name. For SCIF, slashes should be 
-         removed and replaced with underscore.
-    value: the value to set for the environment variable
+        Parameters
+        ==========
+        key: the environment variable name. For SCIF, slashes should be 
+             removed and replaced with underscore.
+        value: the value to set for the environment variable
 
     '''    
     if not hasattr(self,'environment'):

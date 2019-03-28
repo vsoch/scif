@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -100,7 +100,7 @@ def _exec(self, app=None, interactive=False, exit=False):
                 print(line.rstrip().encode(loc))
 
 
-def execute(self, app, cmd=None):
+def execute(self, app, cmd=None, args=None):
     '''execute a command in the context of an app. This means the following:
 
     1. Check that the app is valid for the client. Don't proceed otherwise
@@ -113,7 +113,7 @@ def execute(self, app, cmd=None):
     app: the name of the scif app to execute a command to
 
     '''
-    self.activate(app, cmd)
+    self.activate(app, cmd, args)
                           # checks for existence
                           # sets _active to app's name
                           # updates environment
@@ -167,6 +167,11 @@ def run(self, app=None, args=None):
     args: a list of one or more additional arguments to pass to runscript
 
     '''
+    # Cut out early if the app doesn't have a runscript
+    config = self.app(app)
+    if 'apprun' not in config:
+        bot.exit('%s does not have a runscript.' % app)
+
     self.activate(app, args=args)    # checks for existence
                                      # sets _active to app's name
                                      # updates environment

@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -41,7 +41,7 @@ def main(args,parser,subparser):
     if len(apps) == 0:
         apps = None
 
-    client = ScifRecipe(recipe) # writable is True
+    client = ScifRecipe(path=recipe) # writable is True
 
     # Preview the entire recipe, or the apps chosen
     client.install(apps)

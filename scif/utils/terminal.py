@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -40,10 +40,13 @@ def get_installdir():
 
 def run_command(cmd, sudo=False):
     '''run_command uses subprocess to send a command to the terminal.
-    :param cmd: the command to send, should be a list for subprocess
-    :param error_message: the error message to give to user if fails,
-    if none specified, will alert that command failed.
-    :param sudopw: if specified (not None) command will be run asking for sudo
+
+       Parameters
+       ==========
+       cmd: the command to send, should be a list for subprocess
+       error_message: the error message to give to user if fails,
+                      if none specified, will alert that command failed.
+       sudo: if True (default False) command will be run asking for sudo
     '''
     if not isinstance(cmd, list):
         cmd = shlex.split(cmd)

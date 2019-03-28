@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -92,7 +92,7 @@ def copyfile(source, destination, force=True):
 
 def write_file(filename, content, mode="w"):
     '''write_file will open a file, "filename" and write content, "content"
-    and properly close the file
+        and properly close the file
     '''
     with codecs.open(filename, mode, encoding='utf-8') as filey:
         filey.writelines(content)
@@ -101,9 +101,12 @@ def write_file(filename, content, mode="w"):
 
 def write_json(json_obj, filename, mode="w", print_pretty=True):
     '''write_json will (optionally,pretty print) a json object to file
-    :param json_obj: the dict to print to json
-    :param filename: the output file to write to
-    :param pretty_print: if True, will use nicer formatting
+
+       Parameters
+       ==========
+       json_obj: the dict to print to json
+       filename: the output file to write to
+       pretty_print: if True, will use nicer formatting
     '''
     with codecs.open(filename, mode, encoding='utf-8') as filey:
         if print_pretty:
@@ -122,7 +125,7 @@ def write_json(json_obj, filename, mode="w", print_pretty=True):
 
 def read_file(filename, mode="r", readlines=True):
     '''write_file will open a file, "filename" and write content, "content"
-    and properly close the file
+       and properly close the file
     '''
     with codecs.open(filename, mode, encoding='utf-8') as filey:
         if readlines is True:
@@ -134,7 +137,7 @@ def read_file(filename, mode="r", readlines=True):
 
 def read_json(filename, mode='r'):
     '''read_json reads in a json file and returns
-    the data structure as dict.
+       the data structure as dict.
     '''
     with codecs.open(filename, mode, encoding='utf-8') as filey:
         data = json.load(filey)

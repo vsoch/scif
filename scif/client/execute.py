@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2017-2018 Vanessa Sochat.
+Copyright (C) 2017-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -35,5 +35,9 @@ def main(args,parser,subparser):
         sys.exit(1)
 
     app = cmd.pop(0)
+
+    # The next must be the program to execute
+    command = cmd.pop(0)
+
     client = ScifRecipe(quiet=True, writable=args.writable)
-    client.execute(app, cmd)
+    client.execute(app=app, cmd=command, args=cmd)
