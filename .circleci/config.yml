@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 orbs:
   # https://circleci.com/orbs/registry/orb/circleci/docker-publish
@@ -187,7 +187,6 @@ jobs:
 
 
 workflows:
-  version: 2
   build_and_test:
     jobs:
       - build:
