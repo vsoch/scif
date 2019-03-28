@@ -1,4 +1,9 @@
 version: 2
+
+orbs:
+  # https://circleci.com/orbs/registry/orb/circleci/docker-publish
+  docker-publish: circleci/docker-publish@0.1.3
+
 jobs:
 
   build:
@@ -212,3 +217,57 @@ workflows:
           filters:
             tags:
               only: /.*/
+
+  build_without_publishing_job:
+    jobs:
+      - docker-publish/publish:
+          image: vanessa/scif
+          deploy: false
+          tag: latest
+          filters:
+            branches:
+              ignore: 
+                - master
+                - docs*
+          after_build:
+            - run:
+                name: Preview Docker Tag for Build
+                command: |
+                   DOCKER_TAG=$(docker run vanessa/scif:latest version)
+                   echo "Version for Docker tag is ${DOCKER_TAG}"
+
+      - docker-publish/publish:
+          image: vanessa/scif
+          tag: hw
+          deploy: false
+          dockerfile: Dockerfile.hello-world
+          filters:
+            branches:
+              ignore: 
+                - master
+                - docs*
+
+  # This workflow will deploy images on merge to master only
+  docker_with_lifecycle:
+    jobs:
+      - docker-publish/publish:
+          image: vanessa/scif
+          tag: latest
+          filters:
+            branches:
+             only: master
+          after_build:
+            - run:
+                name: Publish Docker Tag with SIF Python Version
+                command: |
+                   DOCKER_TAG=$(docker run vanessa/scif:latest version)
+                   echo "Version for Docker tag is ${DOCKER_TAG}"
+                   docker tag singularityhub/sif:latest singularityhub/sif:${DOCKER_TAG}
+
+      - docker-publish/publish:
+          image: vanessa/scif
+          tag: hw
+          dockerfile: Dockerfile.hello-world
+          filters:
+            branches:
+             only: master
