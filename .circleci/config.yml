@@ -1,4 +1,9 @@
-version: 2
+version: 2.1
+
+orbs:
+  # https://circleci.com/orbs/registry/orb/circleci/docker-publish
+  docker-publish: circleci/docker-publish@0.1.3
+
 jobs:
 
   build:
@@ -6,7 +11,7 @@ jobs:
       - TZ: "/usr/share/zoneinfo/America/Los_Angeles"
       - CONTAINER_NAME: "vanessa/scif"
     docker:
-      - image: docker:18.01.0-ce-git
+      - image: docker:18.06.3-ce-git
     working_directory: /tmp/src/scif
     steps:
       - run:
@@ -57,52 +62,10 @@ jobs:
             mkdir -p /tmp/cache
             docker save ${CONTAINER_NAME} \
               | pigz -2 -p 3 > /tmp/cache/container.tar.gz
-      - persist_to_workspace:
-          root: /tmp
-          paths:
-            - cache/container.tar.gz
-            - src/scif
-
-  update_cache:
-    machine:
-      # Ubuntu 14.04 with Docker 17.10.0-ce
-      image: circleci/classic:201711-01
-    working_directory: /tmp/src/scif
-    steps:
-      - attach_workspace:
-          at: /tmp
       - save_cache:
          key: docker-v1-{{ .Branch }}-{{ epoch }}
          paths:
             - /tmp/cache/container.tar.gz
-
-  test_apps:
-    machine:
-      image: circleci/classic:201711-01
-    environment:
-      - CONTAINER_NAME: "vanessa/scif"
-    working_directory: /home/circleci/out/tests
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp
-      - run:
-          name: Load Docker image layer cache
-          no_output_timeout: 30m
-          command: |
-            echo $PWD
-            ls /tmp
-      - run:
-          name: Load Docker image layer cache
-          no_output_timeout: 30m
-          command: |
-            docker info
-            set +o pipefail
-            if [ -f /tmp/cache/container.tar.gz ]; then
-              sudo apt update && sudo apt -y install pigz
-              pigz -d --stdout /tmp/cache/container.tar.gz | docker load
-              docker images
-            fi
       - run:
           name: List SCIF Apps
           no_output_timeout: 2h
@@ -117,30 +80,34 @@ jobs:
           command: |
             ls $PWD
             echo "Testing SCIF Client Help"
-            chmod u+x scif/tests/test_help.sh
-            /bin/bash scif/tests/test_help.sh ${CONTAINER_NAME}
+            cd scif/tests
+            chmod u+x test_help.sh
+            /bin/sh test_help.sh ${CONTAINER_NAME}
       - run:
           name: Test SCIF Client Run
           no_output_timeout: 2h
           command: |
             ls /tmp
             echo "Testing SCIF Client Run:"
-            chmod u+x scif/tests/test_run.sh
-            /bin/bash scif/tests/test_run.sh ${CONTAINER_NAME}
+            cd scif/tests
+            chmod u+x test_run.sh
+            /bin/sh test_run.sh ${CONTAINER_NAME}
       - run:
           name: Test SCIF Client Exec
           no_output_timeout: 2h
           command: |
             echo "Testing SCIF Client Exec:"
-            chmod u+x scif/tests/test_exec.sh
-            /bin/bash scif/tests/test_exec.sh ${CONTAINER_NAME}
+            cd scif/tests
+            chmod u+x test_exec.sh
+            /bin/sh test_exec.sh ${CONTAINER_NAME}
       - run:
           name: Test SCIF Client Test
           no_output_timeout: 2h
           command: |
             echo "Testing SCIF Client Test:"
-            chmod u+x scif/tests/test_tests.sh
-            /bin/bash scif/tests/test_tests.sh ${CONTAINER_NAME}
+            cd scif/tests
+            chmod u+x test_tests.sh
+            /bin/sh test_tests.sh ${CONTAINER_NAME}
       - store_test_results:
           path: /home/circleci/out/tests
 
@@ -180,9 +147,11 @@ jobs:
           path: test-reports
           destination: test-reports
 
+      - store_test_results:
+          path: /home/circleci/out/tests
+
 
 workflows:
-  version: 2
   build_and_test:
     jobs:
       - build:
@@ -190,25 +159,61 @@ workflows:
             tags:
               only: /.*/
 
-      - update_cache:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: /docs?\/.*/
-            tags:
-              only: /.*/
-
-      - test_apps:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: /docs?\/.*/
-            tags:
-              only: /.*/
-
       - test_python:
           filters:
             tags:
               only: /.*/
+
+  build_without_publishing_job:
+    jobs:
+      - docker-publish/publish:
+          image: vanessa/scif
+          deploy: false
+          tag: latest
+          filters:
+            branches:
+              ignore: 
+                - master
+                - docs*
+          after_build:
+            - run:
+                name: Preview Docker Tag for Build
+                command: |
+                   DOCKER_TAG=$(docker run vanessa/scif:latest version)
+                   echo "Version for Docker tag is ${DOCKER_TAG}"
+
+      - docker-publish/publish:
+          image: vanessa/scif
+          tag: hw
+          deploy: false
+          dockerfile: Dockerfile.hello-world
+          filters:
+            branches:
+              ignore: 
+                - master
+                - docs*
+
+  # This workflow will deploy images on merge to master only
+  docker_with_lifecycle:
+    jobs:
+      - docker-publish/publish:
+          image: vanessa/scif
+          tag: latest
+          filters:
+            branches:
+             only: master
+          after_build:
+            - run:
+                name: Publish Docker Tag with SIF Python Version
+                command: |
+                   DOCKER_TAG=$(docker run vanessa/scif:latest version)
+                   echo "Version for Docker tag is ${DOCKER_TAG}"
+                   docker tag singularityhub/sif:latest singularityhub/sif:${DOCKER_TAG}
+
+      - docker-publish/publish:
+          image: vanessa/scif
+          tag: hw
+          dockerfile: Dockerfile.hello-world
+          filters:
+            branches:
+             only: master
