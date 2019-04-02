@@ -155,15 +155,6 @@ workflows:
             tags:
               only: /.*/
 
-      - update_cache:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: /docs?\/.*/
-            tags:
-              only: /.*/
-
       - test_python:
           filters:
             tags:
