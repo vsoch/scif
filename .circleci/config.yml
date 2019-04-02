@@ -89,6 +89,7 @@ jobs:
           command: |
             ls /tmp
             echo "Testing SCIF Client Run:"
+            cd scif/tests
             chmod u+x test_run.sh
             /bin/sh test_run.sh ${CONTAINER_NAME}
       - run:
@@ -96,6 +97,7 @@ jobs:
           no_output_timeout: 2h
           command: |
             echo "Testing SCIF Client Exec:"
+            cd scif/tests
             chmod u+x test_exec.sh
             /bin/sh test_exec.sh ${CONTAINER_NAME}
       - run:
@@ -103,6 +105,7 @@ jobs:
           no_output_timeout: 2h
           command: |
             echo "Testing SCIF Client Test:"
+            cd scif/tests
             chmod u+x test_tests.sh
             /bin/sh test_tests.sh ${CONTAINER_NAME}
       - store_test_results:
