@@ -6,7 +6,7 @@ orbs:
 
 jobs:
 
-  build_and_test:
+  build:
     environment:
       - TZ: "/usr/share/zoneinfo/America/Los_Angeles"
       - CONTAINER_NAME: "vanessa/scif"
@@ -156,15 +156,6 @@ workflows:
               only: /.*/
 
       - update_cache:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: /docs?\/.*/
-            tags:
-              only: /.*/
-
-      - test_apps:
           requires:
             - build
           filters:
