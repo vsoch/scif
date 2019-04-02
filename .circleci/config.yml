@@ -104,7 +104,7 @@ jobs:
             docker info
             set +o pipefail
             if [ -f /tmp/cache/container.tar.gz ]; then
-              apt update && sudo apt -y install pigz
+              apt update && apt -y install pigz
               pigz -d --stdout /tmp/cache/container.tar.gz | docker load
               docker images
             fi
@@ -184,6 +184,9 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: test-reports
+
+      - store_test_results:
+          path: /home/circleci/out/tests
 
 
 workflows:
