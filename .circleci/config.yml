@@ -204,11 +204,11 @@ workflows:
              only: master
           after_build:
             - run:
-                name: Publish Docker Tag with SIF Python Version
+                name: Publish Docker Tag with scif Python Version
                 command: |
                    DOCKER_TAG=$(docker run vanessa/scif:latest version)
                    echo "Version for Docker tag is ${DOCKER_TAG}"
-                   docker tag singularityhub/sif:latest singularityhub/sif:${DOCKER_TAG}
+                   docker tag vanessa/scif:latest vanessa/scif:${DOCKER_TAG}
 
       - docker-publish/publish:
           image: vanessa/scif
