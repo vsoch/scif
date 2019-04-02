@@ -5,7 +5,10 @@
 
 [![asciicast](https://asciinema.org/a/156490.png)](https://asciinema.org/a/156490?speed=2)
 
-The The Scientific Filesystem is an organizational format for scientific software and metadata. Our goals are centered around  **consistency**, **transparency**, **programmatic accessibility**, and **modularity**. [Read about](https://sci-f.github.io) the format and please [contribute](https://github.com/vsoch/scif/issues).
+The The Scientific Filesystem is an organizational format for scientific software and metadata. 
+Our goals are centered around  **consistency**, **transparency**, **programmatic accessibility**, 
+and **modularity**. [Read about](https://sci-f.github.io) the format and 
+please [contribute](https://github.com/vsoch/scif/issues).
 
 **Citation**
 
