@@ -6,7 +6,7 @@ orbs:
 
 jobs:
 
-  build:
+  build_and_test:
     environment:
       - TZ: "/usr/share/zoneinfo/America/Los_Angeles"
       - CONTAINER_NAME: "vanessa/scif"
@@ -62,52 +62,10 @@ jobs:
             mkdir -p /tmp/cache
             docker save ${CONTAINER_NAME} \
               | pigz -2 -p 3 > /tmp/cache/container.tar.gz
-      - persist_to_workspace:
-          root: /tmp
-          paths:
-            - cache/container.tar.gz
-            - src/scif
-
-  update_cache:
-    docker:
-      - image: docker:18.06.3-ce-git
-    working_directory: /tmp/src/scif
-    steps:
-      - attach_workspace:
-          at: /tmp
       - save_cache:
          key: docker-v1-{{ .Branch }}-{{ epoch }}
          paths:
             - /tmp/cache/container.tar.gz
-
-  test_apps:
-    docker:
-      - image: docker:18.06.3-ce-git
-    environment:
-      - CONTAINER_NAME: "vanessa/scif"
-    working_directory: /home/circleci/out/tests
-    steps:
-      - setup_remote_docker
-      - checkout
-      - attach_workspace:
-          at: /tmp
-      - run:
-          name: Load Docker image layer cache
-          no_output_timeout: 30m
-          command: |
-            echo $PWD
-            ls /tmp
-      - run:
-          name: Load Docker image layer cache
-          no_output_timeout: 30m
-          command: |
-            docker info
-            set +o pipefail
-            if [ -f /tmp/cache/container.tar.gz ]; then
-              apt update && apt -y install pigz
-              pigz -d --stdout /tmp/cache/container.tar.gz | docker load
-              docker images
-            fi
       - run:
           name: List SCIF Apps
           no_output_timeout: 2h
