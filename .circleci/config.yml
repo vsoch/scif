@@ -11,7 +11,7 @@ jobs:
       - TZ: "/usr/share/zoneinfo/America/Los_Angeles"
       - CONTAINER_NAME: "vanessa/scif"
     docker:
-      - image: docker:18.01.0-ce-git
+      - image: docker:18.06.3-ce-git
     working_directory: /tmp/src/scif
     steps:
       - run:
@@ -70,7 +70,7 @@ jobs:
 
   update_cache:
     docker:
-      - image: docker:18.01.0-ce-git
+      - image: docker:18.06.3-ce-git
     working_directory: /tmp/src/scif
     steps:
       - attach_workspace:
@@ -82,7 +82,7 @@ jobs:
 
   test_apps:
     docker:
-      - image: docker:18.01.0-ce-git
+      - image: docker:18.06.3-ce-git
     environment:
       - CONTAINER_NAME: "vanessa/scif"
     working_directory: /home/circleci/out/tests
