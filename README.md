@@ -15,7 +15,8 @@ please [contribute](https://github.com/vsoch/scif/issues).
 > Vanessa Sochat; The Scientific Filesystem, GigaScience, Volume 7, Issue 5, 1 May 2018, giy023, https://doi.org/10.1093/gigascience/giy023
 
 ## What is this?
-This module will provide tools for generating and interacting with scientific filesystems, optimized for use on a host or inside a container.
+This module will provide tools for generating and interacting with scientific 
+filesystems, optimized for use on a host or inside a container.
 
 ## License
 
