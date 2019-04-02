@@ -69,9 +69,8 @@ jobs:
             - src/scif
 
   update_cache:
-    machine:
-      # Ubuntu 14.04 with Docker 17.10.0-ce
-      image: circleci/classic:201711-01
+    docker:
+      - image: docker:18.01.0-ce-git
     working_directory: /tmp/src/scif
     steps:
       - attach_workspace:
@@ -82,14 +81,14 @@ jobs:
             - /tmp/cache/container.tar.gz
 
   test_apps:
-    machine:
-      image: circleci/classic:201711-01
+    docker:
+      - image: docker:18.01.0-ce-git
     environment:
       - CONTAINER_NAME: "vanessa/scif"
     working_directory: /home/circleci/out/tests
     steps:
-      - checkout
       - setup_remote_docker
+      - checkout
       - attach_workspace:
           at: /tmp
       - run:
