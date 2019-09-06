@@ -27,7 +27,7 @@
         scif exec hello-world-env echo [e]OMG
         
         # Docker image example
-        docker run vanessa/scif exec hello-world-env echo [e]OMG
+        docker run quay.io/scif/scif exec hello-world-env echo [e]OMG
         [hello-world-env] executing /bin/echo $OMG
         TACOS
 %apptest hello-world-script

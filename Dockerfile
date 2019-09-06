@@ -1,8 +1,8 @@
 #######################################
 # SciF Base
 #
-# docker build -t vanessa/scif .
-# docker run vanessa/scif
+# docker build -t quay.io/scif/scif .
+# docker run quay.io/scif/scif
 #
 #######################################
 
