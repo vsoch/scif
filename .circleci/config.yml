@@ -8,8 +8,7 @@ jobs:
 
   build:
     environment:
-      - TZ: "/usr/share/zoneinfo/America/Los_Angeles"
-      - CONTAINER_NAME: "vanessa/scif"
+      - CONTAINER_NAME: "quay.io/scif/scif"
     docker:
       - image: docker:18.06.3-ce-git
     working_directory: /tmp/src/scif
@@ -167,7 +166,8 @@ workflows:
   build_without_publishing_job:
     jobs:
       - docker-publish/publish:
-          image: vanessa/scif
+          image: scif/scif
+          registry: quay.io
           deploy: false
           tag: latest
           filters:
@@ -179,11 +179,12 @@ workflows:
             - run:
                 name: Preview Docker Tag for Build
                 command: |
-                   DOCKER_TAG=$(docker run vanessa/scif:latest version)
+                   DOCKER_TAG=$(docker run quay.io/scif/scif:latest version)
                    echo "Version for Docker tag is ${DOCKER_TAG}"
 
       - docker-publish/publish:
-          image: vanessa/scif
+          image: scif/scif
+          registry: quay.io
           tag: hw
           deploy: false
           dockerfile: Dockerfile.hello-world
@@ -197,7 +198,8 @@ workflows:
   docker_with_lifecycle:
     jobs:
       - docker-publish/publish:
-          image: vanessa/scif
+          image: scif/scif
+          registry: quay.io
           tag: latest
           filters:
             branches:
@@ -206,12 +208,13 @@ workflows:
             - run:
                 name: Publish Docker Tag with scif Python Version
                 command: |
-                   DOCKER_TAG=$(docker run vanessa/scif:latest version)
+                   DOCKER_TAG=$(docker run quay.io/scif/scif:latest version)
                    echo "Version for Docker tag is ${DOCKER_TAG}"
-                   docker tag vanessa/scif:latest vanessa/scif:${DOCKER_TAG}
+                   docker tag quay.io/scif/scif:latest quay.io/scif/scif:${DOCKER_TAG}
 
       - docker-publish/publish:
-          image: vanessa/scif
+          image: scif/scif
+          registry: quay.io
           tag: hw
           dockerfile: Dockerfile.hello-world
           filters:

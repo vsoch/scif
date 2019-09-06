@@ -1,8 +1,8 @@
 # SciF Example
 #
-# docker build -f Dockerfile.hello-world -t vanessa/scif:hw .
-# docker run vanessa/scif:hw
-# docker push vanessa/scif:hw
+# docker build -f Dockerfile.hello-world -t quay.io/scif/scif:hw .
+# docker run quay.io/scif/scif:hw
+# docker push quay.io/scif/scif:hw
 
 FROM continuumio/miniconda3
 
