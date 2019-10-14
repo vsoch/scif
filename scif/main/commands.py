@@ -60,7 +60,11 @@ def _exec(self, app=None, interactive=False, exit=False):
 
     # Execv to the entrypoint
     executable = which(self._entry_point[0])
+
+    # Exit if command not found
     args = ''
+    if executable is None:
+        bot.exit("%s not found." % self._entry_point[0])
 
     if len(self._entry_point) > 1:
         if exit is False:

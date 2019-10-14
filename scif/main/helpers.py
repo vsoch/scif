@@ -21,9 +21,9 @@ from scif.utils import run_command as run_cmd
 from scif.defaults import SCIF_SHELL
 from scif.logger import bot
 import shlex
-import sys
 import os
 import re
+
 
 def get_parts(pair, default=None):
     '''pair is expected to be a string with some key, value, and this function
@@ -57,22 +57,16 @@ def run_command(self, cmd, spinner=True, quiet=True):
     if spinner is True:
         bot.spinner.start()
     
-    result = run_cmd(cmd)
+    result = run_cmd(cmd, quiet=quiet)
 
     if spinner is True:
         bot.spinner.stop()
 
     retval = result['return_code']
 
-    if quiet is False:
-        if isinstance(result['message'], bytes):
-            result['message'] = result['message'].decode('utf-8') 
-        print(result['message'])
-
     # Beep boop, error!
     if retval != 0:
-        bot.error('Return code %s' %retval)
-        sys.exit(retval)
+        bot.exit('Return code %s' % retval, retval)
 
     return result
 

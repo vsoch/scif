@@ -27,7 +27,6 @@ from scif.utils import (
     write_json
 )
 from scif.main.helpers import get_parts
-import sys
 import os
 
 
@@ -74,8 +73,7 @@ def install_apps(self, apps=None):
 
         # We must have the app defined in the config
         if app not in self._config['apps']:
-            bot.error('Cannot find app %s in config.' %app)
-            sys.exit(1)
+            bot.exit('Cannot find app %s in config.' %app)
 
         # Make directories
         settings = self._init_app(app)

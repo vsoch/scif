@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 from scif.logger import bot
-import sys
 import pwd
 import os
 
@@ -29,14 +28,12 @@ def main(args,parser,subparser):
     apps = args.recipe
 
     if len(apps) == 0:
-        bot.error("You must provide a recipe (.scif) file to install.")
-        sys.exit(1)
+        bot.exit("You must provide a recipe (.scif) file to install.")
 
     recipe = apps.pop(0)
 
     if not os.path.exists(recipe):
-        bot.error("Cannot find recipe file %s" %recipe)
-        sys.exit(1)
+        bot.exit("Cannot find recipe file %s" %recipe)
 
     if len(apps) == 0:
         apps = None
