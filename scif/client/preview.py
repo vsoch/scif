@@ -32,8 +32,7 @@ def main(args,parser,subparser):
         recipe = apps.pop(0)
 
         if not os.path.exists(recipe):
-            bot.error("Cannot find recipe file %s" %recipe)
-            sys.exit(1)
+            bot.exit("Cannot find recipe file %s" %recipe)
 
         client = ScifRecipe(recipe, writable=False)
 

@@ -25,7 +25,6 @@ import stat
 import codecs
 import json
 from scif.logger import bot
-import sys
 
 
 ################################################################################
@@ -43,8 +42,7 @@ def mkdir_p(path):
         if e.errno == errno.EEXIST and os.path.isdir(path):
             pass
         else:
-            bot.error("Error creating path %s, exiting." % path)
-            sys.exit(1)
+            bot.exit("Error creating path %s, exiting." % path)
 
 
 def which(software):

@@ -21,7 +21,6 @@ from scif.logger import bot
 import subprocess
 import os
 import re
-import sys
 
 
 # External Environment Functions

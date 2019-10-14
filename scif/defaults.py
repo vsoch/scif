@@ -21,7 +21,6 @@ from scif.logger import bot
 import tempfile
 import os
 import pwd
-import sys
 
 ################################################################################
 # environment / options
@@ -49,8 +48,7 @@ def getenv(variable_key, default=None, required=False, silent=True):
     '''
     variable = os.environ.get(variable_key, default)
     if variable is None and required:
-        bot.error("Cannot find environment variable %s, exiting." %variable_key)
-        sys.exit(1)
+        bot.exit("Cannot find environment variable %s, exiting." % variable_key)
 
     if not silent and variable is not None:
             bot.verbose("%s found as %s" %(variable_key,variable))

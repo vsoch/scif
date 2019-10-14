@@ -23,7 +23,7 @@ from scif.utils import read_file
 from scif.defaults import sections
 import os
 import re
-import sys
+
 
 def load_filesystem(base, quiet=False):
     '''load a filesystem based on a root path, which is usually /scif
@@ -213,12 +213,10 @@ def add_section(config, section, name=None, global_section="apps"):
     '''
 
     if section is None:
-        bot.error('You must define a section (e.g. %appenv) before any action.')
-        sys.exit(1)
+        bot.exit('You must define a section (e.g. %appenv) before any action.')
 
     if section not in sections:
-        bot.error("%s is not a valid section." %section)
-        sys.exit(1)
+        bot.exit("%s is not a valid section." %section)
 
     # Add the global section, if doesn't exist
     if global_section not in config:

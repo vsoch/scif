@@ -22,7 +22,6 @@ from scif.logger import bot
 from datetime import datetime
 from scif.utils import (mkdir_p, write_file, write_json)
 from scif.main.helpers import get_parts
-import sys
 import os
 
 
@@ -43,8 +42,7 @@ def preview_base(self):
         base: the full path to the root folder to create /scif
     '''
     if not hasattr(self,'_base'):
-        bot.error('Please set the base before preview.')
-        sys.exit(1)
+        bot.exit('Please set the base before preview.')
     
     bot.custom(prefix='[base] %s' %self._base, color='CYAN')  
     bot.custom(prefix='[apps] %s' %self.path_apps, color='CYAN')  
@@ -66,8 +64,7 @@ def preview_apps(self, apps=None):
 
         # We must have the app defined in the config
         if app not in self._config['apps']:
-            bot.error('Cannot find app %s in config.' %app)
-            sys.exit(1)
+            bot.exit('Cannot find app %s in config.' %app)
 
         # Make directories
         bot.newline()

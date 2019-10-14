@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from scif.logger import bot
 from scif.utils import mkdir_p
 from scif.main.helpers import parse_entrypoint
-import sys
 import os
 
 
@@ -36,8 +35,7 @@ def set_base(self, base='/', writable=True):
     base = base.strip('scif')
 
     if not os.path.exists(base):
-        bot.error('%s does not exist!' %base)
-        sys.exit(1)
+        bot.exit('%s does not exist!' %base)
 
     base = "/%s" %os.path.abspath(base).strip('/')
     self._base = os.path.join(base,'scif')
@@ -51,8 +49,7 @@ def set_base(self, base='/', writable=True):
     # Check if it's writable
     if writable is True:
         if not os.access(base, os.W_OK):
-            bot.error('%s is not writable.' %base)
-            sys.exit(1)
+            bot.exit('%s is not writable.' %base)
 
 
 
@@ -81,8 +78,7 @@ def install_base(self):
         base: the full path to the root folder to create /scif
     '''
     if not hasattr(self,'_base'):
-        bot.error('Please set the base before installing to it.')
-        sys.exit(1)
+        bot.exit('Please set the base before installing to it.')
 
     bot.info('Installing base at %s' %self._base)  
 

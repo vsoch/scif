@@ -236,7 +236,7 @@ class SCIFMessage:
     def error(self, message):
         self.emit(ERROR, message, 'ERROR')
 
-    def exit(self, message, error_code=255):
+    def exit(self, message, error_code=1):
         self.emit(ERROR, message, 'ERROR')
         sys.exit(error_code)
 
