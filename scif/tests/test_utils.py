@@ -74,7 +74,7 @@ class TestUtils(unittest.TestCase):
         print("Testing utils.run_command")
         from scif.utils import run_command
         result = run_command('echo hello world')
-        self.assertTrue('hello world' in result['message'].decode('utf-8'))
+        self.assertTrue('hello world' in result['message'])
         self.assertEqual(0, result['return_code'])
 
 
