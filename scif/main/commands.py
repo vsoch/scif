@@ -174,7 +174,10 @@ def run(self, app=None, args=None):
     # Cut out early if the app doesn't have a runscript
     config = self.app(app)
     if 'apprun' not in config:
-        bot.exit('%s does not have a runscript.' % app)
+        bot.debug('%s does not have a runscript.' % app)
+        interactive = True
+    else:
+        interactive = False
 
     self.activate(app, args=args)    # checks for existence
                                      # sets _active to app's name
@@ -182,7 +185,7 @@ def run(self, app=None, args=None):
                                      # sets entrypoint
                                      # sets entryfolder
 
-    return self._exec(app)
+    return self._exec(app, interactive=interactive)
 
 
 def test(self, app=None, args=None):

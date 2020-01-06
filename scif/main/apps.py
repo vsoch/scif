@@ -73,7 +73,8 @@ def activate(self, app, cmd=None, args=None):
         # Set the runscript, first to cmd provided (exec) then runscript
         if cmd != None:
             self._entry_point = parse_entrypoint(cmd)
-            self._entry_point += parse_entrypoint(args)
+            if args is not None:
+                self._entry_point += parse_entrypoint(args)
         else:
             # Set the default entrypoint
             self._set_entrypoint(app, 'SCIF_APPRUN', args)
