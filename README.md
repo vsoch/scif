@@ -1,5 +1,6 @@
 # Scientific Filesystem (SCI-F)
 
+[![GitHub actions status](https://github.com/vsoch/scif/workflows/ci/badge.svg?branch=master)](https://github.com/vsoch/scif/actions?query=branch%3Amaster+workflow%3Aci)
 [![CircleCI](https://circleci.com/gh/vsoch/scif.svg?style=svg)](https://circleci.com/gh/vsoch/scif)
 ![https://sci-f.github.io/img/logo/scif-slash-green.png](https://sci-f.github.io/img/logo/scif-slash-green.png)
 
@@ -20,4 +21,4 @@ filesystems, optimized for use on a host or inside a container.
 
 ## License
 
-This code is licensed under the Affero GPL, version 3.0 or later [LICENSE](LICENSE).
+This code is licensed under the Mozilla, version 2.0 or later [LICENSE](LICENSE).

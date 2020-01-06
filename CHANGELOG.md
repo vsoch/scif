@@ -14,6 +14,7 @@ represented by the pull requests that fixed them.
 Versions in parentheses coincide with what is available on [pypi](https://pypi.org/project/scif/).
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (master)
+ - code formatting with black, shell entrypoint bug (0.0.79)
  - executable not found, will not run, adding streaming to output (0.0.78)
  - args not passed correctly for run and exec (0.0.77)
  - test and runscript need to be executable after write (0.0.76)

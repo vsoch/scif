@@ -1,7 +1,4 @@
-from .terminal import (
-    run_command,
-    get_installdir,
-)
+from .terminal import run_command, get_installdir
 from .fileio import (
     copyfile,
     make_executable,
@@ -10,5 +7,5 @@ from .fileio import (
     write_json,
     which,
     read_file,
-    read_json
+    read_json,
 )
