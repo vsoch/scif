@@ -44,12 +44,19 @@ def run_command(cmd, sudo=False, quiet=False):
     if sudo is True:
         cmd = ["sudo"] + cmd
 
-    process = Popen(cmd, stderr=STDOUT, stdout=PIPE, encoding="utf8")
+    process = Popen(cmd, stderr=STDOUT, stdout=PIPE)
 
     # Iterate through the output
     result = ""
     while True:
         output = process.stdout.readline()
+
+        # Encode output to utf-8, if appropriate
+        try:
+            output = output.decode("utf-8")
+        except:
+            pass
+
         if output == "" and process.poll() is not None:
             break
         if output:
