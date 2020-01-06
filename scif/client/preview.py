@@ -1,21 +1,14 @@
-'''
+"""
 
-Copyright (C) 2017-2019 Vanessa Sochat.
+Copyright (C) 2017-2020 Vanessa Sochat.
 
-This program is free software: you can redistribute it and/or modify it
-under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or (at your
-option) any later version.
+This Source Code Form is subject to the terms of the
+Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
+with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public
-License for more details.
+Modified from https://github.com/Visual-mov/Colorful-Julia (MIT License)
 
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-'''
+"""
 
 from scif.logger import bot
 import sys
@@ -23,16 +16,17 @@ import pwd
 import os
 
 
-def main(args,parser,subparser):
+def main(args, parser, subparser):
 
     from scif.main import ScifRecipe
+
     apps = args.recipe
 
     if len(apps) > 0:
         recipe = apps.pop(0)
 
         if not os.path.exists(recipe):
-            bot.exit("Cannot find recipe file %s" %recipe)
+            bot.exit("Cannot find recipe file %s" % recipe)
 
         client = ScifRecipe(recipe, writable=False)
 
@@ -40,4 +34,4 @@ def main(args,parser,subparser):
         client.preview(apps)
 
     else:
-        bot.info('You must provide a recipe file to preview!')
+        bot.info("You must provide a recipe file to preview!")

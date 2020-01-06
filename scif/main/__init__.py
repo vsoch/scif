@@ -1,43 +1,35 @@
-'''
+"""
 
-Copyright (C) 2017-2019 Vanessa Sochat.
+Copyright (C) 2017-2020 Vanessa Sochat.
 
-This program is free software: you can redistribute it and/or modify it
-under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or (at your
-option) any later version.
+This Source Code Form is subject to the terms of the
+Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
+with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public
-License for more details.
+Modified from https://github.com/Visual-mov/Colorful-Julia (MIT License)
 
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
 
-'''
-
-from scif.main.apps import ( app, apps, activate, deactivate, help, 
-                             inspect, reset )
+from scif.main.apps import app, apps, activate, deactivate, help, inspect, reset
 from scif.main.base import ScifRecipe
-from scif.main.commands import ( _exec, execute, run, shell, test )
-from scif.main.environment import ( 
-    add_env, 
+from scif.main.commands import _exec, execute, run, shell, test
+from scif.main.environment import (
+    add_env,
     append_path,
     export_env,
-    get_env, 
+    get_env,
     get_append_path,
     get_appenv,
-    get_appenv_lookup, 
-    init_env, 
+    get_appenv_lookup,
+    init_env,
     load_env,
-    update_env
+    update_env,
 )
-from scif.main.helpers import ( run_command, set_entrypoint )
-from scif.main.preview import ( 
-    preview, 
-    preview_apps, 
-    preview_base, 
+from scif.main.helpers import run_command, set_entrypoint
+from scif.main.preview import (
+    preview,
+    preview_apps,
+    preview_base,
     init_app_preview,
     preview_runscript,
     preview_labels,
@@ -45,9 +37,9 @@ from scif.main.preview import (
     preview_files,
     preview_commands,
     preview_recipe,
-    preview_test
+    preview_test,
 )
-from scif.main.setup import ( install_base, set_base, set_defaults )
+from scif.main.setup import install_base, set_base, set_defaults
 from scif.main.install import (
     init_app,
     install,
@@ -60,7 +52,7 @@ from scif.main.install import (
     install_commands,
     install_files,
     install_recipe,
-    install_test
+    install_test,
 )
 
 
