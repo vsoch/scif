@@ -1,6 +1,6 @@
 # SciF Example
 #
-# docker build -f Dockerfile.exit-nonzer -t scif-exit .
+# docker build -f docs/examples/exit-on-install/Dockerfile -t scif-exit .
 
 FROM continuumio/miniconda3
 
