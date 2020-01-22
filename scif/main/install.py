@@ -155,10 +155,15 @@ def install_commands(self, app, settings, config):
         pwd = os.getcwd()
         os.chdir(settings["approot"])
 
+        # Set strict mode to ensure exit on error
+        command = ["set -e"] + config["appinstall"]
+
         # issue install commands
-        cmd = "\n".join(config["appinstall"])
+        cmd = "\n".join(command)
         bot.info("+ " + "appinstall ".ljust(5) + app)
-        os.system(cmd)
+        retval = os.system(cmd)
+        if retval != 0:
+            bot.exit("Return value %s for install of %s" % (retval, app))
 
         # Go back to previous location
         os.chdir(pwd)

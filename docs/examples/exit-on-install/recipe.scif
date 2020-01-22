@@ -1,0 +1,42 @@
+%appenv hello-world-echo
+    THEBESTAPP=hello-world-echo
+    export THEBESTAPP
+%apprun hello-world-echo
+    echo "The best app is $THEBESTAPP"
+%appinstall hello-world-script
+    echo "echo 'Hello World!'" >> $SCIF_APPBIN/hello-world.sh
+    chmod u+x $SCIF_APPBIN/hello-world.sh
+    return 1
+%appenv hello-world-script
+    THEBESTAPP=$SCIF_APPNAME
+    export THEBESTAPP
+%apprun hello-world-script
+    /bin/bash hello-world.sh
+%apprun hello-world-custom
+    echo "Hello $@"
+%appenv hello-world-env
+    OMG=TACOS
+%apphelp hello-world-script
+   This version of hello world runs a script to print hello world
+%apphelp hello-world-env
+   This is the help section for hello-world-env! This app
+   does not have anything other than an environment installed. 
+   It just defines the environment variable `OMG=TACOS`. Try issuing
+   a command to the scif entrypoint to echo this variable:
+
+        # Local installation
+        scif exec hello-world-env echo [e]OMG
+        
+        # Docker image example
+        docker run quay.io/scif/scif exec hello-world-env echo [e]OMG
+        [hello-world-env] executing /bin/echo $OMG
+        TACOS
+%apptest hello-world-script
+    echo "Running tests!"
+    if [ $# -eq 0 ]
+        then
+            echo "No arguments supplied, tests pass!"
+            exit 0
+        fi
+    echo "Argument supplied, exiting with ${1}"
+    exit ${1}
