@@ -163,7 +163,6 @@ def run(self, app=None, args=None):
     args: a list of one or more additional arguments to pass to runscript
 
     """
-    interactive = False
     config = self.app(app)
     if "apprun" not in config:
         bot.debug("%s does not have a runscript." % app)
@@ -175,7 +174,7 @@ def run(self, app=None, args=None):
     # sets entrypoint
     # sets entryfolder
 
-    return self._exec(app, interactive=interactive)
+    return self._exec(app, interactive=True, exit=True)
 
 
 def test(self, app=None, args=None):
