@@ -17,6 +17,7 @@ import locale
 import sys
 import os
 
+
 def _exec(self, app=None, interactive=False, exit=False):
     """exec is the underlying driver of both run and exec, taking a final
     SCIF and executing the command for the user.
@@ -88,10 +89,9 @@ def _exec(self, app=None, interactive=False, exit=False):
             os.system("".join(cmd))
     else:
         cmd = cmd.split(" ")
-        result = self._run_command(
-            cmd=cmd, spinner=False, quiet=False
-        )
+        result = self._run_command(cmd=cmd, spinner=False, quiet=False)
         sys.exit(result["return_code"])
+
 
 def execute(self, app, cmd=None, args=None):
     """execute a command in the context of an app. This means the following:
