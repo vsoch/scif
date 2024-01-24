@@ -16,7 +16,6 @@ from scif.utils import which
 import locale
 import sys
 import os
-import subprocess
 
 def _exec(self, app=None, interactive=False, exit=False):
     """exec is the underlying driver of both run and exec, taking a final
