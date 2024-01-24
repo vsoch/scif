@@ -161,7 +161,7 @@ def run(self, app=None, args=None):
     args: a list of one or more additional arguments to pass to runscript
 
     """
-    interactive=False
+    interactive = False
     config = self.app(app)
     if "apprun" not in config:
         bot.debug("%s does not have a runscript." % app)
