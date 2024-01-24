@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -18,7 +18,6 @@ import os
 
 
 def main(args, parser, subparser):
-
     from scif.main import ScifRecipe
 
     # Inspect choices, r, e, l, a
@@ -62,7 +61,6 @@ def main(args, parser, subparser):
 
     result = {}
     for app in apps:
-
         inspection = client.inspect(app, attributes)
         if len(inspection) > 0:
             result[app] = inspection

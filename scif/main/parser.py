@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -21,13 +21,13 @@ import re
 def load_filesystem(base, quiet=False):
     """load a filesystem based on a root path, which is usually /scif
 
-        Parameters
-        ==========
-        base: base to load.
+    Parameters
+    ==========
+    base: base to load.
 
-        Returns
-        =======
-        config: a parsed recipe configuration for SCIF
+    Returns
+    =======
+    config: a parsed recipe configuration for SCIF
     """
     from scif.defaults import SCIF_APPS
 
@@ -50,18 +50,17 @@ def load_filesystem(base, quiet=False):
 def load_recipe(path):
     """load will return a loaded in (user) scif configuration file
 
-        Parameters
-        ==========
-        path: a path to a scif recipe file
+    Parameters
+    ==========
+    path: a path to a scif recipe file
 
-        Returns
-        =======
-        config: a parsed recipe configuration for SCIF
+    Returns
+    =======
+    config: a parsed recipe configuration for SCIF
     """
 
     path = os.path.abspath(path)
     if os.path.exists(path):
-
         # Read in spec, skip empty lines, don't strip remaining
         spec = [
             x.strip("\n")
@@ -75,7 +74,6 @@ def load_recipe(path):
         name = None
 
         while len(spec) > 0:
-
             # Clean up white trailing/leading space
             line = spec.pop(0)
             stripped = line.strip()
@@ -86,7 +84,6 @@ def load_recipe(path):
 
             # A new section?
             elif stripped.startswith("%"):
-
                 # Remove any comments
                 line = line.split("#", 1)[0].strip()
 
@@ -114,29 +111,28 @@ def load_recipe(path):
 
 def finish_recipe(config, global_section="apps"):
     """
-       finish recipe includes final steps to add to the runtime for an app.
-       Currently, this just means adding a command to source an environment
-       before running, if appenv is defined. The Python should handle putting
-       variables in the environment, however in some cases (if the variable
-       includes an environment variable:
+    finish recipe includes final steps to add to the runtime for an app.
+    Currently, this just means adding a command to source an environment
+    before running, if appenv is defined. The Python should handle putting
+    variables in the environment, however in some cases (if the variable
+    includes an environment variable:
 
-          VARIABLE1=$VARIABLE2
+       VARIABLE1=$VARIABLE2
 
-       It would not be properly sourced! So we add a source as the first
-       line of the runscript
+    It would not be properly sourced! So we add a source as the first
+    line of the runscript
 
-       Parameters
-       ==========
-       config: the configuation file produced by load_recipe. Assumed to have
-               a highest key of "apps" and then lookup by individual apps,
-               and then sections. Eg: config['apps']['myapp']['apprun'] 
+    Parameters
+    ==========
+    config: the configuation file produced by load_recipe. Assumed to have
+            a highest key of "apps" and then lookup by individual apps,
+            and then sections. Eg: config['apps']['myapp']['apprun']
 
     """
     # The apps are the keys under global section "apps"
     apps = list(config[global_section].keys())
 
     for app in apps:
-
         # If an apprun is present and the system supports source, do it.
         if "appenv" in config[global_section][app]:
             appenv = config[global_section][app]["appenv"]
@@ -154,12 +150,10 @@ def finish_recipe(config, global_section="apps"):
 
 
 def read_section(config, spec, section, name, global_section="apps"):
-    """read in a section to a list, and stop when we hit the next section
-    """
+    """read in a section to a list, and stop when we hit the next section"""
     members = []
 
     while True:
-
         if len(spec) == 0:
             break
         next_line = spec[0]
@@ -169,7 +163,6 @@ def read_section(config, spec, section, name, global_section="apps"):
         else:
             new_member = spec.pop(0)
             if not new_member.strip().startswith("#"):
-
                 # Strip whitespace for labels, files, environment
                 if section in ["applabels", "appfiles", "appenv"]:
                     new_member = new_member.strip()
@@ -187,19 +180,19 @@ def read_section(config, spec, section, name, global_section="apps"):
 
 
 def add_section(config, section, name=None, global_section="apps"):
-    """ add section will add a section (and optionally)
-        section name to a config
+    """add section will add a section (and optionally)
+    section name to a config
 
-        Parameters
-        ==========
-        config: the config (dict) parsed thus far
-        section: the section type (e.g., appinstall)
-        name: an optional name, added as a level (e.g., google-drive)
+    Parameters
+    ==========
+    config: the config (dict) parsed thus far
+    section: the section type (e.g., appinstall)
+    name: an optional name, added as a level (e.g., google-drive)
 
-        Resulting data structure is:
+    Resulting data structure is:
 
-            config['registry']['apprun']
-            config[name][section]
+        config['registry']['apprun']
+        config[name][section]
 
     """
 

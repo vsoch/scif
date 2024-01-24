@@ -11,8 +11,7 @@ jobs:
   formatting:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-
+      - uses: actions/checkout@v4
       - name: Setup black linter
         run: conda create --quiet --name black black
 
@@ -20,4 +19,5 @@ jobs:
         run: |
           export PATH="/usr/share/miniconda/bin:$PATH"
           source activate black
+          pip install black==23.3.0
           black --check scif

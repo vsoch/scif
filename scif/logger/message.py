@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -106,8 +106,7 @@ class SCIFMessage:
         return False
 
     def isEnabledFor(self, messageLevel):
-        """check if a messageLevel is enabled to emit a level
-        """
+        """check if a messageLevel is enabled to emit a level"""
         if messageLevel <= self.level:
             return True
         return False
@@ -262,8 +261,7 @@ class SCIFMessage:
         self.emit(DEBUG, message, "DEBUG")
 
     def is_quiet(self):
-        """is_quiet returns true if the level is under 1
-        """
+        """is_quiet returns true if the level is under 1"""
         if self.level < 1:
             return False
         return True
@@ -271,7 +269,7 @@ class SCIFMessage:
     # Terminal ------------------------------------------
 
     def table(self, rows, col_width=2):
-        """table will print a table of entries. If the rows is 
+        """table will print a table of entries. If the rows is
         a dictionary, the keys are interpreted as column names. if
         not, a numbered list is used.
         """

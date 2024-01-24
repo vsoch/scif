@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -23,15 +23,14 @@ def app(self, app):
     Parameters
     ==========
     app: the name of the app to view
-        """
+    """
     if "apps" in self._config:
         if app in self._config["apps"]:
             return self._config["apps"][app]
 
 
 def apps(self):
-    """get a list of apps to show the user
-    """
+    """get a list of apps to show the user"""
     apps = []
     if self._config is not None:
         if "apps" in self._config:
@@ -41,13 +40,13 @@ def apps(self):
 
 def activate(self, app, cmd=None, args=None):
     """if an app is valid, get it's environment to make it active.
-       Update the entrypoint to be relevant to the app runscript.
-    
-        Parameters
-        ==========
-        app: the name of the app to activate
-        cmd: if defined, the entry point (command) to run. Otherwise uses apprun
-        args: additional commands for the apprun
+    Update the entrypoint to be relevant to the app runscript.
+
+     Parameters
+     ==========
+     app: the name of the app to activate
+     cmd: if defined, the entry point (command) to run. Otherwise uses apprun
+     args: additional commands for the apprun
 
     """
     if app is None:
@@ -107,9 +106,9 @@ def deactivate(self, app):
 def help(self, app):
     """print the help file for an app, if it exists.
 
-       Parameters
-       ==========
-       app: the app to export variables for
+    Parameters
+    ==========
+    app: the app to export variables for
 
     """
     lines = None
@@ -130,8 +129,8 @@ def help(self, app):
 
 def reset(self):
     """reset the SCIF filesystem, meaning that defaults are set, the entrypoint
-      if reset, and the environment is reset. Only maintain entry folder set
-      by environment, if it was defined.
+    if reset, and the environment is reset. Only maintain entry folder set
+    by environment, if it was defined.
     """
 
     self.set_defaults()

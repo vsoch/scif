@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -31,14 +31,14 @@ def convert2boolean(arg):
 
 
 def getenv(variable_key, default=None, required=False, silent=True):
-    """ getenv will attempt to get an environment variable. If the variable
-        is not found, None is returned.
+    """getenv will attempt to get an environment variable. If the variable
+    is not found, None is returned.
 
-        Paramters
-        =========
-        variable_key: the variable name
-        required: exit with error if not found
-        silent: Do not print debugging information for variable
+    Paramters
+    =========
+    variable_key: the variable name
+    required: exit with error if not found
+    silent: Do not print debugging information for variable
     """
     variable = os.environ.get(variable_key, default)
     if variable is None and required:
@@ -52,12 +52,12 @@ def getenv(variable_key, default=None, required=False, silent=True):
 
 def getenv_namespace(namespace="SCIF", func=None):
     """return all environment variables in a particular namespace, such as for
-       SCIF apps using a filter function (func). The function should take first
-       a key in the environment, and then the namespace variable. 
-       If none provided, uses "starts with" equivalent.
+    SCIF apps using a filter function (func). The function should take first
+    a key in the environment, and then the namespace variable.
+    If none provided, uses "starts with" equivalent.
 
-        def func(key, namespace):
-            return key.startswith(namespace)
+     def func(key, namespace):
+         return key.startswith(namespace)
     """
     if func is None:
         """does key start with namespace?"""
