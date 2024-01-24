@@ -1,16 +1,19 @@
 Bootstrap: docker
 From: continuumio/miniconda3
 
-# sudo singularity build scif.simg Singularity
+# apptainer build scif.simg docs/examples/exit-from-run/apptainer.def
 
 %runscript
     exec /opt/conda/bin/scif "$@"
 
+%files
+  docs/examples/exit-from-run/recipe.scif /recipe.scif
+  . /opt/scif
 %post
     apt-get update && apt-get install -y git build-essential
 
     # Install SCIF
-    cd /opt && git clone https://www.github.com/vsoch/scif.git
-    cd scif
+    cd /opt/scif
     /opt/conda/bin/pip install setuptools
     /opt/conda/bin/pip install -e .
+    scif install /recipe.scif
