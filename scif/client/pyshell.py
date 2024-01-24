@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -17,7 +17,6 @@ import os
 
 
 def main(args, parser, subparser):
-
     from scif.defaults import SCIF_SHELL as shell
 
     parsed = parse_input_preferences(args.recipe, quiet=args.quiet)
@@ -54,8 +53,7 @@ def main(args, parser, subparser):
 
 
 def ipython(recipe, app=None, quiet=False, writable=True):
-    """embed the client with loaded recipe into an ipython session
-    """
+    """embed the client with loaded recipe into an ipython session"""
     from scif.main import ScifRecipe
     from IPython import embed
 

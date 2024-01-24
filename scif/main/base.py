@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -21,24 +21,24 @@ bot.level = 3
 class ScifRecipe:
     """Create and work with a scif recipe. Usage typically looks like:
 
-       recipe = ScifRecipe('sregistry.scif')
-       
-       Parameters
-       ==========
-       path: the path to the scif recipe flie.
+    recipe = ScifRecipe('sregistry.scif')
+
+    Parameters
+    ==========
+    path: the path to the scif recipe flie.
 
     """
 
     def __init__(self, path=None, app=None, writable=True, quiet=False):
         """initialize the scientific filesystem by creating a scif folder
-           at the base, and loading the recipe to fill it.
+        at the base, and loading the recipe to fill it.
 
-           Parameters
-           ==========
-           path: is the first paramter, not required to initialize an empty 
-                 client session. The logic proceeds as follows:
-                 1. If path is not defined, we want (empty) interactive session
-                 2. We derive the base from the environment SCIF_BASE
+        Parameters
+        ==========
+        path: is the first paramter, not required to initialize an empty
+              client session. The logic proceeds as follows:
+              1. If path is not defined, we want (empty) interactive session
+              2. We derive the base from the environment SCIF_BASE
         """
 
         # 0. base determined from environment
@@ -53,7 +53,6 @@ class ScifRecipe:
 
         # 1. Determine if path is a recipe or base
         if path is not None:
-
             self.set_base(SCIF_BASE, writable=writable)  # /scif
             self.load(path, app, quiet)  # recipe, environment
 
@@ -70,8 +69,7 @@ class ScifRecipe:
         return "[scif]"
 
     def speak(self):
-        """the client should announce self given that the shell is being used.
-        """
+        """the client should announce self given that the shell is being used."""
         if self._base is not None:
             apps = " | ".join(self.apps())
             bot.custom(prefix="%s %s" % (self, self._base), message=apps, color="CYAN")
@@ -81,13 +79,13 @@ class ScifRecipe:
     def load(self, path, app=None, quiet=False):
         """load a scif recipe into the object
 
-            Parameters
-            ==========
-            path: the complete path to the config (recipe file) to load, or 
-                  root path of filesystem (that from calling function defaults to
-                  /scif)
-            app:  if running with context of an active app, this will load the
-                  active app environment for it as well.
+        Parameters
+        ==========
+        path: the complete path to the config (recipe file) to load, or
+              root path of filesystem (that from calling function defaults to
+              /scif)
+        app:  if running with context of an active app, this will load the
+              active app environment for it as well.
         """
         # 1. path is a recipe
         if os.path.isfile(path):

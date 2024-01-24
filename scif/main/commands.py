@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -20,20 +20,20 @@ import os
 
 def _exec(self, app=None, interactive=False, exit=False):
     """exec is the underlying driver of both run and exec, taking a final
-       SCIF and executing the command for the user.
+    SCIF and executing the command for the user.
 
-       This function is called via self._exec, and the expectation is that
-       self.run or self.exec has been called first to prepare the environment
-       and SCIF settings.
+    This function is called via self._exec, and the expectation is that
+    self.run or self.exec has been called first to prepare the environment
+    and SCIF settings.
 
-       If a user wants to preserve an environment variable from the console
-       it can be referenced with [e], for example $SCIF_DATA --> [e]SCIF_DATA
+    If a user wants to preserve an environment variable from the console
+    it can be referenced with [e], for example $SCIF_DATA --> [e]SCIF_DATA
 
-       Parameters
-       ==========
-       app: the name of the application to execute a command to
-       interactive: if True, us os.system directly
-       exit: exit with return code from command (for test)
+    Parameters
+    ==========
+    app: the name of the application to execute a command to
+    interactive: if True, us os.system directly
+    exit: exit with return code from command (for test)
 
     """
 
@@ -79,7 +79,6 @@ def _exec(self, app=None, interactive=False, exit=False):
 
     # A shell will run the command
     if interactive is True:
-
         # Will exit with error, if happens, otherwise exit with 0
         if exit is True:
             result = self._run_command(
@@ -197,7 +196,6 @@ def test(self, app=None, args=None):
     # Does the application have a test script?
 
     if app in self.apps():
-
         self.activate(app, args=args)
 
         if not self._set_entrypoint(app, "SCIF_APPTEST", args):

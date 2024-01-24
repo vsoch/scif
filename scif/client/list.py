@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -16,7 +16,6 @@ import os
 
 
 def main(args, parser, subparser):
-
     from scif.main import ScifRecipe
 
     client = ScifRecipe(writable=False, quiet=True)
@@ -33,7 +32,6 @@ def main(args, parser, subparser):
             result.append(app.rjust(10))
 
     if len(result) > 0:
-
         if longlist is True:
             header = "[app]              [root]"
             bot.custom(prefix="SCIF", message=header, color="CYAN")

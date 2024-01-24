@@ -8,7 +8,7 @@ import os
 
 
 def get_lookup():
-    """get version by way of scif.version, returns a 
+    """get version by way of scif.version, returns a
     lookup dictionary with several global variables without
     needing to import singularity
     """
@@ -65,7 +65,6 @@ with open("README.md") as filey:
 
 
 if __name__ == "__main__":
-
     INSTALL_REQUIRES = get_requirements(lookup)
     INSTALL_REQUIRES_ALL = get_requirements(lookup, "INSTALL_REQUIRES_ALL")
 

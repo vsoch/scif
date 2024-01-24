@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -24,19 +24,18 @@ import shlex
 
 
 def get_installdir():
-    """get_installdir returns the installation directory of the application
-    """
+    """get_installdir returns the installation directory of the application"""
     return os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
 def run_command(cmd, sudo=False, quiet=False):
     """run_command uses subprocess to send a command to the terminal.
 
-       Parameters
-       ==========
-       cmd: the command to send, should be a list for subprocess
-       sudo: if True (default False) command will be run asking for sudo
-       quiet: skip printing output to the terminal
+    Parameters
+    ==========
+    cmd: the command to send, should be a list for subprocess
+    sudo: if True (default False) command will be run asking for sudo
+    quiet: skip printing output to the terminal
     """
     if not isinstance(cmd, list):
         cmd = shlex.split(cmd)

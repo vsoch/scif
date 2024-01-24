@@ -2,7 +2,7 @@
 
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -31,8 +31,7 @@ class TestUtils(unittest.TestCase):
         shutil.rmtree(self.tmpdir)
 
     def test_write_read_files(self):
-        """test_write_read_files will test the functions write_file and read_file
-        """
+        """test_write_read_files will test the functions write_file and read_file"""
         print("Testing utils.write_file...")
         from scif.utils import write_file
 
@@ -68,8 +67,7 @@ class TestUtils(unittest.TestCase):
         self.assertTrue("Wakkawakkawakka" in content)
 
     def test_run_command(self):
-        """test running a command
-        """
+        """test running a command"""
         print("Testing utils.run_command")
         from scif.utils import run_command
 
