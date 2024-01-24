@@ -1,0 +1,2 @@
+%apprun force_fail
+    exit 155

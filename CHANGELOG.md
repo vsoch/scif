@@ -14,6 +14,7 @@ represented by the pull requests that fixed them.
 Versions in parentheses coincide with what is available on [pypi](https://pypi.org/project/scif/).
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (master)
+ - return exit code of app in run command (0.0.82)
  - install return value non zero should stop build (0.0.81)
  - removing Python less than 3.6 support (0.0.80)
  - code formatting with black, shell entrypoint bug (0.0.79)
