@@ -1,2 +1,7 @@
 %apprun force_fail
-    exit 155
+echo "Calling exit 155"
+exit 155
+
+%apprun success
+echo "Running succes"
+exit 0
