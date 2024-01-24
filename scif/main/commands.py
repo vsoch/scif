@@ -16,7 +16,7 @@ from scif.utils import which
 import locale
 import sys
 import os
-
+import subprocess
 
 def _exec(self, app=None, interactive=False, exit=False):
     """exec is the underlying driver of both run and exec, taking a final
@@ -88,14 +88,12 @@ def _exec(self, app=None, interactive=False, exit=False):
             sys.exit(result["return_code"])
         else:
             os.system("".join(cmd))
-
     else:
-        for line in os.popen(cmd):
-            try:
-                print(line.rstrip())
-            except:
-                print(line.rstrip().encode(loc))
-
+        cmd = cmd.split(" ")
+        result = self._run_command(
+            cmd=cmd, spinner=False, quiet=False
+        )
+        sys.exit(result["return_code"])
 
 def execute(self, app, cmd=None, args=None):
     """execute a command in the context of an app. This means the following:
@@ -163,6 +161,7 @@ def run(self, app=None, args=None):
     args: a list of one or more additional arguments to pass to runscript
 
     """
+    interactive=False
     config = self.app(app)
     if "apprun" not in config:
         bot.debug("%s does not have a runscript." % app)
@@ -173,8 +172,7 @@ def run(self, app=None, args=None):
     # updates environment
     # sets entrypoint
     # sets entryfolder
-
-    return self._exec(app, interactive=True, exit=True)
+    return self._exec(app, interactive=interactive)
 
 
 def test(self, app=None, args=None):

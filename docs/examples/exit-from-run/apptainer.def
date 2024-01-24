@@ -15,5 +15,5 @@ From: continuumio/miniconda3
     # Install SCIF
     cd /opt/scif
     /opt/conda/bin/pip install setuptools
-    /opt/conda/bin/pip install -e .
+    /opt/conda/bin/pip install .
     scif install /recipe.scif
