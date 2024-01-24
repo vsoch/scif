@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -21,11 +21,11 @@ import os
 def parse_input_preferences(recipe, quiet=False):
     """parse a recipe|app, meaning a list of one or more things that could be
 
-       any of the following:
+    any of the following:
 
-        Returns
-        =======
-        parsed: a dictionary lookup with keys for app, recipe, and quiet.
+     Returns
+     =======
+     parsed: a dictionary lookup with keys for app, recipe, and quiet.
     """
 
     # if coming from inspect, will be string
@@ -34,14 +34,12 @@ def parse_input_preferences(recipe, quiet=False):
 
     # First case: recipe and app
     if len(recipe) > 1:
-
         app = recipe[1]
         recipe = recipe[0]
         quiet = True
 
     # Second case, no input or recipe|app
     else:
-
         app = None
 
         # If no recipe provided, assume loading base

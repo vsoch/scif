@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2018-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -20,16 +20,16 @@ import re
 
 def get_parts(pair, default=None):
     """pair is expected to be a string with some key, value, and this function
-       will replace any "=" with a space, and then parse the remainder
-       for a first and second part (key and value pair). 
+    will replace any "=" with a space, and then parse the remainder
+    for a first and second part (key and value pair).
 
-       We likely will need to use regular expressions for pairs that have 
-       spaces or equals that need to be maintained.
+    We likely will need to use regular expressions for pairs that have
+    spaces or equals that need to be maintained.
 
-       Parameters
-       ==========
-       pair should be a single string, likely with a key and value split by 
-            a space or equals sign.
+    Parameters
+    ==========
+    pair should be a single string, likely with a key and value split by
+         a space or equals sign.
 
     """
     pair = pair.replace("=", " ")
@@ -43,9 +43,9 @@ def get_parts(pair, default=None):
 
 
 def run_command(self, cmd, spinner=True, quiet=True):
-    """run_command will run a command (a list) and wrap in a spinner. A 
-       result (dict) with message and return code is returned. If the
-       return value is not 0, an error is issed and we exit
+    """run_command will run a command (a list) and wrap in a spinner. A
+    result (dict) with message and return code is returned. If the
+    return value is not 0, an error is issed and we exit
     """
     if spinner is True:
         bot.spinner.start()
@@ -66,15 +66,15 @@ def run_command(self, cmd, spinner=True, quiet=True):
 
 def set_entrypoint(self, app, config_key="SCIF_APPRUN", args=None):
     """if the value is defined in the config and the file exists, set
-       the entrypoint for the app to execute the script.
+    the entrypoint for the app to execute the script.
 
-       Parameters
-       ==========
-       key: the entry in the config (a filename) to check for existence. If 
-            it exists, then set it's execution using the default shell to
-            be the entrypoint.
+    Parameters
+    ==========
+    key: the entry in the config (a filename) to check for existence. If
+         it exists, then set it's execution using the default shell to
+         be the entrypoint.
 
-       returns True if the config entry and file are found, False otherwise
+    returns True if the config entry and file are found, False otherwise
     """
 
     if app in self.apps():
@@ -92,12 +92,12 @@ def set_entrypoint(self, app, config_key="SCIF_APPRUN", args=None):
 
 def parse_entrypoint(entry_point=None):
     """parse entrypoint will return a list, where the first argument is the
-       executable, followed by arguments. This function also works to
-       parse arguments into a list.
- 
-       Parameters
-       ==========
-       entry_point: the entry point for the application, is 
+    executable, followed by arguments. This function also works to
+    parse arguments into a list.
+
+    Parameters
+    ==========
+    entry_point: the entry point for the application, is
     """
 
     if entry_point is None:

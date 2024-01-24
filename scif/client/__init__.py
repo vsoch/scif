@@ -2,7 +2,7 @@
 
 """
 
-Copyright (C) 2016-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -167,8 +167,7 @@ def get_parser():
 
 
 def get_subparsers(parser):
-    """get_subparser will get a dictionary of subparsers, to help with printing help
-    """
+    """get_subparser will get a dictionary of subparsers, to help with printing help"""
 
     actions = [
         action
@@ -186,16 +185,16 @@ def get_subparsers(parser):
 
 
 def main():
-    """main is the entrypoint to managing or interacting with an scif 
-       organized filesystem.
+    """main is the entrypoint to managing or interacting with an scif
+    organized filesystem.
     """
 
     parser = get_parser()
     subparsers = get_subparsers(parser)
 
     def help(return_code=0):
-        """print help, including the software version and active client 
-           and exit with return code.
+        """print help, including the software version and active client
+        and exit with return code.
         """
         version = scif.__version__
 

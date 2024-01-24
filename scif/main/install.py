@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -18,12 +18,12 @@ import os
 
 def install(self, app=None):
     """install recipes to a base. We assume this is the root of a system
-       or container, and will write the /scif directory on top of it.
-       If an app name is provided, install that app if it is found 
-       in the config. This function goes through all steps to:
+    or container, and will write the /scif directory on top of it.
+    If an app name is provided, install that app if it is found
+    in the config. This function goes through all steps to:
 
-       1. Install base folders to base, creating a folder for each app
-       2. Install one or more apps to it, the config is already loaded
+    1. Install base folders to base, creating a folder for each app
+    2. Install one or more apps to it, the config is already loaded
     """
 
     self._install_base()  # Generate the folder structure
@@ -31,8 +31,8 @@ def install(self, app=None):
 
 
 def init_app(self, app):
-    """initialize an app, meaning adding the metadata folder, bin, and 
-       lib to it. The app is created at the base
+    """initialize an app, meaning adding the metadata folder, bin, and
+    lib to it. The app is created at the base
     """
     settings = self.get_appenv_lookup(app)[app]
 
@@ -44,7 +44,7 @@ def init_app(self, app):
 
 def install_apps(self, apps=None):
     """install one or more apps to the base. If app is defined, only
-       install app specified. Otherwise, install all found in config.
+    install app specified. Otherwise, install all found in config.
     """
     if apps in [None, ""]:
         apps = self.apps()
@@ -56,7 +56,6 @@ def install_apps(self, apps=None):
         bot.warning("No apps to install. Load a recipe or base with .load()")
 
     for app in apps:
-
         # We must have the app defined in the config
         if app not in self._config["apps"]:
             bot.exit("Cannot find app %s in config." % app)
@@ -88,11 +87,11 @@ def install_apps(self, apps=None):
 def install_labels(self, app, settings, config):
     """install labels will add labels to the app labelfile
 
-       Parameters
-       ==========
-       app should be the name of the app, for lookup in config['apps']
-       settings: the output of _init_app(), a dictionary of environment vars
-       config: should be the config for the app obtained with self.app(app)
+    Parameters
+    ==========
+    app should be the name of the app, for lookup in config['apps']
+    settings: the output of _init_app(), a dictionary of environment vars
+    config: should be the config for the app obtained with self.app(app)
 
     """
     lookup = dict()
@@ -109,13 +108,13 @@ def install_labels(self, app, settings, config):
 
 def install_files(self, app, settings, config):
     """install files will add files (or directories) to a destination.
-       If none specified, they are placed in the app base
+    If none specified, they are placed in the app base
 
-       Parameters
-       ==========
-       app should be the name of the app, for lookup in config['apps']
-       settings: the output of _init_app(), a dictionary of environment vars
-       config: should be the config for the app obtained with self.app(app)
+    Parameters
+    ==========
+    app should be the name of the app, for lookup in config['apps']
+    settings: the output of _init_app(), a dictionary of environment vars
+    config: should be the config for the app obtained with self.app(app)
 
     """
     if "appfiles" in config:
@@ -123,7 +122,6 @@ def install_files(self, app, settings, config):
         bot.info("+ " + "appfiles ".ljust(5) + app)
 
         for pair in files:
-
             # Step 1: determine source and destination
             src, dest = get_parts(pair, default=settings["approot"])
 
@@ -142,15 +140,14 @@ def install_files(self, app, settings, config):
 def install_commands(self, app, settings, config):
     """install will finally, issue commands to install the app.
 
-       Parameters
-       ==========
-       app should be the name of the app, for lookup in config['apps']
-       settings: the output of _init_app(), a dictionary of environment vars
-       config: should be the config for the app obtained with self.app(app)
+    Parameters
+    ==========
+    app should be the name of the app, for lookup in config['apps']
+    settings: the output of _init_app(), a dictionary of environment vars
+    config: should be the config for the app obtained with self.app(app)
 
     """
     if "appinstall" in config:
-
         # Change directory so the APP is $PWD
         pwd = os.getcwd()
         os.chdir(settings["approot"])
@@ -172,11 +169,11 @@ def install_commands(self, app, settings, config):
 def install_recipe(self, app, settings, config):
     """Write the initial recipe for the app to its metadata folder.
 
-       Parameters
-       ==========
-       app should be the name of the app, for lookup in config['apps']
-       settings: the output of _init_app(), a dictionary of environment vars
-       config: should be the config for the app obtained with self.app(app)
+    Parameters
+    ==========
+    app should be the name of the app, for lookup in config['apps']
+    settings: the output of _init_app(), a dictionary of environment vars
+    config: should be the config for the app obtained with self.app(app)
 
     """
     recipe_file = settings["apprecipe"]
@@ -196,16 +193,16 @@ def install_recipe(self, app, settings, config):
 
 def install_script(self, section, app, settings, config, executable=False):
     """a general function used by install_runscript, install_help, and
-       install_environment to write a script to a file from a config setting
-       section
+    install_environment to write a script to a file from a config setting
+    section
 
-       Parameters
-       ==========
-       section: should be the name of the section in the config (e.g., apprun)
-       app should be the name of the app, for lookup in config['apps']
-       settings: the output of _init_app(), a dictionary of environment vars
-       config: should be the config for the app obtained with self.app(app)
-       executable: if the file is written, make it executable (defaults False)
+    Parameters
+    ==========
+    section: should be the name of the section in the config (e.g., apprun)
+    app should be the name of the app, for lookup in config['apps']
+    settings: the output of _init_app(), a dictionary of environment vars
+    config: should be the config for the app obtained with self.app(app)
+    executable: if the file is written, make it executable (defaults False)
 
     """
     if section in config:
@@ -220,27 +217,27 @@ def install_script(self, section, app, settings, config, executable=False):
 
 def install_runscript(self, app, settings, config, executable=True):
     """install runscript will prepare the runscript for an app.
-       the parameters are shared by _install_script
+    the parameters are shared by _install_script
     """
     return self._install_script("apprun", app, settings, config, executable)
 
 
 def install_environment(self, app, settings, config):
     """install will run the content to export environment variables, if defined
-       the parameters are shared by _install_script
+    the parameters are shared by _install_script
     """
     return self._install_script("appenv", app, settings, config)
 
 
 def install_help(self, app, settings, config):
     """install will write the help section, if defined.
-       the parameters are shared by _install_script
+    the parameters are shared by _install_script
     """
     return self._install_script("apphelp", app, settings, config)
 
 
 def install_test(self, app, settings, config, executable=True):
     """install test will prepare a test script for an app.
-       the parameters are shared by _install_script
+    the parameters are shared by _install_script
     """
     return self._install_script("apptest", app, settings, config, executable)

@@ -1,6 +1,6 @@
 """
 
-Copyright (C) 2017-2020 Vanessa Sochat.
+Copyright (C) 2017-2024 Vanessa Sochat.
 
 This Source Code Form is subject to the terms of the
 Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed
@@ -17,12 +17,12 @@ import os
 
 
 def set_base(self, base="/", writable=True):
-    """ set the base (the root where to create /scif) and determine if
-        it is writable
+    """set the base (the root where to create /scif) and determine if
+    it is writable
 
-        Parameters
-        ==========
-        base: the full path to the root folder to create /scif
+    Parameters
+    ==========
+    base: the full path to the root folder to create /scif
     """
     # The user is likely to give path to scif (should still work)
     base = base.strip("scif")
@@ -46,9 +46,9 @@ def set_base(self, base="/", writable=True):
 
 
 def set_defaults(self, entry_point=None):
-    """set the defaults for the SCIF state at start up. 
-       Usually this means parsing them from the environment. We hold these
-       with the object so we can easily maintain and change state.
+    """set the defaults for the SCIF state at start up.
+    Usually this means parsing them from the environment. We hold these
+    with the object so we can easily maintain and change state.
     """
 
     # The entrypoint is the runscript (or /bin/bash default)
@@ -64,11 +64,11 @@ def set_defaults(self, entry_point=None):
 
 
 def install_base(self):
-    """ create basic scif structure at the base for apps and metadata
+    """create basic scif structure at the base for apps and metadata
 
-        Parameters
-        ==========
-        base: the full path to the root folder to create /scif
+    Parameters
+    ==========
+    base: the full path to the root folder to create /scif
     """
     if not hasattr(self, "_base"):
         bot.exit("Please set the base before installing to it.")
