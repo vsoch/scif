@@ -87,10 +87,13 @@ def _exec(self, app=None, interactive=False, exit=False):
             sys.exit(result["return_code"])
         else:
             os.system("".join(cmd))
+
     else:
-        cmd = cmd.split(" ")
-        result = self._run_command(cmd=cmd, spinner=False, quiet=False)
-        sys.exit(result["return_code"])
+        for line in os.popen(cmd):
+            try:
+                print(line.rstrip())
+            except:
+                print(line.rstrip().encode(loc))
 
 
 def execute(self, app, cmd=None, args=None):
@@ -170,6 +173,7 @@ def run(self, app=None, args=None):
     # updates environment
     # sets entrypoint
     # sets entryfolder
+
     return self._exec(app, interactive=interactive)
 
 
