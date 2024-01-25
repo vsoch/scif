@@ -6,3 +6,4 @@ echo "Testing exec of commands:"
 docker run -it "${CONTAINER_NAME}" exec hello-world-echo echo "Hello World!"
 docker run -it "${CONTAINER_NAME}" exec hello-world-script ls /
 docker run -it "${CONTAINER_NAME}" exec hello-world-env env
+docker run -it "${CONTAINER_NAME}" exec hello-world-env echo [e]OMG

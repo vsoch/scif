@@ -39,3 +39,6 @@
         fi
     echo "Argument supplied, exiting with ${1}"
     exit ${1}
+%apprun hello-world-exit-code
+  echo "Exiting with code 155"
+	exit 155
