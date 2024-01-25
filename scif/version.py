@@ -10,7 +10,7 @@ Modified from https://github.com/Visual-mov/Colorful-Julia (MIT License)
 
 """
 
-__version__ = "0.0.82"
+__version__ = "0.0.83"
 AUTHOR = "Vanessa Sochat"
 AUTHOR_EMAIL = "vsochat@stanford.edu"
 NAME = "scif"
