@@ -14,6 +14,7 @@ represented by the pull requests that fixed them.
 Versions in parentheses coincide with what is available on [pypi](https://pypi.org/project/scif/).
 
 ## [xxx](https://github.com/vsoch/scif/tree/master) (master)
+ - (re)add exit code to app.run (0.0.84)
  - revert exit code to app.run until further notice (0.0.83)
  - add exit code to app.run (0.0.82)
  - install return value non zero should stop build (0.0.81)

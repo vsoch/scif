@@ -89,11 +89,15 @@ def _exec(self, app=None, interactive=False, exit=False):
             os.system("".join(cmd))
 
     else:
-        for line in os.popen(cmd):
+        f = os.popen(cmd)
+        for line in f.readlines():
             try:
                 print(line.rstrip())
             except:
                 print(line.rstrip().encode(loc))
+        status = f.close()
+        if status:
+            sys.exit(os.waitstatus_to_exitcode(status))
 
 
 def execute(self, app, cmd=None, args=None):
